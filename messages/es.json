@@ -1,0 +1,286 @@
+{
+  "common": {
+    "schedule": "Agendar cita",
+    "scheduleShort": "Agendar",
+    "call": "Llamar",
+    "text": "Escríbenos",
+    "directions": "Cómo llegar",
+    "hours": "Lunes – Sábado, 9:00 AM – 6:00 PM",
+    "skipToContent": "Saltar al contenido",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "menu": "Menú",
+    "learnMore": "Ver más",
+    "viewAll": "Ver todos los servicios"
+  },
+  "nav": {
+    "services": "Servicios",
+    "locations": "Ubicaciones",
+    "patients": "Pacientes",
+    "eyeHealth": "Salud visual",
+    "about": "Nosotros",
+    "contact": "Contacto",
+    "appointment": "Solicitar cita",
+    "examsGroup": "Exámenes y salud visual",
+    "eyewearGroup": "Lentes y lentes de contacto",
+    "conditionsGroup": "Condiciones oculares",
+    "allLocations": "Nuestras oficinas",
+    "patientsGroup": "Información para pacientes",
+    "comprehensiveExam": "Examen completo de la vista",
+    "childrensEyeCare": "Cuidado visual infantil",
+    "diabeticExam": "Examen de la vista para diabéticos",
+    "glasses": "Lentes y armazones",
+    "contactLenses": "Examen y adaptación de lentes de contacto",
+    "specialtyLenses": "Lentes de contacto especializados",
+    "keratoconus": "Queratocono y córnea",
+    "dryEye": "Ojo seco",
+    "glaucoma": "Glaucoma",
+    "cataracts": "Cataratas",
+    "camden": "Camden, NJ",
+    "philadelphia": "Philadelphia, PA",
+    "cherryHill": "Cherry Hill, NJ",
+    "firstVisit": "Primera visita",
+    "insurance": "Seguros y pagos",
+    "faq": "Preguntas frecuentes"
+  },
+  "footer": {
+    "blurb": "Cuidado de la vista para las comunidades de Camden, Philadelphia y Cherry Hill, en inglés y español.",
+    "careTitle": "Cuidado visual",
+    "patientsTitle": "Pacientes",
+    "locationsTitle": "Ubicaciones",
+    "legalTitle": "Legal",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Uso",
+    "accessibility": "Declaración de Accesibilidad",
+    "smsTerms": "Términos SMS",
+    "cookies": "Preferencias de Cookies",
+    "rights": "Tus Ojos Inc. Todos los derechos reservados.",
+    "disclaimer": "Este sitio ofrece información general y no proporciona consejo médico ni diagnóstico."
+  },
+  "a11y": {
+    "title": "Accesibilidad",
+    "close": "Cerrar panel de accesibilidad",
+    "textSize": "Tamaño de texto",
+    "contrast": "Alto contraste",
+    "grayscale": "Escala de grises",
+    "underline": "Subrayar enlaces",
+    "spacing": "Más espaciado",
+    "readable": "Fuente legible",
+    "focus": "Resaltar foco",
+    "still": "Pausar animaciones",
+    "on": "Sí",
+    "off": "No",
+    "reset": "Restablecer todo"
+  },
+  "home": {
+    "hero": {
+      "lede": "Exámenes de la vista, lentes y lentes de contacto en tres oficinas de tu barrio en Philadelphia y el sur de Nueva Jersey. Abierto de lunes a sábado, en inglés y español.",
+      "findOffice": "Encuentra tu oficina",
+      "openLabel": "Abierto lun – sáb",
+      "photoAlt": "Paciente sonriendo mientras se ajusta los lentes",
+      "chips": {
+        "bilingual": "Inglés y español",
+        "insurance": "Aceptamos la mayoría de los seguros",
+        "hours": "Lunes – Sábado"
+      }
+    },
+    "trust": {
+      "yearsValue": "{years} años",
+      "yearsLabel": "Al servicio de la comunidad desde {year}",
+      "patientsLabel": "Personas atendidas con sus lentes y su visión",
+      "officesLabel": "Oficinas en Philadelphia y el sur de Nueva Jersey",
+      "languagesLabel": "Cada página, formulario y llamada en ambos idiomas"
+    },
+    "services": {
+      "eyebrow": "Lo que hacemos",
+      "heading": "Exámenes de la vista, lentes y cuidado visual en Camden, Philadelphia y Cherry Hill",
+      "intro": "La disponibilidad varía por oficina. Cada página de servicio indica dónde se ofrece y qué ocurre durante la visita.",
+      "availability": {
+        "in_office": "En consulta",
+        "evaluation": "Evaluación",
+        "referral": "Referimiento"
+      },
+      "blurbs": {
+        "comprehensiveExam": "Revisión de visión, graduación y evaluación general de la salud de tus ojos.",
+        "glasses": "Selección de armazones, opciones de micas y ajustes, incluidas graduaciones fuertes.",
+        "contactLenses": "Medidas, lentes de prueba y seguimiento para una adaptación cómoda.",
+        "childrensEyeCare": "Revisión visual para niños en edad escolar, explicada a los padres paso a paso.",
+        "dryEye": "Evaluación de ardor, sensación de arenilla o lagrimeo, y un plan de cuidado.",
+        "keratoconus": "Evaluación y opciones de lentes especializados, con referimiento cuando se requiere tratamiento."
+      }
+    },
+    "locations": {
+      "eyebrow": "Encuéntranos",
+      "heading": "Tres oficinas, un mismo equipo.",
+      "intro": "Llama, escribe o solicita tu visita en línea, lo que te resulte más fácil.",
+      "seeLocation": "Ver la oficina"
+    },
+    "steps": {
+      "eyebrow": "Primera visita",
+      "heading": "Cómo funciona solicitar una visita.",
+      "one": {
+        "title": "Dinos dónde y cuándo",
+        "body": "Elige la oficina, el día que prefieres y si te viene mejor por la mañana o por la tarde. Toma un minuto."
+      },
+      "two": {
+        "title": "Te contactamos para confirmar",
+        "body": "Nuestra recepción se comunica por llamada, mensaje o correo, según lo que hayas elegido, para fijar la hora exacta."
+      },
+      "three": {
+        "title": "Trae esto contigo",
+        "body": "Identificación con foto, tu tarjeta de seguro si la tienes, y los lentes o pupilentes que usas ahora."
+      },
+      "noticeStrong": "Tu cita no queda confirmada hasta que un integrante del equipo de Tus Ojos Eyecare se comunique contigo.",
+      "noticeRest": "Por favor no incluyas información médica detallada en el formulario.",
+      "emergencyStrong": "Este sitio web no es para emergencias.",
+      "emergencyRest": "Si tienes pérdida repentina de la visión, dolor ocular intenso o una lesión en el ojo, llama al 911 o acude a la sala de emergencias más cercana."
+    },
+    "cta": {
+      "heading": "Cuando tú estés listo.",
+      "body": "Solicita tu visita en menos de un minuto, en inglés o en español."
+    }
+  },
+  "about": {
+    "metaTitle": "Sobre Tus Ojos Eyecare",
+    "metaDescription": "Cuidamos tu visión desde 1996. Tus Ojos Eyecare atiende Camden NJ, Cherry Hill NJ y Philadelphia PA con exámenes de la vista, lentes y atención personalizada.",
+    "seeLocations": "Ver nuestras oficinas",
+    "who": {
+      "eyebrow": "Quiénes somos",
+      "heading": "Cuidamos tu visión. Al servicio de nuestra comunidad por generaciones.",
+      "p1": "Durante décadas, Tus Ojos Eyecare se ha dedicado a ayudar a personas y familias a ver con claridad y a cuidar su salud visual, con una atención personalizada y cercana.",
+      "p2": "Con oficinas en Camden, Nueva Jersey; Cherry Hill, Nueva Jersey; y Philadelphia, Pensilvania, atendemos con orgullo a las comunidades que nos han confiado su visión durante todos estos años.",
+      "p3": "Nuestro enfoque combina atención visual profesional, soluciones modernas para la visión y una amplia selección de lentes de calidad. Desde exámenes completos de la vista y cuidado visual infantil hasta lentes de contacto, lentes recetados y atención especializada, nuestro equipo trabaja para entender las necesidades de cada paciente y ofrecerle el cuidado y la orientación adecuados.",
+      "closing": "En Tus Ojos Eyecare eres más que una cita. Eres parte de la comunidad a la que servimos."
+    },
+    "owner": {
+      "eyebrow": "Nuestro fundador",
+      "role": "Óptico · Propietario y Presidente",
+      "photoAlt": "Wilfredo Manzano, óptico y propietario de Tus Ojos Eyecare",
+      "p1": "Wilfredo Manzano nació en Puerto Rico y abrió Tus Ojos en 1996. Casi tres décadas después, dirige tres oficinas —Philadelphia, Camden y Cherry Hill— con el mismo criterio del primer día: escuchar antes de recomendar.",
+      "p2": "Como óptico, su trabajo empieza donde termina la receta. Traducir una graduación en unos lentes que la persona use a diario tiene tanto de técnica como de conversación: qué hace en su trabajo, cuántas horas pasa frente a una pantalla, si maneja de noche, qué le incomodó de sus lentes anteriores.",
+      "p3": "Se ha especializado en graduaciones fuertes y complejas, donde el material de la mica, el tratamiento y la elección del armazón deciden si alguien ve bien o simplemente ve."
+    },
+    "philosophy": {
+      "eyebrow": "Nuestra filosofía",
+      "heading": "Tu visión es personal. Tu cuidado visual también debería serlo.",
+      "lead": "Creemos que el buen cuidado de la vista empieza por escuchar.",
+      "p1": "Cada paciente tiene necesidades visuales, rutinas, preocupaciones y metas distintas. Por eso nos tomamos el tiempo de entender lo que a ti te importa y de explicarte tus opciones con claridad antes de recomendarte una solución o el siguiente paso en tu cuidado.",
+      "p2": "Ya vengas por un examen de rutina, a elegir lentes nuevos, a probar lentes de contacto o a atender una condición ocular, nuestra meta es que cada visita sea cómoda, clara y personal.",
+      "p3": "Queremos que salgas de Tus Ojos Eyecare informado sobre tu salud visual, seguro de tus opciones y acompañado por un equipo comprometido con tu visión.",
+      "closing": "Tus ojos. Tu visión. Nuestro compromiso."
+    },
+    "numbers": {
+      "heading": "Tus Ojos, en cifras",
+      "yearsValue": "{years} años",
+      "yearsLabel": "En la comunidad desde {year}",
+      "patientsLabel": "Personas atendidas con sus lentes y su visión",
+      "officesLabel": "Oficinas de barrio"
+    }
+  },
+  "appointment": {
+    "metaTitle": "Solicitar una cita",
+    "metaDescription": "Solicita tu visita en Tus Ojos Eyecare en Camden, Philadelphia o Cherry Hill. Nuestro equipo te llama para confirmar.",
+    "heading": "Solicita tu cita",
+    "intro": "Dinos dónde y cuándo te viene bien. Toma un minuto, y nuestro equipo se comunicará contigo para confirmar la hora exacta.",
+    "emergencyStrong": "Este formulario no es para emergencias.",
+    "emergencyRest": "Si tienes pérdida repentina de la visión, dolor ocular intenso o una lesión en el ojo, llama al 911 o acude a la sala de emergencias más cercana.",
+    "progress": "Progreso del formulario",
+    "optional": "(opcional)",
+    "back": "Atrás",
+    "next": "Continuar",
+    "submit": "Enviar solicitud",
+    "sending": "Enviando…",
+    "steps": {
+      "location": "Oficina",
+      "patient": "Paciente",
+      "contact": "Contacto",
+      "visit": "Visita",
+      "communication": "Contáctame"
+    },
+    "location": {
+      "legend": "¿Qué oficina te queda mejor?",
+      "help": "Puedes atenderte en cualquiera de nuestras tres ubicaciones."
+    },
+    "patient": {
+      "legend": "¿Ya nos habías visitado antes?",
+      "new": "Soy paciente nuevo",
+      "existing": "Ya he venido antes",
+      "note": "Usaremos la información que nos des para ayudar a nuestro equipo a localizar tu expediente."
+    },
+    "contact": {
+      "legend": "¿Cómo te contactamos?",
+      "firstName": "Nombre",
+      "lastName": "Apellido",
+      "phone": "Teléfono celular",
+      "email": "Correo electrónico"
+    },
+    "visit": {
+      "legend": "¿Qué te trae por aquí?",
+      "reason": "Motivo de la visita",
+      "reasonPlaceholder": "Elige un motivo",
+      "date": "Fecha que prefieres",
+      "time": "Horario que prefieres",
+      "morning": "Mañana",
+      "afternoon": "Tarde",
+      "notes": "¿Algo más que debamos saber?",
+      "notesWarning": "Por favor no incluyas información médica detallada."
+    },
+    "reasons": {
+      "ROUTINE_EXAM": "Examen de la vista de rutina",
+      "CONTACT_LENS_EXAM": "Examen para lentes de contacto",
+      "EYEWEAR": "Lentes y armazones",
+      "PEDIATRIC_EXAM": "Examen de la vista para niños",
+      "DRY_EYE": "Ojo seco",
+      "CORNEA_CONSULT": "Consulta de córnea",
+      "KERATOCONUS": "Queratocono",
+      "GLAUCOMA_EVAL": "Evaluación de glaucoma",
+      "CATARACT_EVAL": "Evaluación de cataratas",
+      "EYE_PROBLEM": "Un problema en los ojos",
+      "OTHER": "Otro motivo"
+    },
+    "comm": {
+      "legend": "¿Cómo prefieres que te contactemos?",
+      "CALL": "Llámenme",
+      "TEXT": "Escríbanme",
+      "EMAIL": "Por correo"
+    },
+    "consent": {
+      "transactional": "Acepto recibir mensajes de texto de Tus Ojos Inc. relacionados con mi solicitud de cita y comunicaciones de servicio relacionadas en el número móvil proporcionado. La frecuencia de los mensajes varía. Pueden aplicarse tarifas de mensajes y datos. Responda STOP para dejar de recibir mensajes y HELP para obtener ayuda. El consentimiento para recibir mensajes publicitarios no es requisito para solicitar una cita ni adquirir bienes o servicios.",
+      "marketing": "También deseo recibir ocasionalmente mensajes de texto promocionales de Tus Ojos Inc. sobre lentes, ofertas y servicios. La frecuencia de los mensajes varía. Pueden aplicarse tarifas de mensajes y datos. Responda STOP para cancelar. El consentimiento es opcional y no constituye una condición para realizar una compra o recibir atención.",
+      "requiredForText": "Para que te contactemos por mensaje, acepta arriba recibir mensajes de texto.",
+      "noticeStrong": "Tu cita no queda confirmada hasta que un integrante del equipo de Tus Ojos Eyecare se comunique contigo.",
+      "noticeRest": "Te contactaremos dentro de nuestro horario, de lunes a sábado."
+    },
+    "errors": {
+      "required": "Este campo es obligatorio.",
+      "tooLong": "Esto es demasiado largo.",
+      "invalidName": "Usa sólo letras.",
+      "invalidPhone": "Escribe un teléfono de 10 dígitos.",
+      "invalidEmail": "Escribe un correo electrónico válido.",
+      "invalidDate": "Elige una fecha entre hoy y dentro de un año.",
+      "smsConsentRequired": "Acepta recibir mensajes de texto, o elige otra forma de contacto.",
+      "emailRequiredForPreference": "Añade tu correo electrónico para que podamos escribirte.",
+      "rateLimited": "Has enviado varias solicitudes en poco tiempo. Por favor llama directamente a tu oficina.",
+      "duplicate": "Ya tenemos una solicitud reciente de este número. Nuestro equipo te llamará.",
+      "captcha": "No pudimos verificar tu navegador. Recarga la página e inténtalo de nuevo.",
+      "unknownLocation": "Por favor elige una oficina.",
+      "validation": "Revisa los campos marcados.",
+      "network": "No pudimos conectar con el servidor. Revisa tu conexión e inténtalo de nuevo.",
+      "server": "Algo falló de nuestro lado. Por favor llama directamente a tu oficina.",
+      "badRequest": "Algo salió mal. Inténtalo de nuevo."
+    },
+    "confirmation": {
+      "heading": "Recibimos tu solicitud.",
+      "notConfirmedStrong": "Tu cita todavía no está confirmada.",
+      "notConfirmedRest": "Un integrante del equipo de Tus Ojos Eyecare se comunicará contigo para fijar la hora exacta. Por favor no vayas a la oficina hasta que te contactemos.",
+      "whatNext": "Qué sigue",
+      "next": {
+        "one": "Nuestra recepción revisa tu solicitud en horario de oficina, de lunes a sábado, de 9:00 AM a 6:00 PM.",
+        "two": "Te contactamos como pediste —llamada, mensaje o correo— para confirmar una hora que te sirva.",
+        "three": "Trae identificación con foto, tu tarjeta de seguro si la tienes, y los lentes o pupilentes que usas ahora."
+      },
+      "needSooner": "¿Necesitas que te atiendan antes?",
+      "backHome": "Volver al inicio"
+    }
+  }
+}

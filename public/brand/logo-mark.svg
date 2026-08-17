@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 605 380" role="img" aria-label="Tus Ojos">
+  <title>Tus Ojos</title>
+  <defs>
+    <clipPath id="tusojos-inner">
+      <ellipse cx="302.5" cy="190" rx="208.5" ry="184"/>
+    </clipPath>
+  </defs>
+  <ellipse cx="302.5" cy="190" rx="302.5" ry="190" fill="#008080"/>
+  <ellipse cx="302.5" cy="190" rx="208.5" ry="184" fill="#FFFFFF"/>
+  <path d="M0 89 H605 V159 H372 V374 H233 V159 H0 Z" fill="#800080" clip-path="url(#tusojos-inner)"/>
+</svg>

@@ -7,16 +7,16 @@
    ===================================================================== */
 @theme {
   /* Colores extraídos del archivo original del logo */
-  --color-brand-primary: #800080;
-  --color-brand-primary-deep: #6b006b;
-  --color-brand-primary-tint: #f6e8f6;
+  --color-brand-primary: #6f2a70;
+  --color-brand-primary-deep: #55205a;
+  --color-brand-primary-tint: #f3eaf3;
 
-  /* El teal del logo da 4.77:1 sobre blanco: SÍ pasa WCAG AA para texto
-     normal. La variante -deep (7.5:1) queda para texto sobre fondos
-     tintados, donde el contraste efectivo baja. */
-  --color-brand-secondary: #008080;
-  --color-brand-secondary-deep: #005f5f;
-  --color-brand-secondary-tint: #e3f0f0;
+  --color-brand-secondary: #518782;
+  /* El teal del logo da 4.09:1 sobre blanco: insuficiente para texto
+     normal en WCAG AA (hace falta 4.5:1). Para texto y botones usa
+     brand-secondary-deep, que da 7.2:1. */
+  --color-brand-secondary-deep: #2f5f5b;
+  --color-brand-secondary-tint: #e8f0ef;
 
   --color-surface: #ffffff;
   --color-background: #f5f7f6;
@@ -72,11 +72,11 @@ body {
    Tailwind 4 las referencian con var(), así que todo el sitio cambia.
    ===================================================================== */
 html.a11y-contrast {
-  --color-brand-primary: #4d004d;
-  --color-brand-primary-deep: #330033;
+  --color-brand-primary: #4a1a4c;
+  --color-brand-primary-deep: #331035;
   --color-brand-primary-tint: #ffffff;
-  --color-brand-secondary: #004d4d;
-  --color-brand-secondary-deep: #003333;
+  --color-brand-secondary: #245450;
+  --color-brand-secondary-deep: #14332f;
   --color-brand-secondary-tint: #ffffff;
   --color-text-primary: #000000;
   --color-text-secondary: #000000;
@@ -131,71 +131,4 @@ html.a11y-still *::after {
 }
 .skip-link:focus {
   top: 0;
-}
-
-/* =====================================================================
-   Impresión — listas de citas del panel
-   El navegador genera el PDF; no hace falta librería en el servidor.
-   ===================================================================== */
-@media print {
-  @page {
-    margin: 14mm;
-    size: letter;
-  }
-  body {
-    background: #fff;
-    font-size: 11pt;
-  }
-  /* Repetir la cabecera de la tabla en cada página */
-  thead {
-    display: table-header-group;
-  }
-  tr {
-    break-inside: avoid;
-  }
-  a[href]::after {
-    content: "";
-  }
-}
-
-/* =====================================================================
-   Documentos legales
-   Texto largo: medida de lectura contenida y jerarquía clara.
-   ===================================================================== */
-.legal-prose {
-  color: var(--color-text-secondary);
-  line-height: 1.75;
-}
-.legal-prose p {
-  margin-top: 1rem;
-  max-width: 72ch;
-}
-.legal-prose ul,
-.legal-prose ol {
-  margin-top: 1rem;
-  padding-left: 1.5rem;
-  max-width: 72ch;
-}
-.legal-prose ul {
-  list-style: disc;
-}
-.legal-prose ol {
-  list-style: decimal;
-}
-.legal-prose li {
-  margin-top: 0.35rem;
-}
-.legal-prose strong {
-  color: var(--color-text-primary);
-  font-weight: 700;
-}
-.legal-prose hr {
-  margin: 2rem 0;
-  border: 0;
-  border-top: 1px solid var(--color-border-subtle);
-}
-.legal-prose blockquote {
-  margin-top: 1rem;
-  padding-left: 1rem;
-  border-left: 3px solid var(--color-brand-secondary);
 }

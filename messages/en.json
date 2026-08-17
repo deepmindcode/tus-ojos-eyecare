@@ -1,0 +1,286 @@
+{
+  "common": {
+    "schedule": "Schedule appointment",
+    "scheduleShort": "Schedule",
+    "call": "Call",
+    "text": "Text us",
+    "directions": "Directions",
+    "hours": "Monday – Saturday, 9:00 AM – 6:00 PM",
+    "skipToContent": "Skip to content",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "menu": "Menu",
+    "learnMore": "Learn more",
+    "viewAll": "View all services"
+  },
+  "nav": {
+    "services": "Services",
+    "locations": "Locations",
+    "patients": "Patients",
+    "eyeHealth": "Eye health",
+    "about": "About",
+    "contact": "Contact",
+    "appointment": "Request appointment",
+    "examsGroup": "Exams & eye health",
+    "eyewearGroup": "Eyewear & contact lenses",
+    "conditionsGroup": "Eye conditions",
+    "allLocations": "Our offices",
+    "patientsGroup": "Patient information",
+    "comprehensiveExam": "Comprehensive eye exams",
+    "childrensEyeCare": "Children's eye care",
+    "diabeticExam": "Diabetic eye exams",
+    "glasses": "Glasses & frames",
+    "contactLenses": "Contact lens exams & fitting",
+    "specialtyLenses": "Specialty contact lenses",
+    "keratoconus": "Keratoconus & cornea",
+    "dryEye": "Dry eye",
+    "glaucoma": "Glaucoma",
+    "cataracts": "Cataracts",
+    "camden": "Camden, NJ",
+    "philadelphia": "Philadelphia, PA",
+    "cherryHill": "Cherry Hill, NJ",
+    "firstVisit": "First visit",
+    "insurance": "Insurance & payment",
+    "faq": "Frequently asked questions"
+  },
+  "footer": {
+    "blurb": "Eye care for the Camden, Philadelphia and Cherry Hill communities, in English and Spanish.",
+    "careTitle": "Eye care",
+    "patientsTitle": "Patients",
+    "locationsTitle": "Locations",
+    "legalTitle": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "accessibility": "Accessibility Statement",
+    "smsTerms": "SMS Terms & Conditions",
+    "cookies": "Cookie Preferences",
+    "rights": "Tus Ojos Inc. All rights reserved.",
+    "disclaimer": "This website provides general information and does not offer medical advice or diagnosis."
+  },
+  "a11y": {
+    "title": "Accessibility",
+    "close": "Close accessibility panel",
+    "textSize": "Text size",
+    "contrast": "High contrast",
+    "grayscale": "Grayscale",
+    "underline": "Underline links",
+    "spacing": "More spacing",
+    "readable": "Readable font",
+    "focus": "Highlight focus",
+    "still": "Pause animations",
+    "on": "On",
+    "off": "Off",
+    "reset": "Reset all"
+  },
+  "home": {
+    "hero": {
+      "lede": "Eye exams, glasses and contact lenses at three neighborhood offices in Philadelphia and South Jersey. Open Monday through Saturday, in English and Spanish.",
+      "findOffice": "Find your office",
+      "openLabel": "Open Mon – Sat",
+      "photoAlt": "Smiling patient adjusting her glasses",
+      "chips": {
+        "bilingual": "English & Spanish",
+        "insurance": "Most insurance plans accepted",
+        "hours": "Monday – Saturday"
+      }
+    },
+    "trust": {
+      "yearsValue": "{years} years",
+      "yearsLabel": "Serving the community since {year}",
+      "patientsLabel": "People helped with their eyewear and vision",
+      "officesLabel": "Offices across Philadelphia and South Jersey",
+      "languagesLabel": "Every page, form and phone call in both languages"
+    },
+    "services": {
+      "eyebrow": "What we do",
+      "heading": "Eye exams, eyewear and eye care in Camden, Philadelphia and Cherry Hill",
+      "intro": "Availability varies by office. Each service page says where it is offered and what happens at the visit.",
+      "availability": {
+        "in_office": "In office",
+        "evaluation": "Evaluation",
+        "referral": "Referral"
+      },
+      "blurbs": {
+        "comprehensiveExam": "Vision check, prescription and a look at your overall eye health.",
+        "glasses": "Frame selection, lens options and adjustments, including strong prescriptions.",
+        "contactLenses": "Measurements, trial lenses and follow-up for a comfortable fit.",
+        "childrensEyeCare": "Vision checks for school-age kids, explained to parents step by step.",
+        "dryEye": "Assessment of burning, grittiness or watery eyes, and a care plan.",
+        "keratoconus": "Evaluation and specialty lens options, with referral when treatment is needed."
+      }
+    },
+    "locations": {
+      "eyebrow": "Find us",
+      "heading": "Three offices, one team.",
+      "intro": "Call, text, or request a visit online — whichever is easier for you.",
+      "seeLocation": "Location details"
+    },
+    "steps": {
+      "eyebrow": "First visit",
+      "heading": "How requesting a visit works.",
+      "one": {
+        "title": "Tell us where and when",
+        "body": "Pick an office, a preferred day, and morning or afternoon. It takes about a minute."
+      },
+      "two": {
+        "title": "We contact you to confirm",
+        "body": "Our front desk reaches out by call, text or email — whichever you chose — to set the exact time."
+      },
+      "three": {
+        "title": "Bring these with you",
+        "body": "Photo ID, your insurance card if you have one, and your current glasses or contact lenses."
+      },
+      "noticeStrong": "Your appointment is not confirmed until a Tus Ojos Eyecare team member contacts you.",
+      "noticeRest": "Please don't include detailed medical information in the request form.",
+      "emergencyStrong": "This website is not for emergencies.",
+      "emergencyRest": "If you have sudden vision loss, severe eye pain or an eye injury, call 911 or go to the nearest emergency room."
+    },
+    "cta": {
+      "heading": "Ready when you are.",
+      "body": "Request a visit in under a minute, in English or Spanish."
+    }
+  },
+  "about": {
+    "metaTitle": "About Tus Ojos Eyecare",
+    "metaDescription": "Caring for your vision since 1996. Tus Ojos Eyecare serves Camden NJ, Cherry Hill NJ and Philadelphia PA with eye exams, eyewear and personalized care.",
+    "seeLocations": "See our offices",
+    "who": {
+      "eyebrow": "Who we are",
+      "heading": "Caring for your vision. Serving our community for generations.",
+      "p1": "For decades, Tus Ojos Eyecare has been dedicated to helping individuals and families see clearly and protect their eye health through personalized, compassionate care.",
+      "p2": "With convenient locations in Camden, New Jersey; Cherry Hill, New Jersey; and Philadelphia, Pennsylvania, we proudly serve the communities that have trusted us with their vision throughout the years.",
+      "p3": "Our approach brings together professional eye care, modern vision solutions, and a wide selection of quality eyewear. From comprehensive eye exams and pediatric eye care to contact lenses, prescription eyewear, and specialized eye care, our team works to understand each patient's individual needs and provide the appropriate care and guidance.",
+      "closing": "At Tus Ojos Eyecare, you're more than an appointment. You're part of the community we serve."
+    },
+    "owner": {
+      "eyebrow": "Our founder",
+      "role": "Optician · Owner & President",
+      "photoAlt": "Wilfredo Manzano, optician and owner of Tus Ojos Eyecare",
+      "p1": "Wilfredo Manzano was born in Puerto Rico and opened Tus Ojos in 1996. Nearly three decades on, he leads three offices — Philadelphia, Camden and Cherry Hill — the same way he ran the first one: listen before recommending.",
+      "p2": "As an optician, his work begins where the prescription ends. Turning a prescription into glasses someone will wear every day is as much conversation as craft: what they do for work, how many hours they spend on a screen, whether they drive at night, what bothered them about their last pair.",
+      "p3": "He has built his practice around strong and complex prescriptions, where the lens material, the treatment and the frame choice decide whether someone sees well or merely sees."
+    },
+    "philosophy": {
+      "eyebrow": "Our philosophy",
+      "heading": "Your vision is personal. Your eye care should be too.",
+      "lead": "We believe exceptional eye care begins with listening.",
+      "p1": "Every patient has different visual needs, daily activities, concerns, and goals. That's why we take the time to understand what matters to you and explain your options clearly before recommending a vision solution or next step in your care.",
+      "p2": "Whether you're visiting us for a routine eye exam, selecting new eyewear, exploring contact lenses, or seeking care for an eye condition, our goal is to make every experience comfortable, informative, and personal.",
+      "p3": "We want you to leave Tus Ojos Eyecare feeling informed about your eye health, confident in your options, and supported by a team committed to your vision.",
+      "closing": "Your eyes. Your vision. Our commitment."
+    },
+    "numbers": {
+      "heading": "Tus Ojos, in numbers",
+      "yearsValue": "{years} years",
+      "yearsLabel": "In the community since {year}",
+      "patientsLabel": "People helped with their eyewear and vision",
+      "officesLabel": "Neighborhood offices"
+    }
+  },
+  "appointment": {
+    "metaTitle": "Request an appointment",
+    "metaDescription": "Request a visit at Tus Ojos Eyecare in Camden, Philadelphia or Cherry Hill. Our team calls you back to confirm.",
+    "heading": "Request an appointment",
+    "intro": "Tell us where and when works for you. It takes about a minute, and our team will contact you to confirm the exact time.",
+    "emergencyStrong": "This form is not for emergencies.",
+    "emergencyRest": "If you have sudden vision loss, severe eye pain or an eye injury, call 911 or go to the nearest emergency room.",
+    "progress": "Form progress",
+    "optional": "(optional)",
+    "back": "Back",
+    "next": "Continue",
+    "submit": "Send request",
+    "sending": "Sending…",
+    "steps": {
+      "location": "Office",
+      "patient": "Patient",
+      "contact": "Contact",
+      "visit": "Visit",
+      "communication": "Contact me"
+    },
+    "location": {
+      "legend": "Which office works best for you?",
+      "help": "You can be seen at any of our three locations."
+    },
+    "patient": {
+      "legend": "Have you visited us before?",
+      "new": "I'm a new patient",
+      "existing": "I've been here before",
+      "note": "We'll use the information you provide to help our team locate your record."
+    },
+    "contact": {
+      "legend": "How can we reach you?",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "phone": "Mobile phone",
+      "email": "Email"
+    },
+    "visit": {
+      "legend": "What brings you in?",
+      "reason": "Reason for visit",
+      "reasonPlaceholder": "Select a reason",
+      "date": "Preferred date",
+      "time": "Preferred time",
+      "morning": "Morning",
+      "afternoon": "Afternoon",
+      "notes": "Anything else we should know?",
+      "notesWarning": "Please don't include detailed medical information."
+    },
+    "reasons": {
+      "ROUTINE_EXAM": "Routine eye exam",
+      "CONTACT_LENS_EXAM": "Contact lens exam",
+      "EYEWEAR": "Eyewear / glasses",
+      "PEDIATRIC_EXAM": "Children's eye exam",
+      "DRY_EYE": "Dry eye",
+      "CORNEA_CONSULT": "Cornea consultation",
+      "KERATOCONUS": "Keratoconus",
+      "GLAUCOMA_EVAL": "Glaucoma evaluation",
+      "CATARACT_EVAL": "Cataract evaluation",
+      "EYE_PROBLEM": "An eye problem",
+      "OTHER": "Something else"
+    },
+    "comm": {
+      "legend": "How should we contact you?",
+      "CALL": "Call me",
+      "TEXT": "Text me",
+      "EMAIL": "Email me"
+    },
+    "consent": {
+      "transactional": "I agree to receive text messages from Tus Ojos Inc. regarding my appointment request and related customer-service communications at the mobile number provided. Message frequency varies. Message and data rates may apply. Reply STOP to opt out and HELP for help. Consent to receive marketing messages is not required to request an appointment or purchase goods or services.",
+      "marketing": "I would also like to receive occasional promotional text messages from Tus Ojos Inc. about eyewear, offers, and services. Message frequency varies. Message and data rates may apply. Reply STOP to opt out. Consent is optional and is not a condition of purchase or care.",
+      "requiredForText": "To be contacted by text, please agree to receive text messages above.",
+      "noticeStrong": "Your appointment is not confirmed until a Tus Ojos Eyecare team member contacts you.",
+      "noticeRest": "We'll reach out within our business hours, Monday through Saturday."
+    },
+    "errors": {
+      "required": "This field is required.",
+      "tooLong": "This is too long.",
+      "invalidName": "Please use letters only.",
+      "invalidPhone": "Enter a 10-digit US phone number.",
+      "invalidEmail": "Enter a valid email address.",
+      "invalidDate": "Choose a date between today and one year from now.",
+      "smsConsentRequired": "Please agree to receive text messages, or choose another way to be contacted.",
+      "emailRequiredForPreference": "Add your email address so we can reach you that way.",
+      "rateLimited": "You've sent several requests recently. Please call your office directly.",
+      "duplicate": "We already have a recent request from this number. Our team will call you.",
+      "captcha": "We couldn't verify your browser. Please reload the page and try again.",
+      "unknownLocation": "Please choose an office.",
+      "validation": "Please check the highlighted fields.",
+      "network": "We couldn't reach the server. Check your connection and try again.",
+      "server": "Something went wrong on our side. Please call your office directly.",
+      "badRequest": "Something went wrong. Please try again."
+    },
+    "confirmation": {
+      "heading": "We got your request.",
+      "notConfirmedStrong": "Your appointment is not confirmed yet.",
+      "notConfirmedRest": "A Tus Ojos Eyecare team member will contact you to set the exact time. Please don't come to the office until you hear from us.",
+      "whatNext": "What happens next",
+      "next": {
+        "one": "Our front desk reviews your request during business hours, Monday through Saturday, 9:00 AM to 6:00 PM.",
+        "two": "We contact you the way you asked — call, text or email — to confirm a time that works.",
+        "three": "Bring a photo ID, your insurance card if you have one, and your current glasses or contact lenses."
+      },
+      "needSooner": "Need to be seen sooner?",
+      "backHome": "Back to home"
+    }
+  }
+}
