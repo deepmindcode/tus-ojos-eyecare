@@ -9,6 +9,7 @@ import {
   Tag,
   ScrollText,
   Users,
+  KeyRound,
   LogOut,
   Menu,
   X,
@@ -113,10 +114,20 @@ export function AdminShell({
           <p className="text-xs uppercase tracking-wider text-brand-secondary-deep">
             {role.replace("_", " ")}
           </p>
+          {/* Sin permiso: cualquiera del equipo cambia la suya. */}
+          <Link
+            href="/admin/account"
+            onClick={() => setOpen(false)}
+            className="mt-3 flex min-h-11 w-full items-center justify-center gap-2 rounded-full border-2 border-border-subtle text-sm font-bold hover:border-brand-primary hover:text-brand-primary"
+          >
+            <KeyRound className="size-4" aria-hidden="true" />
+            My account
+          </Link>
+
           <button
             type="button"
             onClick={signOut}
-            className="mt-3 flex min-h-11 w-full items-center justify-center gap-2 rounded-full border-2 border-border-subtle text-sm font-bold hover:border-brand-primary hover:text-brand-primary"
+            className="mt-2 flex min-h-11 w-full items-center justify-center gap-2 rounded-full border-2 border-border-subtle text-sm font-bold hover:border-brand-primary hover:text-brand-primary"
           >
             <LogOut className="size-4" aria-hidden="true" />
             Sign out

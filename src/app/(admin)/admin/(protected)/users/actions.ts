@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { after } from "next/server";
-import { createSupabaseAdminClient } from "@/lib/supabase/server";
+import { createSupabaseAdminClient, createSupabaseServerClient } from "@/lib/supabase/server";
 import { getAdminUser, can, ROLES, type Role } from "@/lib/auth/roles";
 import { logAudit } from "@/lib/auth/audit";
 
@@ -14,12 +14,17 @@ import { logAudit } from "@/lib/auth/audit";
  * comprobar el permiso al principio: aquí no hay red de seguridad de RLS.
  */
 
+/** Suspensión larga: Supabase no tiene "para siempre", 100 años basta. */
+const FOREVER = "876000h";
+
 export interface StaffMember {
   readonly userId: string;
   readonly email: string;
   readonly displayName: string;
   readonly roles: readonly string[];
   readonly locations: readonly string[];
+  /** Falso si la cuenta está desactivada y no puede entrar. */
+  readonly active: boolean;
 }
 
 async function requireUserAdmin() {
@@ -33,21 +38,35 @@ export async function listStaff(): Promise<StaffMember[]> {
 
   const supabase = createSupabaseAdminClient();
 
-  const [profiles, roles, locs] = await Promise.all([
+  const [profiles, roles, locs, authUsers] = await Promise.all([
     supabase.from("staff_profiles").select("user_id, display_name, email"),
     supabase.from("user_roles").select("user_id, roles(name)"),
     supabase.from("user_locations").select("user_id, locations(city)"),
+    // El estado de la cuenta vive en Auth, no en nuestras tablas: una
+    // cuenta suspendida no puede entrar aunque conserve sus roles.
+    supabase.auth.admin.listUsers({ page: 1, perPage: 200 }),
   ]);
+
+  const banned = new Set(
+    (authUsers.data?.users ?? [])
+      .filter((u) => {
+        const until = (u as unknown as { banned_until?: string | null }).banned_until;
+        return Boolean(until) && new Date(until!).getTime() > Date.now();
+      })
+      .map((u) => u.id),
+  );
 
   const byUser = new Map<string, StaffMember>();
 
   for (const p of profiles.data ?? []) {
-    byUser.set(p.user_id as string, {
-      userId: p.user_id as string,
+    const id = p.user_id as string;
+    byUser.set(id, {
+      userId: id,
       email: p.email as string,
       displayName: p.display_name as string,
       roles: [],
       locations: [],
+      active: !banned.has(id),
     });
   }
 
@@ -63,7 +82,11 @@ export async function listStaff(): Promise<StaffMember[]> {
     if (m && city) byUser.set(m.userId, { ...m, locations: [...m.locations, city] });
   }
 
-  return [...byUser.values()].sort((a, b) => a.displayName.localeCompare(b.displayName));
+  return [...byUser.values()].sort((a, b) => {
+    // Las desactivadas al final: estorban menos y se ven igual.
+    if (a.active !== b.active) return a.active ? -1 : 1;
+    return a.displayName.localeCompare(b.displayName);
+  });
 }
 
 /**
@@ -162,6 +185,144 @@ export async function setStaffLocations(userId: string, locationSlugs: string[])
   });
 
   revalidatePath("/admin/users");
+  return { ok: true as const };
+}
+
+/**
+ * Activa o desactiva una cuenta.
+ *
+ * Desactivar, no borrar. La auditoría apunta a estos usuarios: borrar a
+ * alguien dejaría registros huérfanos de quién abrió qué expediente, y
+ * eso es justo lo que la auditoría existe para evitar.
+ *
+ * Dos cerrojos: nadie se desactiva a sí mismo (te quedas fuera de tu
+ * propio panel), y no se puede dejar al negocio sin ninguna cuenta de
+ * dirección activa.
+ */
+export async function setStaffActive(userId: string, active: boolean) {
+  const admin = await requireUserAdmin();
+  if (!admin) return { ok: false as const, error: "forbidden" };
+  if (userId === admin.id) return { ok: false as const, error: "cannotSelf" };
+
+  const supabase = createSupabaseAdminClient();
+
+  if (!active) {
+    const staff = await listStaff();
+    const leadershipLeft = staff.filter(
+      (m) =>
+        m.active &&
+        m.userId !== userId &&
+        m.roles.some((r) => r === "OWNER" || r === "SUPER_ADMIN"),
+    );
+    if (leadershipLeft.length === 0) {
+      return { ok: false as const, error: "lastOwner" };
+    }
+  }
+
+  const { error } = await supabase.auth.admin.updateUserById(userId, {
+    ban_duration: active ? "none" : FOREVER,
+  });
+
+  if (error) {
+    console.error("[admin] fallo cambiando estado de la cuenta:", error);
+    return { ok: false as const, error: "server" };
+  }
+
+  after(async () => {
+    await logAudit({
+      userId: admin.id,
+      action: active ? "user.reactivated" : "user.deactivated",
+      objectType: "user",
+      objectId: userId,
+    });
+  });
+
+  revalidatePath("/admin/users");
+  return { ok: true as const };
+}
+
+/**
+ * Pone una contraseña temporal a otra persona.
+ *
+ * Se devuelve para enseñarla UNA vez en pantalla; no se envía por correo
+ * por la misma razón que al crear la cuenta. Cierra todas las sesiones
+ * abiertas de esa persona: si alguien olvidó la contraseña porque le
+ * robaron el portátil, dejar su sesión viva no arreglaría nada.
+ */
+export async function resetStaffPassword(userId: string, newPassword: string) {
+  const admin = await requireUserAdmin();
+  if (!admin) return { ok: false as const, error: "forbidden" };
+  if (newPassword.length < 12) return { ok: false as const, error: "weakPassword" };
+
+  const supabase = createSupabaseAdminClient();
+
+  const { error } = await supabase.auth.admin.updateUserById(userId, {
+    password: newPassword,
+  });
+
+  if (error) {
+    console.error("[admin] fallo reiniciando contraseña:", error);
+    return { ok: false as const, error: "server" };
+  }
+
+  // Fuera todas sus sesiones: la contraseña vieja ya no vale, y una
+  // sesión abierta con la vieja tampoco debería.
+  await supabase.auth.admin.signOut(userId, "global").catch(() => {
+    // Si no hay sesiones que cerrar, no es un error.
+  });
+
+  after(async () => {
+    await logAudit({
+      userId: admin.id,
+      action: "user.password_reset",
+      objectType: "user",
+      objectId: userId,
+    });
+  });
+
+  return { ok: true as const };
+}
+
+/**
+ * Cambiar la contraseña propia. Cualquiera del equipo, no solo dirección.
+ *
+ * Se comprueba la actual antes de cambiarla. Sin eso, una sesión robada
+ * bastaría para quedarse con la cuenta: el ladrón pondría su propia
+ * contraseña y el dueño quedaría fuera.
+ */
+export async function changeOwnPassword(currentPassword: string, newPassword: string) {
+  const user = await getAdminUser();
+  if (!user) return { ok: false as const, error: "forbidden" };
+  if (newPassword.length < 12) return { ok: false as const, error: "weakPassword" };
+  if (currentPassword === newPassword) return { ok: false as const, error: "samePassword" };
+
+  const supabase = await createSupabaseServerClient();
+
+  const { data: me } = await supabase.auth.getUser();
+  const email = me.user?.email;
+  if (!email) return { ok: false as const, error: "forbidden" };
+
+  const { error: checkError } = await supabase.auth.signInWithPassword({
+    email,
+    password: currentPassword,
+  });
+  if (checkError) return { ok: false as const, error: "wrongPassword" };
+
+  const { error } = await supabase.auth.updateUser({ password: newPassword });
+  if (error) {
+    console.error("[admin] fallo cambiando contraseña propia:", error);
+    return { ok: false as const, error: "server" };
+  }
+
+  after(async () => {
+    await logAudit({
+      userId: user.id,
+      action: "user.password_changed",
+      objectType: "user",
+      objectId: user.id,
+    });
+  });
+
   return { ok: true as const };
 }
 
