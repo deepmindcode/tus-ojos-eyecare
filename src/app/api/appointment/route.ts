@@ -7,6 +7,8 @@ import {
   CONSENT_VERSION,
 } from "@/lib/validation/appointment";
 import { validatePromotionForAppointment } from "@/lib/promotions";
+import { notifyNewAppointment } from "@/lib/notify";
+import { after } from "next/server";
 
 /**
  * Recepción de solicitudes de cita.
@@ -204,6 +206,18 @@ export async function POST(req: NextRequest) {
     status: "queued",
   });
   if (notifyError) console.error("[appointment] fallo encolando notificación:", notifyError);
+
+  // El aviso sale DESPUES de responder: la persona no espera a que
+  // Resend conteste, y si el correo falla la cita ya esta guardada.
+  after(async () => {
+    await notifyNewAppointment({
+      locationSlug: data.locationId,
+      isNewPatient: data.patientStatus === "new",
+      preferredDate: data.preferredDate || null,
+      preferredTime: data.preferredTime || null,
+      withDiscount: promotionLabel !== null,
+    });
+  });
 
   return NextResponse.json({ ok: true, id: appointment.id });
 }
