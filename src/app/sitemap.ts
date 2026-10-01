@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
 import { LOCATIONS } from "@/config/site";
+import { listContentSlugs } from "@/lib/content";
 
 /**
  * Sitemap bilingüe.
@@ -42,7 +43,35 @@ function url(pathname: StaticPath, locale: "en" | "es"): string {
   return `${BASE}${prefix}${clean}`;
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+/**
+ * Paginas que viven como archivos en `content/`: un servicio o un
+ * articulo nuevo entra en el sitemap por existir, sin que nadie tenga
+ * que acordarse de anadirlo aqui.
+ */
+async function fromContent(
+  folder: string,
+  enPrefix: string,
+  esPrefix: string,
+  priority: number,
+): Promise<MetadataRoute.Sitemap> {
+  const slugs = await listContentSlugs(folder);
+
+  return slugs.flatMap((slug) => {
+    const en = `${BASE}${enPrefix}/${slug}`;
+    const es = `${BASE}${esPrefix}/${slug}`;
+    const alternates = { languages: { "en-US": en, "es-US": es } };
+
+    return [en, es].map((u) => ({
+      url: u,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority,
+      alternates,
+    }));
+  });
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = [];
 
   for (const pathname of INDEXABLE) {
@@ -76,6 +105,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       });
     }
   }
+
+  // Las nueve paginas de servicio y los articulos de salud visual. El
+  // slug es el mismo en los dos idiomas; lo que cambia es el tramo.
+  entries.push(
+    ...(await fromContent("services", "/services", "/es/servicios", 0.85)),
+    ...(await fromContent("eye-health", "/eye-health", "/es/salud-visual", 0.6)),
+  );
 
   return entries;
 }
