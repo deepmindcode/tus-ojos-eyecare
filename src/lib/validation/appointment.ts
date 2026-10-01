@@ -118,6 +118,18 @@ export const appointmentSchema = z
      */
     startedAt: z.number().optional(),
 
+    /**
+     * Slug de la promoción que trajo al visitante, si vino de un popup.
+     * El texto del descuento NO viaja en el formulario: se resuelve en
+     * el servidor contra la base. Editar la URL no crea un descuento.
+     */
+    promo: z
+      .string()
+      .trim()
+      .max(80)
+      .regex(/^[a-z0-9-]*$/, "invalidPromo")
+      .optional(),
+
     turnstileToken: z.string().optional(),
   })
   .refine(

@@ -52,7 +52,7 @@ export default async function AppointmentsPage({
   let query = supabase
     .from("appointment_requests")
     .select(
-      "id, first_name, last_name, phone, email, preferred_date, preferred_time, reason, notes, communication_preference, sms_transactional_consent, patient_status, status, created_at, location_id, locations(slug, city)",
+      "id, first_name, last_name, phone, email, preferred_date, preferred_time, reason, notes, promotion_label, communication_preference, sms_transactional_consent, patient_status, status, created_at, location_id, locations(slug, city)",
     )
     .gte("created_at", since.toISOString())
     .order("created_at", { ascending: false })
@@ -180,6 +180,8 @@ export default async function AppointmentsPage({
             preferredDate: (r.preferred_date as string) ?? null,
             preferredTime: (r.preferred_time as string) ?? null,
             notes: (r.notes as string) ?? null,
+            // El descuento que pidió, copiado al momento de la solicitud.
+            promotionLabel: (r.promotion_label as string) ?? null,
             commPref: r.communication_preference as string,
             smsConsent: Boolean(r.sms_transactional_consent),
             status: r.status as string,

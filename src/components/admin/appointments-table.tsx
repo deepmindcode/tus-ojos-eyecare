@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { ChevronDown, Phone, MessageSquare, Mail, Loader2, Clock } from "lucide-react";
+import { ChevronDown, Phone, MessageSquare, Mail, Loader2, Clock, Tag } from "lucide-react";
 import {
   updateAppointmentStatus,
   getAppointmentActivity,
@@ -19,6 +19,13 @@ export interface AppointmentRow {
   readonly preferredDate: string | null;
   readonly preferredTime: string | null;
   readonly notes: string | null;
+  /**
+   * Descuento que este paciente está pidiendo, si llegó desde una
+   * promoción. Es una copia del texto en el momento de la solicitud: si
+   * la promoción se edita después, esta cita sigue diciendo qué se le
+   * prometió a ESTA persona.
+   */
+  readonly promotionLabel: string | null;
   readonly commPref: string;
   readonly smsConsent: boolean;
   readonly status: string;
@@ -193,6 +200,15 @@ export function AppointmentsTable({
                 </span>
               )}
 
+              {/* Visible sin abrir la ficha: quien llama necesita saber
+                  que hay un descuento en juego antes de marcar. */}
+              {r.promotionLabel && (
+                <span className="inline-flex items-center gap-1 rounded bg-brand-primary-tint px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wider text-brand-primary">
+                  <Tag className="size-3" aria-hidden="true" />
+                  discount
+                </span>
+              )}
+
               {r.stale && (
                 <span className="rounded bg-[#FDF0F0] px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wider text-error">
                   needs follow-up
@@ -269,6 +285,17 @@ export function AppointmentsTable({
                       <p className="mt-2 rounded-xl bg-surface p-3 text-sm text-text-secondary">
                         {r.notes}
                       </p>
+                    )}
+
+                    {/* El texto exacto del descuento, tal como lo vio el
+                        paciente. Es lo que recepción lee en voz alta. */}
+                    {r.promotionLabel && (
+                      <div className="mt-2 rounded-xl border-l-[3px] border-brand-secondary bg-surface p-3">
+                        <span className="block text-xs font-bold uppercase tracking-wider text-brand-secondary-deep">
+                          Discount requested
+                        </span>
+                        <strong className="mt-1 block text-sm">{r.promotionLabel}</strong>
+                      </div>
                     )}
                   </div>
                 </div>

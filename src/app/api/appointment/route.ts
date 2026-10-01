@@ -6,6 +6,7 @@ import {
   normalizePhone,
   CONSENT_VERSION,
 } from "@/lib/validation/appointment";
+import { validatePromotionForAppointment } from "@/lib/promotions";
 
 /**
  * Recepción de solicitudes de cita.
@@ -121,6 +122,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "unknownLocation" }, { status: 422 });
   }
 
+  // La promoción se valida contra la base: el descuento que se guarda
+  // es el que dice la base, nunca el que venga en la URL. Y si la promo
+  // era de una sola sede y la cita es de otra, no hay descuento.
+  const { promotionId, promotionLabel } = await validatePromotionForAppointment(
+    data.promo,
+    data.locationId,
+    data.locale,
+  );
+
   const consentAt = new Date().toISOString();
 
   const { data: appointment, error: insertError } = await supabase
@@ -135,6 +145,8 @@ export async function POST(req: NextRequest) {
       preferred_date: data.preferredDate || null,
       preferred_time: data.preferredTime || null,
       reason: data.reason,
+      promotion_id: promotionId,
+      promotion_label: promotionLabel,
       notes: data.notes || null,
       communication_preference: data.communicationPreference,
       sms_transactional_consent: data.smsTransactionalConsent,

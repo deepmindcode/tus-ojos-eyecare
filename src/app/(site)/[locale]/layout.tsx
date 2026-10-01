@@ -10,6 +10,7 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { MobileCTA } from "@/components/layout/mobile-cta";
 import { AccessibilityPanel } from "@/components/accessibility/accessibility-panel";
+import { PromotionPopup } from "@/components/promotions/promotion-popup";
 import "../../globals.css";
 
 /**
@@ -96,6 +97,7 @@ export default async function SiteLayout({
           <Footer />
           <MobileCTA />
           <AccessibilityPanel />
+          <PromotionPopup />
         </NextIntlClientProvider>
       </body>
     </html>

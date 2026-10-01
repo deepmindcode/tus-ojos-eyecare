@@ -32,7 +32,20 @@ const FIELDS_BY_STEP: Record<number, (keyof AppointmentInput)[]> = {
   4: ["communicationPreference", "smsTransactionalConsent"],
 };
 
-export function AppointmentForm() {
+interface Props {
+  /**
+   * Slug de la promoción, si la persona llegó desde un popup.
+   *
+   * El `| undefined` explícito es por `exactOptionalPropertyTypes`: con
+   * esa opción, "opcional" y "puede ser undefined" no son lo mismo, y la
+   * página pasa undefined cuando no hay promoción.
+   */
+  readonly promoSlug?: string | undefined;
+  /** Si la promo es de una sola sede, esa sede queda fijada. */
+  readonly lockedLocationSlug?: string | undefined;
+}
+
+export function AppointmentForm({ promoSlug, lockedLocationSlug }: Props = {}) {
   const t = useTranslations("appointment");
   const te = useTranslations("appointment.errors");
   const locale = useLocale() as "en" | "es";
@@ -63,6 +76,17 @@ export function AppointmentForm() {
     mode: "onTouched",
     defaultValues: {
       locale,
+      // Se esparcen en vez de asignarse: con `exactOptionalPropertyTypes`
+      // pasar undefined a un campo opcional es un error de tipos. O va
+      // con valor, o no va.
+      //
+      // `promo` no tiene campo visible: viaja en los valores del
+      // formulario y el servidor lo resuelve contra la base.
+      ...(promoSlug ? { promo: promoSlug } : {}),
+      // Promoción de una sola sede: viene ya elegida. Una oferta de
+      // Camden que acaba en una cita de Cherry Hill genera una discusión
+      // en el mostrador que nadie quiere tener.
+      ...(lockedLocationSlug ? { locationId: lockedLocationSlug } : {}),
       confirmSubscription: false,
       smsTransactionalConsent: false,
       smsMarketingConsent: false,
@@ -184,7 +208,9 @@ export function AppointmentForm() {
             <legend className="font-display text-xl font-bold">{t("location.legend")}</legend>
             <p className="mt-2 text-sm text-text-secondary">{t("location.help")}</p>
             <div className="mt-5 grid gap-3">
-              {LOCATIONS.filter((l) => l.active).map((l) => (
+              {LOCATIONS.filter(
+                (l) => l.active && (!lockedLocationSlug || l.slug === lockedLocationSlug),
+              ).map((l) => (
                 <label
                   key={l.id}
                   className="flex cursor-pointer items-start gap-3 rounded-xl border border-border-subtle bg-surface p-4 has-checked:border-brand-primary has-checked:bg-brand-primary-tint"
@@ -206,6 +232,13 @@ export function AppointmentForm() {
                 </label>
               ))}
             </div>
+            {lockedLocationSlug && (
+              <p className="mt-4 rounded-xl border-l-[3px] border-brand-secondary bg-brand-secondary-tint p-3 text-sm">
+                {locale === "es"
+                  ? "Esta promoción es válida solo en esta oficina."
+                  : "This offer is valid at this office only."}
+              </p>
+            )}
             {err("locationId")}
           </fieldset>
         )}

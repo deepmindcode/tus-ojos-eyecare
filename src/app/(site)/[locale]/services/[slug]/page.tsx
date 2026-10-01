@@ -1,0 +1,64 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { setRequestLocale } from "next-intl/server";
+import { loadContent } from "@/lib/content";
+import { ContentPageBody } from "@/components/content/content-page";
+import { Link } from "@/i18n/navigation";
+
+/**
+ * Pagina de un servicio. El slug es el nombre del archivo en
+ * `content/services/`, igual en los dos idiomas: la URL en espanol
+ * cambia el tramo (/servicios/) pero no el slug del servicio.
+ *
+ * Sin `generateStaticParams` a proposito: los servicios se escriben de
+ * a poco y una lista fija obligaria a recordar actualizarla. Se lee del
+ * disco en la peticion y Vercel lo cachea.
+ */
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const isES = locale === "es";
+  const content = await loadContent(`services/${slug}`, locale);
+
+  if (!content) return { title: isES ? "Servicio" : "Service" };
+
+  const en = `/services/${slug}`;
+  const es = `/es/servicios/${slug}`;
+
+  return {
+    title: content.title || undefined,
+    description: content.description || undefined,
+    alternates: {
+      canonical: isES ? es : en,
+      languages: { "en-US": en, "es-US": es, "x-default": en },
+    },
+  };
+}
+
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}) {
+  const { locale, slug } = await params;
+  setRequestLocale(locale);
+
+  const content = await loadContent(`services/${slug}`, locale);
+  if (!content) notFound();
+
+  return (
+    <ContentPageBody
+      content={content}
+      locale={locale}
+      breadcrumb={
+        <Link href="/services" className="hover:text-brand-primary">
+          {locale === "es" ? "Servicios" : "Services"}
+        </Link>
+      }
+    />
+  );
+}
