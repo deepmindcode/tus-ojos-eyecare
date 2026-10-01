@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import { X, Tag } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { consentPending } from "@/components/layout/cookie-notice";
 
 /**
  * Popup de promoción.
@@ -111,6 +112,9 @@ export function PromotionPopup() {
 
   useEffect(() => {
     if (blocked) return;
+    // Mientras el aviso de cookies este en pantalla no apilamos una
+    // segunda tarjeta encima: en movil no caben las dos.
+    if (consentPending()) return;
     let cancelled = false;
 
     async function load() {

@@ -4,6 +4,8 @@ import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { loadContent } from "@/lib/content";
 import { ContentPageBody } from "@/components/content/content-page";
+import { JsonLd } from "@/components/seo/json-ld";
+import { articleSchema } from "@/lib/schema";
 
 /**
  * Articulo de salud visual. El slug es el nombre del archivo, igual en
@@ -44,14 +46,24 @@ export default async function ArticlePage({
   if (!content) notFound();
 
   return (
-    <ContentPageBody
-      content={content}
-      locale={locale}
-      breadcrumb={
-        <Link href="/eye-health" className="hover:text-brand-primary">
-          {locale === "es" ? "Salud visual" : "Eye health"}
-        </Link>
-      }
-    />
+    <>
+      <JsonLd
+        data={articleSchema({
+          title: content.title.split(" | ")[0]!,
+          description: content.description,
+          path: locale === "es" ? `/es/salud-visual/${slug}` : `/eye-health/${slug}`,
+          locale,
+        })}
+      />
+      <ContentPageBody
+        content={content}
+        locale={locale}
+        breadcrumb={
+          <Link href="/eye-health" className="hover:text-brand-primary">
+            {locale === "es" ? "Salud visual" : "Eye health"}
+          </Link>
+        }
+      />
+    </>
   );
 }

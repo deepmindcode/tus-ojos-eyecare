@@ -3,6 +3,8 @@ import { setRequestLocale } from "next-intl/server";
 import { MapPin, Phone, Clock } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { LOCATIONS } from "@/config/site";
+import { JsonLd } from "@/components/seo/json-ld";
+import { locationListSchema } from "@/lib/schema";
 
 /**
  * Indice de sedes. Se construye desde `LOCATIONS` y no desde markdown:
@@ -47,6 +49,7 @@ export default async function LocationsPage({
 
   return (
     <section className="py-12 lg:py-16">
+      <JsonLd data={locationListSchema(locale)} />
       <div className="mx-auto w-[92%] max-w-[1200px]">
         <h1 className="font-display text-[clamp(1.9rem,4vw,2.6rem)] font-extrabold leading-tight tracking-[-0.03em] text-brand-primary">
           {isES ? "Nuestras oficinas" : "Our offices"}

@@ -5,6 +5,8 @@ import { Link } from "@/i18n/navigation";
 import { LOCATIONS } from "@/config/site";
 import { loadContent } from "@/lib/content";
 import { ContentPageBody } from "@/components/content/content-page";
+import { JsonLd } from "@/components/seo/json-ld";
+import { opticianSchema, breadcrumbSchema } from "@/lib/schema";
 
 /**
  * Pagina de una sede.
@@ -59,15 +61,36 @@ export default async function LocationPage({
   const content = await loadContent(`locations/${location.slug}`, locale);
   if (!content) notFound();
 
+  const isES = locale === "es";
+
   return (
-    <ContentPageBody
-      content={content}
-      locale={locale}
-      breadcrumb={
-        <Link href="/locations" className="hover:text-brand-primary">
-          {locale === "es" ? "Oficinas" : "Offices"}
-        </Link>
-      }
-    />
+    <>
+      {/* Negocio local: es lo que hace que la oficina aparezca en el mapa
+          con su dirección, su teléfono y su horario. */}
+      <JsonLd data={opticianSchema(location, locale)} />
+      <JsonLd
+        data={breadcrumbSchema([
+          {
+            name: isES ? "Oficinas" : "Offices",
+            path: isES ? "/es/ubicaciones" : "/locations",
+          },
+          {
+            name: location.city,
+            path: isES
+              ? `/es/ubicaciones/${location.slugES}`
+              : `/locations/${location.slug}`,
+          },
+        ])}
+      />
+      <ContentPageBody
+        content={content}
+        locale={locale}
+        breadcrumb={
+          <Link href="/locations" className="hover:text-brand-primary">
+            {isES ? "Oficinas" : "Offices"}
+          </Link>
+        }
+      />
+    </>
   );
 }

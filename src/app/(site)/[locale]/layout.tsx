@@ -11,6 +11,9 @@ import { Footer } from "@/components/layout/footer";
 import { MobileCTA } from "@/components/layout/mobile-cta";
 import { AccessibilityPanel } from "@/components/accessibility/accessibility-panel";
 import { PromotionPopup } from "@/components/promotions/promotion-popup";
+import { CookieNotice } from "@/components/layout/cookie-notice";
+import { JsonLd } from "@/components/seo/json-ld";
+import { organizationSchema } from "@/lib/schema";
 import "../../globals.css";
 
 /**
@@ -98,6 +101,10 @@ export default async function SiteLayout({
           <MobileCTA />
           <AccessibilityPanel />
           <PromotionPopup />
+          <CookieNotice />
+          {/* La empresa, una vez por pagina: es lo que une las tres
+              sedes bajo un mismo negocio a ojos de Google. */}
+          <JsonLd data={organizationSchema(locale)} />
         </NextIntlClientProvider>
       </body>
     </html>
