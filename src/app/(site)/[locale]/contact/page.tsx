@@ -3,12 +3,12 @@ import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { loadContent } from "@/lib/content";
 import { ContentPageBody } from "@/components/content/content-page";
+import { ContactForm } from "@/components/forms/contact-form";
 
 /**
- * Pagina de contacto. El aviso de urgencias vive en el markdown.
- *
- * El texto vive en `content/contact.{en,es}.md`. La pagina solo lo coloca:
- * asi la oficina puede corregir una frase sin tocar codigo.
+ * Pagina de contacto. El texto (direcciones, telefonos, aviso de
+ * urgencias) vive en `content/contact.{en,es}.md`; el formulario va
+ * debajo, para que quien solo quiere el telefono lo vea primero.
  */
 
 export async function generateMetadata({
@@ -34,7 +34,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({
+export default async function ContactPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
@@ -45,5 +45,15 @@ export default async function Page({
   const content = await loadContent("contact", locale);
   if (!content) notFound();
 
-  return <ContentPageBody content={content} locale={locale} />;
+  return (
+    <>
+      <ContentPageBody content={content} locale={locale} />
+
+      <section className="pb-16">
+        <div className="mx-auto w-[92%] max-w-[760px] rounded-2xl border border-border-subtle bg-surface p-6 sm:p-8">
+          <ContactForm locale={locale} />
+        </div>
+      </section>
+    </>
+  );
 }

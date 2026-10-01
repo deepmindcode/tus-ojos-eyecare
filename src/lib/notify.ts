@@ -67,6 +67,54 @@ export interface AppointmentNotice {
   readonly withDiscount: boolean;
 }
 
+/**
+ * Aviso de un mensaje del formulario de contacto.
+ *
+ * Igual que con las citas: ni el nombre ni el correo de quien escribe
+ * viajan en el aviso. Solo el tipo de consulta y la oficina, que es lo
+ * que permite decidir quien lo atiende.
+ */
+export async function notifyNewMessage(notice: {
+  readonly office: string | null;
+  readonly subject: string;
+}): Promise<void> {
+  const base = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://tusojoseyecare.com").replace(
+    /\/$/,
+    "",
+  );
+  const url = `${base}/admin/inbox`;
+  const topic = notice.subject.replace(/_/g, " ").toLowerCase();
+  const where = notice.office ? ` — ${notice.office}` : "";
+
+  const text = [
+    `Entró un mensaje por el formulario de contacto${where}.`,
+    "",
+    `- Tema: ${topic}`,
+    ...(notice.office ? [`- Oficina: ${notice.office}`] : []),
+    "",
+    `Léelo y contéstalo en el panel: ${url}`,
+    "",
+    "Este aviso no incluye el nombre ni el correo de quien escribió.",
+  ].join("\n");
+
+  const html = `
+    <div style="font-family:system-ui,-apple-system,'Segoe UI',sans-serif;max-width:480px">
+      <h2 style="color:#800080;margin:0 0 4px">Nuevo mensaje de contacto</h2>
+      <p style="color:#555;margin:0 0 20px">${topic}${where}</p>
+      <p style="margin:24px 0">
+        <a href="${url}"
+           style="background:#800080;color:#fff;text-decoration:none;padding:12px 22px;border-radius:999px;font-weight:bold;display:inline-block">
+          Leer en el panel
+        </a>
+      </p>
+      <p style="color:#777;font-size:13px;line-height:1.6;margin-top:28px">
+        Este aviso no incluye el nombre ni el correo de quien escribió.
+      </p>
+    </div>`;
+
+  await send(`Nuevo mensaje de contacto${where}`, text, html);
+}
+
 export async function notifyNewAppointment(notice: AppointmentNotice): Promise<void> {
   const office =
     LOCATIONS.find((l) => l.slug === notice.locationSlug)?.city ?? notice.locationSlug;
