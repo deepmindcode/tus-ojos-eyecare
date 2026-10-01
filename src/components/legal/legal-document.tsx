@@ -96,14 +96,21 @@ export async function LegalDocument({
 }
 
 /**
- * Aviso de revisión pendiente.
+ * Aviso de revisión pendiente — SOLO EN DESARROLLO.
  *
- * Se muestra mientras los documentos no hayan pasado por un abogado. NO
- * lo quites porque quede feo: publicar políticas sin revisar y sin
- * advertirlo es peor que la molestia visual. Se elimina cuando el
- * abogado firme, y en ese momento se pone la fecha de revisión.
+ * Es un recordatorio para el equipo, no un aviso para el paciente.
+ *
+ * No se publica por dos razones. Un cartel de "borrador" en una política
+ * pública no da ninguna protección legal: lo que protege es que un
+ * abogado la revise. Y declarar que tus propios términos no son
+ * definitivos puede debilitarlos si algún día hay que hacerlos valer.
+ *
+ * Cuando el abogado firme, se borra esta función y se pone la fecha de
+ * revisión en cada documento.
  */
 export function LegalReviewNotice({ locale }: { readonly locale: string }) {
+  if (process.env.NODE_ENV === "production") return null;
+
   const isES = locale === "es";
   return (
     <p className="mt-6 flex gap-3 rounded-r-xl border-l-4 border-warning bg-[#FBF0DC] p-4 text-sm">
