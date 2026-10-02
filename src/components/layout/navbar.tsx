@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { ChevronDown, Menu, X, MessageSquare, Plus, Minus } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { LogoLockup } from "@/components/brand/logo";
@@ -19,6 +19,7 @@ import { LOCATIONS } from "@/config/site";
 export function Navbar() {
   const t = useTranslations("nav");
   const tc = useTranslations("common");
+  const isES = useLocale() === "es";
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
@@ -94,6 +95,15 @@ export function Navbar() {
         ref={navRef}
         className="sticky top-0 z-50 border-b border-border-subtle bg-surface/95 backdrop-blur"
       >
+        {/* El idioma es el primer filtro de mucha gente de la zona.
+            En la cabecera sale en todas las paginas sin tener que buscarlo. */}
+        <div className="bg-brand-secondary-deep text-white">
+          <p className="mx-auto w-[92%] max-w-[1200px] py-1.5 text-center text-[0.8rem] font-semibold">
+            {isES
+              ? "Se habla español · atención en español e inglés"
+              : "Se habla español · we serve patients in Spanish and English"}
+          </p>
+        </div>
         <div className="mx-auto flex w-[92%] max-w-[1200px] items-center justify-between gap-5 py-3">
           <Link href="/" className="shrink-0" aria-label="Tus Ojos Eyecare">
             <LogoLockup alt="" priority />
