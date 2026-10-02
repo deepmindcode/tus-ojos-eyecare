@@ -52,6 +52,7 @@ export function opticianSchema(l: Location, locale: string): Json {
     "@type": "Optician",
     "@id": absolute(path),
     name: `${BRAND.name} — ${l.city}`,
+    image: absolute("/brand/logo-lockup.png"),
     url: absolute(path),
     telephone: l.phoneE164,
     address: {
@@ -102,6 +103,7 @@ export function organizationSchema(locale: string): Json {
     name: BRAND.name,
     url: isES ? absolute("/es") : siteUrl(),
     logo: absolute("/brand/logo-lockup.png"),
+    image: absolute("/brand/logo-lockup.png"),
     foundingDate: String(BRAND.foundedYear),
     slogan: isES ? BRAND.tagline.es : BRAND.tagline.en,
     // La direccion de la empresa es la de la sede principal, leida de
@@ -208,7 +210,6 @@ export function serviceSchema(opts: {
     description: opts.description,
     serviceType: opts.name,
     url: absolute(opts.path),
-    inLanguage: opts.locale === "es" ? "es-US" : "en-US",
     provider: { "@id": `${siteUrl()}/#organization` },
     areaServed: active.map((l) => ({
       "@type": "City",
