@@ -42,3 +42,6 @@ next-env.d.ts
 
 .vercel
 .env*
+
+# scripts de parcheo puntuales
+*.ps1
