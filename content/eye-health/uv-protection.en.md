@@ -3,6 +3,7 @@ page: eye-health/uv-protection
 locale: en
 title: "Sun protection for your eyes | Tus Ojos Eyecare"
 description: "Why UV protection matters in winter too, and what to look for when choosing sunglasses."
+answer: "Ultraviolet light builds up in the eye over a lifetime and is linked to cataracts, pterygium and macular damage. A lens that blocks UVA and UVB protects more than one that is merely dark: a dark tint is not protection. Children need it as much as adults, or more."
 verify: []
 ---
 

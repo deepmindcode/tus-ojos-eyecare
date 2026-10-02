@@ -3,6 +3,7 @@ page: services/red-eye-and-irritation
 locale: es
 title: "Ojos Rojos e Irritación | Tus Ojos Eyecare"
 description: "Evaluación oportuna del enrojecimiento, la irritación o la molestia persistente en los ojos."
+answer: "El ojo rojo casi nunca es grave, pero conviene saber de qué tipo es: alergia, infección, ojo seco o un cuerpo extraño se ven parecidos y se tratan distinto. Si hay dolor fuerte, pérdida de visión o sensibilidad a la luz, debe verse el mismo día. Atendemos irritación ocular con cita previa."
 verify: []
 ---
 

@@ -3,6 +3,7 @@ page: eye-health/eye-exam-frequency
 locale: es
 title: "Cada cuánto hay que examinarse la vista | Tus Ojos Eyecare"
 description: "Con qué frecuencia conviene un examen de la vista según la edad y los factores de riesgo."
+answer: "Un adulto sano y sin síntomas debería examinarse la vista cada uno o dos años. Cada año si usa lentes, si tiene más de 60, si tiene diabetes o presión alta, o si en su familia hay glaucoma. Los niños, una vez al año desde antes de empezar la escuela."
 verify: []
 ---
 

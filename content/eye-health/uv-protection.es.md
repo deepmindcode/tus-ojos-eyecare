@@ -3,6 +3,7 @@ page: eye-health/uv-protection
 locale: es
 title: "Protección solar para los ojos | Tus Ojos Eyecare"
 description: "Por qué la protección ultravioleta importa también en invierno y qué mirar al elegir lentes de sol."
+answer: "Los rayos ultravioleta se acumulan en el ojo a lo largo de la vida y se asocian con cataratas, pterigio y daño en la mácula. Un lente que bloquee UVA y UVB protege más que uno simplemente oscuro: el color no indica protección. Los niños la necesitan tanto como los adultos o más."
 verify: []
 ---
 

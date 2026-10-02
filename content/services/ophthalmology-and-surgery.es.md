@@ -3,6 +3,7 @@ page: services/ophthalmology-and-surgery
 locale: es
 title: "Oftalmología y Consultas Quirúrgicas | Tus Ojos Eyecare"
 description: "Evaluación para cataratas, retinopatía diabética, glaucoma y ptosis. Consulta previa con un médico con licencia en Camden, Filadelfia y Cherry Hill."
+answer: "Sí, atendemos consultas de cataratas, retinopatía diabética, glaucoma y párpado caído, siempre con cita previa. La evaluación se hace en nuestras sedes y el procedimiento, si hace falta, lo realiza un médico con licencia. En la consulta se le explica qué se encontró y cuáles son las opciones."
 verify: []
 ---
 

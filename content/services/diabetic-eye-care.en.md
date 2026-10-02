@@ -3,6 +3,7 @@ page: services/diabetic-eye-care
 locale: en
 title: "Diabetic Eye Care | Tus Ojos Eyecare"
 description: "Annual eye health evaluations for people with diabetes, coordinated with your medical care."
+answer: "Diabetes can damage the blood vessels of the retina for years without any symptom, and by the time vision changes the damage is already done. That is why everyone with diabetes needs a dilated retinal exam every year, even with good vision. We send results to your physician if you authorize it."
 verify: []
 ---
 

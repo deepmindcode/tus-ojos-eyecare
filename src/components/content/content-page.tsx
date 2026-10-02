@@ -27,6 +27,13 @@ interface Props {
 export function ContentPageBody({ content, locale, breadcrumb }: Props) {
   const isES = locale === "es";
 
+  // El H1 sale del cuerpo para poder colocar la respuesta directa justo
+  // debajo. Titulo -> respuesta -> contexto: ese es el orden que extrae
+  // un motor de respuestas, y el que lee comodo una persona con prisa.
+  const h1 = /^#[ \t]+(.+)$/m.exec(content.body);
+  const heading = h1?.[1]?.trim() ?? "";
+  const rest = h1 ? content.body.slice(h1.index + h1[0].length) : content.body;
+
   return (
     <article className="mx-auto w-[92%] max-w-[760px] py-12 lg:py-16">
       {breadcrumb && (
@@ -54,7 +61,19 @@ export function ContentPageBody({ content, locale, breadcrumb }: Props) {
         </div>
       )}
 
-      <div className="[&>*:first-child]:mt-0">
+      {heading && (
+        <h1 className="mt-0 font-display text-3xl font-extrabold leading-tight tracking-tight text-brand-primary sm:text-4xl">
+          {heading}
+        </h1>
+      )}
+
+      {content.answer && (
+        <p className="mt-5 border-l-4 border-brand-secondary bg-brand-primary-tint px-5 py-4 text-[1.125rem] font-medium leading-relaxed text-text-primary">
+          {content.answer}
+        </p>
+      )}
+
+      <div className={heading ? "" : "[&>*:first-child]:mt-0"}>
         <Markdown
           remarkPlugins={[remarkGfm]}
           components={{
@@ -121,7 +140,7 @@ export function ContentPageBody({ content, locale, breadcrumb }: Props) {
             hr: () => <hr className="mt-10 border-border-subtle" />,
           }}
         >
-          {content.body}
+          {rest}
         </Markdown>
       </div>
 
@@ -137,6 +156,11 @@ export function ContentPageBody({ content, locale, breadcrumb }: Props) {
             : "Send a request and we'll call you to arrange the day and time."}
         </p>
 
+        <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-surface px-4 py-1.5 text-[0.85rem] font-bold text-brand-secondary-deep">
+          {isES
+            ? "Se habla español · atención en español e inglés"
+            : "Se habla español · we serve patients in Spanish and English"}
+        </p>
         <Link
           href="/appointment"
           className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-brand-primary px-6 font-bold text-white hover:bg-brand-primary-deep"

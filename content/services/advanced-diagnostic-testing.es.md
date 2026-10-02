@@ -3,6 +3,7 @@ page: services/advanced-diagnostic-testing
 locale: es
 title: "Pruebas y Diagnóstico Visual Avanzado | Tus Ojos"
 description: "Pruebas de apoyo para la detección temprana de condiciones que afectan la visión."
+answer: "Las pruebas diagnósticas avanzadas son estudios de imagen y de campo visual que muestran el interior del ojo con un detalle que un examen de rutina no alcanza. Sirven para detectar glaucoma, degeneración macular o daño por diabetes antes de que usted note síntomas. Se realizan en nuestras sedes con cita previa."
 verify: []
 ---
 

@@ -3,6 +3,7 @@ page: eye-health/diabetes-and-vision
 locale: en
 title: "Diabetes and your vision | Tus Ojos Eyecare"
 description: "How diabetes affects the eyes and why an annual check matters even when your vision is good."
+answer: "Diabetes affects sight by damaging the blood vessels of the retina, painlessly and without warning. Blurry vision that comes and goes usually tracks blood sugar; permanent loss arrives once retinopathy is advanced. A yearly dilated exam is what catches it in time."
 verify: []
 ---
 

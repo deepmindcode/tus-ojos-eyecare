@@ -3,6 +3,7 @@ page: services/prescription-sunglasses
 locale: en
 title: "Prescription Sunglasses | Tus Ojos Eyecare"
 description: "Sunglasses with your prescription and full UV protection. Cartier, Ray-Ban, Oakley, Prada, Miu Miu, Yves Saint Laurent and Nike."
+answer: "Prescription sunglasses put your correction into a lens that blocks UVA and UVB rays. We make them polarized for driving, in Ray-Ban, Oakley, Prada, Cartier and other frames. If your prescription is current you can bring it in."
 verify: []
 ---
 

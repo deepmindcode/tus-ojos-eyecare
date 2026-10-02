@@ -3,6 +3,7 @@ page: eye-health/screen-eye-strain
 locale: es
 title: "Fatiga visual por pantallas | Tus Ojos Eyecare"
 description: "Por qué cansan las pantallas, qué medidas funcionan y cuándo conviene una consulta."
+answer: "La fatiga visual por pantallas viene de parpadear menos y de enfocar a la misma distancia durante horas, no de la luz azul. Da ojos secos, visión borrosa al final del día y dolor de cabeza. La regla 20-20-20 ayuda: cada 20 minutos, mire algo a 20 pies durante 20 segundos."
 verify: []
 ---
 

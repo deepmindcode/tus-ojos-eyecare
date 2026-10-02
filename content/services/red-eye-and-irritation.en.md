@@ -3,6 +3,7 @@ page: services/red-eye-and-irritation
 locale: en
 title: "Red Eye and Irritation | Tus Ojos Eyecare"
 description: "Prompt evaluation of eye redness, irritation, or persistent discomfort."
+answer: "A red eye is rarely serious, but it matters which kind it is: allergy, infection, dry eye and a foreign body look alike and are treated differently. Severe pain, vision loss or light sensitivity should be seen the same day. We see eye irritation by appointment."
 verify: []
 ---
 

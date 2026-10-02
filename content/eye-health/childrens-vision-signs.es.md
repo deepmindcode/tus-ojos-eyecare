@@ -3,6 +3,7 @@ page: eye-health/childrens-vision-signs
 locale: es
 title: "Señales de que un niño no ve bien | Tus Ojos Eyecare"
 description: "Qué observar en casa y en la escuela cuando un niño puede tener un problema de visión."
+answer: "Un niño que no ve bien rara vez lo dice. Las señales son acercarse mucho al papel o a la pantalla, entrecerrar los ojos, taparse un ojo para ver, dolores de cabeza al final del día y bajar el rendimiento en la escuela. Cualquiera de ellas es motivo suficiente para un examen."
 verify: []
 ---
 

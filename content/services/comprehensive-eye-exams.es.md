@@ -3,6 +3,7 @@ page: services/comprehensive-eye-exams
 locale: es
 title: "Examen General de la Vista | Tus Ojos Eyecare"
 description: "Examen completo de la vista en Camden, Filadelfia y Cherry Hill. Graduación exacta y revisión de la salud del ojo."
+answer: "El examen general de la vista mide cuánto ve usted y además revisa la salud del ojo por dentro: retina, nervio óptico y presión ocular. Dura entre 30 y 45 minutos y termina con su graduación actualizada si la necesita. Se atiende con cita previa en nuestras tres sedes."
 verify: []
 ---
 

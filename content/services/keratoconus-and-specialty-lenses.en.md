@@ -3,6 +3,7 @@ page: services/keratoconus-and-specialty-lenses
 locale: en
 title: "Keratoconus and Specialty Lenses | Tus Ojos Eyecare"
 description: "Scleral and specialty lens fittings for keratoconus and irregular corneas. Camden, Philadelphia and Cherry Hill."
+answer: "Keratoconus reshapes the cornea so ordinary lenses stop correcting vision well. Scleral and tricurve lenses rest on the white of the eye and create a regular surface, which usually restores sharpness. Fitting takes several measurements and follow-up visits."
 verify: []
 ---
 

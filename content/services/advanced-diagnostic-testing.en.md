@@ -3,6 +3,7 @@ page: services/advanced-diagnostic-testing
 locale: en
 title: "Advanced Diagnostic Eye Testing | Tus Ojos"
 description: "Supporting tests for the early detection of conditions that affect vision."
+answer: "Advanced diagnostic testing uses imaging and visual field studies to see inside the eye in a detail a routine exam cannot reach. It finds glaucoma, macular degeneration and diabetic damage before you notice any symptom. Testing is done at our offices by appointment."
 verify: []
 ---
 

@@ -3,6 +3,7 @@ page: eye-health/dry-eye
 locale: en
 title: "Dry eye | Tus Ojos Eyecare"
 description: "Common causes of dryness, burning or grittiness, and when it is worth having it evaluated."
+answer: "Dry eye causes burning, a gritty feeling, vision that clears when you blink and, oddly, watering. It happens when the eye does not make enough tear or when the tear evaporates too fast because of the eyelid glands. Artificial tears relieve it but do not fix the cause."
 verify: []
 ---
 

@@ -3,6 +3,7 @@ page: services/childrens-eye-exams
 locale: en
 title: "Children's Eye Exams | Tus Ojos Eyecare"
 description: "Pediatric vision care with accredited professionals. Call us for guidance based on your child's age and location."
+answer: "An eye exam for children checks whether both eyes work together, focus well near and far, and whether there is lazy eye or crossed eyes. Your child does not need to know how to read. The first full exam should happen before school starts, and once a year after that."
 verify: []
 ---
 

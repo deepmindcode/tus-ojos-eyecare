@@ -3,6 +3,7 @@ page: eye-health/diabetes-and-vision
 locale: es
 title: "Diabetes y la vista | Tus Ojos Eyecare"
 description: "Cómo afecta la diabetes a los ojos y por qué conviene una revisión anual aunque veas bien."
+answer: "La diabetes afecta la vista dañando los vasos sanguíneos de la retina, y lo hace sin dolor y sin aviso. La visión borrosa que aparece y desaparece suele deberse a cambios de azúcar en sangre; la pérdida permanente llega cuando la retinopatía ya está avanzada. Un examen dilatado cada año es lo que la detecta a tiempo."
 verify: []
 ---
 

@@ -3,6 +3,7 @@ page: services/keratoconus-and-specialty-lenses
 locale: es
 title: "Queratocono y Lentes Especiales | Tus Ojos Eyecare"
 description: "Adaptación de lentes esclerales y de diseño especial para queratocono y córneas irregulares. Camden, Filadelfia y Cherry Hill."
+answer: "El queratocono deforma la córnea y hace que los lentes comunes dejen de corregir bien la visión. Los lentes esclerales y tricurvos apoyan sobre la parte blanca del ojo y crean una superficie regular, lo que suele devolver nitidez. La adaptación requiere varias medidas y citas de control."
 verify: []
 ---
 

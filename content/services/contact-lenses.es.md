@@ -3,6 +3,7 @@ page: services/contact-lenses
 locale: es
 title: "Lentes de Contacto | Tus Ojos Eyecare"
 description: "Prueba y adaptación de lentes de contacto blandos y especiales. Camden, Filadelfia y Cherry Hill."
+answer: "Adaptar lentes de contacto no es lo mismo que graduar lentes de armazón: hay que medir la curvatura de la córnea y comprobar que el ojo los tolera. Por eso la receta de contacto es aparte y lleva su propia cita. Trabajamos lentes blandos, tóricos para astigmatismo y multifocales."
 verify: []
 ---
 

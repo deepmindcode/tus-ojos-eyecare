@@ -21,6 +21,8 @@ export interface ContentPage {
   readonly locale: string;
   readonly title: string;
   readonly description: string;
+  /** Respuesta directa de 2-3 frases. Es lo que cita un motor de respuestas. */
+  readonly answer: string;
   /** Datos que la oficina todavía tiene que confirmar. */
   readonly verify: readonly string[];
   readonly body: string;
@@ -102,6 +104,7 @@ export const loadContent = cache(
           locale: lang,
           title: typeof data.title === "string" ? data.title : "",
           description: typeof data.description === "string" ? data.description : "",
+          answer: typeof data.answer === "string" ? data.answer : "",
           verify: Array.isArray(data.verify) ? data.verify : [],
           body,
         };

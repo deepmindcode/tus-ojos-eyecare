@@ -3,6 +3,7 @@ page: services/childrens-eye-exams
 locale: es
 title: "Examen de la Vista para Niños | Tus Ojos Eyecare"
 description: "Cuidado visual para niños con profesionales acreditados. Llámanos para orientarte según la edad y la sede."
+answer: "El examen de la vista para niños evalúa si los dos ojos trabajan juntos, si enfocan bien de cerca y de lejos, y si hay ojo perezoso o estrabismo. No hace falta que el niño sepa leer. Se recomienda el primer examen completo antes de empezar la escuela y después una vez al año."
 verify: []
 ---
 

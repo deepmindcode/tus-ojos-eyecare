@@ -3,6 +3,7 @@ page: services/optical-and-frames
 locale: en
 title: "Optical and Frames | Tus Ojos Eyecare"
 description: "Authorized Cartier dealer. Ray-Ban, Oakley, Prada, Miu Miu, Yves Saint Laurent and Nike, with our own optical lab."
+answer: "We are authorized Cartier dealers and also carry Ray-Ban, Oakley, Prada, Miu Miu, Yves Saint Laurent and Nike. We mount your prescription in the frame you choose, with single vision, progressive or high index lenses. Bring a prescription from elsewhere or have your exam here."
 verify: []
 ---
 

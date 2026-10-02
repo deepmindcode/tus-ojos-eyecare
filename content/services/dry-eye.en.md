@@ -3,6 +3,7 @@ page: services/dry-eye
 locale: en
 title: "Dry Eye Evaluation | Tus Ojos Eyecare"
 description: "Dry eye evaluations: identifying the cause of irritation, burning, or that gritty sensation."
+answer: "A dry eye evaluation measures how much tear the eye produces and whether that tear evaporates too quickly. Not every case is treated the same way: some need lubrication, others need the eyelid margin treated. The evaluation is by appointment and determines which kind you have."
 verify: []
 ---
 

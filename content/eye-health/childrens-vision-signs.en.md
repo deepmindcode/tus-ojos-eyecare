@@ -3,6 +3,7 @@ page: eye-health/childrens-vision-signs
 locale: en
 title: "Signs a child may not be seeing well | Tus Ojos Eyecare"
 description: "What to watch for at home and at school when a child may have a vision problem."
+answer: "A child who cannot see well almost never says so. The signs are sitting close to the page or screen, squinting, covering one eye to look, headaches late in the day, and schoolwork slipping. Any one of them is reason enough for an exam."
 verify: []
 ---
 

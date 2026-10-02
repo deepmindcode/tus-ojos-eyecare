@@ -3,6 +3,7 @@ page: services/contact-lenses
 locale: en
 title: "Contact Lenses | Tus Ojos Eyecare"
 description: "Contact lens fittings for soft and specialty lenses. Camden, Philadelphia, and Cherry Hill."
+answer: "Fitting contact lenses is not the same as prescribing glasses: the curvature of the cornea has to be measured and the eye checked for tolerance. That is why a contact lens prescription is separate and needs its own visit. We fit soft, toric for astigmatism and multifocal lenses."
 verify: []
 ---
 

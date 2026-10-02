@@ -3,6 +3,7 @@ page: services/optical-and-frames
 locale: es
 title: "Óptica y Armazones | Tus Ojos Eyecare"
 description: "Distribuidores autorizados de Cartier. Ray-Ban, Oakley, Prada, Miu Miu, Yves Saint Laurent y Nike, con laboratorio propio."
+answer: "Somos distribuidores autorizados de Cartier y trabajamos además Ray-Ban, Oakley, Prada, Miu Miu, Yves Saint Laurent y Nike. Montamos su graduación en el armazón que elija, con lentes monofocales, progresivos o de alto índice. Puede traer su receta de otro lugar o hacerse el examen aquí."
 verify: []
 ---
 

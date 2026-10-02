@@ -3,6 +3,7 @@ page: eye-health/eye-exam-frequency
 locale: en
 title: "How often you should have an eye exam | Tus Ojos Eyecare"
 description: "How often an eye exam makes sense based on your age and risk factors."
+answer: "A healthy adult with no symptoms should have an eye exam every one to two years. Every year if you wear glasses, are over 60, have diabetes or high blood pressure, or have glaucoma in the family. Children, once a year starting before school begins."
 verify: []
 ---
 

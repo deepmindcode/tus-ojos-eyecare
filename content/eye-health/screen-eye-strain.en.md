@@ -3,6 +3,7 @@ page: eye-health/screen-eye-strain
 locale: en
 title: "Screen-related eye strain | Tus Ojos Eyecare"
 description: "Why screens tire your eyes, which measures work, and when to get it checked."
+answer: "Screen eye strain comes from blinking less and focusing at one distance for hours, not from blue light. It causes dry eyes, blurry vision late in the day and headaches. The 20-20-20 rule helps: every 20 minutes, look 20 feet away for 20 seconds."
 verify: []
 ---
 

@@ -3,6 +3,7 @@ page: services/comprehensive-eye-exams
 locale: en
 title: "Comprehensive Eye Exam | Tus Ojos Eyecare"
 description: "Complete eye exams in Camden, Philadelphia, and Cherry Hill. Accurate prescription and a check of your eye health."
+answer: "A comprehensive eye exam measures how well you see and also checks the health of the eye itself: retina, optic nerve and eye pressure. It takes 30 to 45 minutes and ends with an updated prescription if you need one. Available by appointment at all three offices."
 verify: []
 ---
 

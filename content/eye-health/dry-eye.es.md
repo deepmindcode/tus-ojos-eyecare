@@ -3,6 +3,7 @@ page: eye-health/dry-eye
 locale: es
 title: "Ojo seco | Tus Ojos Eyecare"
 description: "Causas comunes de la sensación de sequedad, ardor o arena en los ojos, y cuándo conviene revisarlo."
+answer: "El ojo seco da ardor, sensación de arena, visión que se aclara al parpadear y, curiosamente, lagrimeo. Ocurre cuando el ojo no produce lágrima suficiente o cuando la que produce se evapora muy rápido por las glándulas del párpado. Las lágrimas artificiales alivian, pero no corrigen la causa."
 verify: []
 ---
 

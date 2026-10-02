@@ -3,6 +3,7 @@ page: services/dry-eye
 locale: es
 title: "Evaluación de Ojo Seco | Tus Ojos Eyecare"
 description: "Evaluación del ojo seco: identificar la causa de la irritación, el ardor o la sensación de arenilla."
+answer: "La evaluación de ojo seco mide cuánta lágrima produce el ojo y si esa lágrima se evapora demasiado rápido. No todos los casos se tratan igual: unos necesitan lubricación y otros tratar el borde del párpado. La evaluación se hace con cita previa y define cuál es su caso."
 verify: []
 ---
 

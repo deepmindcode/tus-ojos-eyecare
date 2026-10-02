@@ -3,6 +3,7 @@ page: services/diabetic-eye-care
 locale: es
 title: "Salud Ocular y Diabetes | Tus Ojos Eyecare"
 description: "Evaluación anual de la salud de los ojos para personas con diabetes, coordinada con tu cuidado médico."
+answer: "La diabetes puede dañar los vasos de la retina durante años sin dar ningún síntoma, y cuando la vista falla el daño ya está hecho. Por eso toda persona con diabetes necesita un examen de retina dilatado cada año, aunque vea bien. Enviamos el resultado a su médico si usted lo autoriza."
 verify: []
 ---
 

@@ -3,6 +3,7 @@ page: services/ophthalmology-and-surgery
 locale: en
 title: "Ophthalmology and Surgical Consultations | Tus Ojos"
 description: "Evaluations for cataracts, diabetic retinopathy, glaucoma and ptosis. By appointment, with a licensed physician, in Camden, Philadelphia and Cherry Hill."
+answer: "Yes, we see cataract, diabetic retinopathy, glaucoma and droopy eyelid consultations, always by appointment. The evaluation happens at our offices and the procedure, if one is needed, is performed by a licensed physician. The visit explains what was found and what the options are."
 verify: []
 ---
 

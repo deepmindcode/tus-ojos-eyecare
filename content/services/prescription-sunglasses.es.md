@@ -3,6 +3,7 @@ page: services/prescription-sunglasses
 locale: es
 title: "Lentes de Sol Graduados | Tus Ojos Eyecare"
 description: "Lentes de sol con tu graduación y protección ultravioleta completa. Cartier, Ray-Ban, Oakley, Prada, Miu Miu, Yves Saint Laurent y Nike."
+answer: "Los lentes de sol graduados llevan su receta montada en un lente que bloquea los rayos UVA y UVB. Los hacemos polarizados para manejar, en armazones Ray-Ban, Oakley, Prada, Cartier y otros. Si ya tiene una receta vigente puede traerla."
 verify: []
 ---
 
