@@ -4,6 +4,9 @@ import { setRequestLocale } from "next-intl/server";
 import { loadContent } from "@/lib/content";
 import { ContentPageBody } from "@/components/content/content-page";
 import { Link } from "@/i18n/navigation";
+import { JsonLd } from "@/components/seo/json-ld";
+import { serviceSchema, breadcrumbSchema, faqSchema } from "@/lib/schema";
+import { faqFromBold } from "@/lib/faq";
 
 /**
  * Pagina de un servicio. El slug es el nombre del archivo en
@@ -50,15 +53,44 @@ export default async function Page({
   const content = await loadContent(`services/${slug}`, locale);
   if (!content) notFound();
 
+  const isES = locale === "es";
+  const path = isES ? `/es/servicios/${slug}` : `/services/${slug}`;
+  const name = content.title.split(" | ")[0]!;
+
+  // Las preguntas salen del propio markdown: lo que se declara es
+  // exactamente lo que el visitante lee en la pagina.
+  const faq = faqFromBold(content.body);
+
   return (
-    <ContentPageBody
-      content={content}
-      locale={locale}
-      breadcrumb={
-        <Link href="/services" className="hover:text-brand-primary">
-          {locale === "es" ? "Servicios" : "Services"}
-        </Link>
-      }
-    />
+    <>
+      <JsonLd
+        data={serviceSchema({
+          name,
+          description: content.description,
+          path,
+          locale,
+        })}
+      />
+      <JsonLd
+        data={breadcrumbSchema([
+          {
+            name: isES ? "Servicios" : "Services",
+            path: isES ? "/es/servicios" : "/services",
+          },
+          { name, path },
+        ])}
+      />
+      {faq.length > 0 && <JsonLd data={faqSchema(faq)} />}
+
+      <ContentPageBody
+        content={content}
+        locale={locale}
+        breadcrumb={
+          <Link href="/services" className="hover:text-brand-primary">
+            {isES ? "Servicios" : "Services"}
+          </Link>
+        }
+      />
+    </>
   );
 }

@@ -5,6 +5,7 @@ import { loadContent } from "@/lib/content";
 import { ContentPageBody } from "@/components/content/content-page";
 import { JsonLd } from "@/components/seo/json-ld";
 import { faqSchema } from "@/lib/schema";
+import { faqFromHeadings } from "@/lib/faq";
 
 /**
  * Preguntas frecuentes.
@@ -13,25 +14,6 @@ import { faqSchema } from "@/lib/schema";
  * estructurados. Asi nunca se declara a Google una respuesta que no este
  * visible en la pagina: la fuente es la misma.
  */
-
-/** Saca los pares pregunta/respuesta de los encabezados `###`. */
-function extractFaq(body: string): Array<{ q: string; a: string }> {
-  const out: Array<{ q: string; a: string }> = [];
-  const parts = body.split(/^### +/m).slice(1);
-
-  for (const part of parts) {
-    const [head, ...rest] = part.split("\n");
-    const q = (head ?? "").trim();
-    const a = rest
-      .join(" ")
-      .replace(/\*\*(.+?)\*\*/g, "$1")
-      .replace(/\s+/g, " ")
-      .trim();
-    if (q && a) out.push({ q, a });
-  }
-
-  return out;
-}
 
 export async function generateMetadata({
   params,
@@ -67,7 +49,7 @@ export default async function FaqPage({
   const content = await loadContent("patients/faq", locale);
   if (!content) notFound();
 
-  const items = extractFaq(content.body);
+  const items = faqFromHeadings(content.body);
 
   return (
     <>

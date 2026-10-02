@@ -2,7 +2,7 @@
 page: services/prescription-sunglasses
 locale: es
 title: "Lentes de Sol Graduados | Tus Ojos Eyecare"
-description: "Lentes de sol con tu graduación y protección ultravioleta completa. También lentes de sol de alta gama."
+description: "Lentes de sol con tu graduación y protección ultravioleta completa. Cartier, Ray-Ban, Oakley, Prada, Miu Miu, Yves Saint Laurent y Nike."
 verify: []
 ---
 
@@ -29,6 +29,12 @@ Entrecerrar los ojos todo el camino no es protección. Si usas lentes, tu gradua
 ### Cuándo se nota más
 
 Al mediodía, cerca del agua, en la nieve, y conduciendo con el sol de frente. También en invierno: el sol está más bajo y pega directo a la altura de los ojos.
+
+### Las marcas que trabajamos
+
+Somos **distribuidores autorizados de Cartier**, y trabajamos además Ray-Ban, Oakley, Prada, Miu Miu, Yves Saint Laurent y Nike.
+
+En lentes de sol esto importa más que en armazones normales: el filtro ultravioleta de una marca original es el que dice la etiqueta. En una copia, no lo sabes.
 
 ### Preguntas frecuentes
 

@@ -2,7 +2,7 @@
 page: services/optical-and-frames
 locale: en
 title: "Optical and Frames | Tus Ojos Eyecare"
-description: "A wide selection of frames and precision lenses, with our own lab in Camden, Philadelphia, and Cherry Hill."
+description: "Authorized Cartier dealer. Ray-Ban, Oakley, Prada, Miu Miu, Yves Saint Laurent and Nike, with our own optical lab."
 verify: []
 ---
 
@@ -26,6 +26,14 @@ Choosing frames should be the enjoyable part. We have our own lab, so your lense
 * **Progressive:** near, intermediate and distance in one lens, without the visible bifocal line.
 * **Anti-reflective:** removes glare from screens, overhead lights and night driving. For anyone working on a computer it makes a real difference.
 * **Photochromic:** darkens in sunlight and clears indoors.
+
+### The brands we carry
+
+We are an **authorized Cartier dealer**, and we also carry Ray-Ban, Oakley, Prada, Miu Miu, Yves Saint Laurent and Nike.
+
+Being an authorized dealer matters for a practical reason: the frame is genuine, it comes with its factory warranty, and if something fails there is someone to answer for it. A designer frame bought outside the official channel has none of that.
+
+If you are looking for a brand that is not on the list, ask us: we work with more suppliers than fit here.
 
 ### Frequently asked questions
 

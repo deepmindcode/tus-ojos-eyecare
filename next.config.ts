@@ -29,6 +29,51 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
 
+  /**
+   * Redirecciones del sitio anterior.
+   *
+   * Las rutas salen del menu y el pie del WordPress archivado en Wayback
+   * (captura de junio de 2026). Se usan 301 explicitos y no `permanent`,
+   * que en Next emite 308: los dos valen para Google, pero 301 es lo que
+   * esperan ver las herramientas de auditoria.
+   *
+   * No se redirige /services ni /appointment porque existen igual.
+   */
+  async redirects() {
+    const moved = (source: string, destination: string) => ({
+      source,
+      destination,
+      statusCode: 301 as const,
+    });
+
+    return [
+      moved("/about-us", "/about"),
+      moved("/contact-us", "/contact"),
+      moved("/faq", "/patients/faq"),
+
+      // "Treatments" se repartio entre las paginas de servicio; el indice
+      // es el destino honesto, no una pagina concreta que quiza no era la
+      // que buscaban.
+      moved("/treatments", "/services"),
+      moved("/treatments/:path*", "/services"),
+
+      moved("/blog", "/eye-health"),
+      moved("/blog/:path*", "/eye-health"),
+
+      moved("/privacy-policy", "/legal/privacy"),
+      moved("/terms-of-use", "/legal/terms"),
+
+      // No hay pagina de empleo todavia: contacto es donde pueden escribir.
+      moved("/recruitment", "/contact"),
+
+      moved("/shop", "/services/optical-and-frames"),
+      moved("/before-after", "/services"),
+
+      moved("/home", "/"),
+      moved("/index.php", "/"),
+    ];
+  },
+
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },

@@ -2,7 +2,7 @@
 page: services/prescription-sunglasses
 locale: en
 title: "Prescription Sunglasses | Tus Ojos Eyecare"
-description: "Sunglasses with your prescription and full ultraviolet protection. High-end sunglasses available as well."
+description: "Sunglasses with your prescription and full UV protection. Cartier, Ray-Ban, Oakley, Prada, Miu Miu, Yves Saint Laurent and Nike."
 verify: []
 ---
 
@@ -29,6 +29,12 @@ Squinting the whole drive is not protection. If you wear glasses, your prescript
 ### When it matters most
 
 Midday, near water, in snow, and driving into the sun. Winter too: the sun sits lower and hits straight at eye level.
+
+### The brands we carry
+
+We are an **authorized Cartier dealer**, and we also carry Ray-Ban, Oakley, Prada, Miu Miu, Yves Saint Laurent and Nike.
+
+With sunglasses this matters more than with regular frames: the ultraviolet filter in a genuine pair is what the label says it is. In a copy, you have no way of knowing.
 
 ### Frequently asked questions
 

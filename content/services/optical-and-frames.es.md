@@ -2,7 +2,7 @@
 page: services/optical-and-frames
 locale: es
 title: "Óptica y Armazones | Tus Ojos Eyecare"
-description: "Amplia selección de armazones y micas de precisión, con laboratorio propio en Camden, Filadelfia y Cherry Hill."
+description: "Distribuidores autorizados de Cartier. Ray-Ban, Oakley, Prada, Miu Miu, Yves Saint Laurent y Nike, con laboratorio propio."
 verify: []
 ---
 
@@ -26,6 +26,14 @@ Entre 20 y 30 minutos, sin prisa.
 * **Progresiva:** de cerca, intermedia y lejos en un solo lente, sin la línea visible del bifocal.
 * **Antirreflejante:** quita el brillo de pantallas, luces de techo y conducción nocturna. Para quien trabaja con computadora cambia bastante.
 * **Fotocromática:** se oscurece al sol y se aclara en interiores.
+
+### Las marcas que trabajamos
+
+Somos **distribuidores autorizados de Cartier**, y trabajamos además Ray-Ban, Oakley, Prada, Miu Miu, Yves Saint Laurent y Nike.
+
+Ser distribuidor autorizado importa por una razón práctica: el armazón es original, viene con su garantía de fábrica, y si algo falla hay a quién reclamarle. Un armazón de marca comprado fuera del canal oficial no tiene eso.
+
+Si buscas una marca que no está en la lista, pregúntanos: trabajamos con más proveedores de los que caben aquí.
 
 ### Preguntas frecuentes
 

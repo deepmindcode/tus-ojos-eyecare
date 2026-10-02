@@ -183,6 +183,51 @@ export function articleSchema(opts: {
   };
 }
 
+/**
+ * Un servicio concreto, prestado por la empresa en sus tres sedes.
+ *
+ * `provider` apunta a la Organization por `@id` en vez de repetirla: asi
+ * Google entiende que las nueve paginas de servicio son del mismo
+ * negocio, no de nueve negocios distintos.
+ *
+ * No se declara `offers` ni precio. Un precio en datos estructurados es
+ * una oferta vinculante, y aqui cada caso se valora en consulta.
+ */
+export function serviceSchema(opts: {
+  readonly name: string;
+  readonly description: string;
+  readonly path: string;
+  readonly locale: string;
+}): Json {
+  const active = LOCATIONS.filter((l) => l.active);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: opts.name,
+    description: opts.description,
+    serviceType: opts.name,
+    url: absolute(opts.path),
+    inLanguage: opts.locale === "es" ? "es-US" : "en-US",
+    provider: { "@id": `${siteUrl()}/#organization` },
+    areaServed: active.map((l) => ({
+      "@type": "City",
+      name: l.city,
+      containedInPlace: { "@type": "State", name: l.state },
+    })),
+    availableChannel: {
+      "@type": "ServiceChannel",
+      serviceUrl: absolute(opts.locale === "es" ? "/es/cita" : "/appointment"),
+      servicePhone: active.map((l) => ({
+        "@type": "ContactPoint",
+        telephone: l.phoneE164,
+        areaServed: l.city,
+        availableLanguage: ["en", "es"],
+      })),
+    },
+  };
+}
+
 /** Migas de pan, para que Google muestre la ruta en el resultado. */
 export function breadcrumbSchema(
   trail: ReadonlyArray<{ name: string; path: string }>,
