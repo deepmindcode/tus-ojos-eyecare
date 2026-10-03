@@ -5,7 +5,7 @@
     "call": "Call",
     "text": "Text us",
     "directions": "Directions",
-    "hours": "Monday – Saturday, 9:00 AM – 6:00 PM",
+    "hours": "Monday – Saturday · hours vary by office",
     "skipToContent": "Skip to content",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
@@ -77,6 +77,7 @@
       "lede": "Eye exams, glasses and contact lenses at three neighborhood offices in Philadelphia and South Jersey. Open Monday through Saturday, in English and Spanish.",
       "findOffice": "Find your office",
       "openLabel": "Open Mon – Sat",
+      "hoursNote": "Hours vary by office",
       "photoAlt": "Our team is ready to help you",
       "chips": {
         "bilingual": "English & Spanish",
@@ -275,7 +276,7 @@
       "notConfirmedRest": "A Tus Ojos Eyecare team member will contact you to set the exact time. Please don't come to the office until you hear from us.",
       "whatNext": "What happens next",
       "next": {
-        "one": "Our front desk reviews your request during business hours, Monday through Saturday, 9:00 AM to 6:00 PM.",
+        "one": "Our front desk reviews your request during business hours, Monday through Saturday.",
         "two": "We contact you the way you asked — call, text or email — to confirm a time that works.",
         "three": "Bring a photo ID, your insurance card if you have one, and your current glasses or contact lenses."
       },

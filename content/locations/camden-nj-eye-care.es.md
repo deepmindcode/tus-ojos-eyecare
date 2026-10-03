@@ -12,7 +12,7 @@ Los exámenes de la vista los realizan profesionales acreditados para ello, y nu
 
 * **Dirección:** 1000 Atlantic Ave, Camden, NJ 08104
 * **Teléfono:** (856) 365-1500
-* **Horario:** lunes a sábado, de 9:00 am a 6:00 pm
+* **Horario:** lunes a jueves, de 9:00 am a 5:00 pm; viernes, de 8:00 am a 4:00 pm; sábados, de 8:00 am a 12:00 pm
 * **Estacionamiento:** gratuito
 * **Accesibilidad:** acceso en silla de ruedas
 

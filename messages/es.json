@@ -5,7 +5,7 @@
     "call": "Llamar",
     "text": "Escríbenos",
     "directions": "Cómo llegar",
-    "hours": "Lunes – Sábado, 9:00 AM – 6:00 PM",
+    "hours": "Lunes – Sábado · el horario varía por sede",
     "skipToContent": "Saltar al contenido",
     "openMenu": "Abrir menú",
     "closeMenu": "Cerrar menú",
@@ -77,6 +77,7 @@
       "lede": "Exámenes de la vista, lentes y lentes de contacto en tres oficinas de tu barrio en Philadelphia y el sur de Nueva Jersey. Abierto de lunes a sábado, en inglés y español.",
       "findOffice": "Encuentra tu oficina",
       "openLabel": "Abierto lun – sáb",
+      "hoursNote": "El horario varía por sede",
       "photoAlt": "Nuestro equipo está listo para atenderte",
       "chips": {
         "bilingual": "Inglés y español",
@@ -275,7 +276,7 @@
       "notConfirmedRest": "Un integrante del equipo de Tus Ojos Eyecare se comunicará contigo para fijar la hora exacta. Por favor no vayas a la oficina hasta que te contactemos.",
       "whatNext": "Qué sigue",
       "next": {
-        "one": "Nuestra recepción revisa tu solicitud en horario de oficina, de lunes a sábado, de 9:00 AM a 6:00 PM.",
+        "one": "Nuestra recepción revisa tu solicitud en horario de oficina, de lunes a sábado.",
         "two": "Te contactamos como pediste —llamada, mensaje o correo— para confirmar una hora que te sirva.",
         "three": "Trae identificación con foto, tu tarjeta de seguro si la tienes, y los lentes o pupilentes que usas ahora."
       },

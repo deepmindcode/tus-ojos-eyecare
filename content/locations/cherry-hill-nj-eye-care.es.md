@@ -12,7 +12,7 @@ Los exámenes de la vista los realizan profesionales acreditados para ello, y nu
 
 * **Dirección:** 122 HaddonTowne Ct, Cherry Hill, NJ 08034
 * **Teléfono:** (856) 375-2454
-* **Horario:** lunes a sábado, de 9:00 am a 6:00 pm
+* **Horario:** lunes a jueves, de 9:00 am a 4:30 pm; viernes, de 9:00 am a 1:00 pm; sábados, de 8:00 am a 12:00 pm
 * **Estacionamiento:** gratuito
 * **Accesibilidad:** acceso en silla de ruedas
 

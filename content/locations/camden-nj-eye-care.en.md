@@ -12,7 +12,7 @@ Eye examinations are performed by accredited eye care professionals, and our opt
 
 * **Address:** 1000 Atlantic Ave, Camden, NJ 08104
 * **Phone:** (856) 365-1500
-* **Hours:** Monday to Saturday, 9:00 am to 6:00 pm
+* **Hours:** Monday to Thursday, 9:00 am to 5:00 pm; Friday, 8:00 am to 4:00 pm; Saturday, 8:00 am to 12:00 pm
 * **Parking:** free
 * **Accessibility:** wheelchair accessible
 

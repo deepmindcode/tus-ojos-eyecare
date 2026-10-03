@@ -18,16 +18,16 @@ We are ready to help. Reach out with questions about insurance, children's appoi
 * **Camden, NJ**
   1000 Atlantic Ave, Camden, NJ 08104
   Phone: (856) 365-1500
-  Monday to Saturday, 9:00 am to 6:00 pm
+  Monday to Thursday, 9:00 am to 5:00 pm; Friday, 8:00 am to 4:00 pm; Saturday, 8:00 am to 12:00 pm
 
 * **Philadelphia, PA**
   412 W Lehigh Ave, Philadelphia, PA 19133
   Phone: (215) 634-6567
-  Monday to Saturday, 9:00 am to 6:00 pm
+  Monday to Friday, 9:00 am to 5:00 pm; Saturday, 9:00 am to 1:00 pm
 
 * **Cherry Hill, NJ**
   122 HaddonTowne Ct, Cherry Hill, NJ 08034
   Phone: (856) 375-2454
-  Monday to Saturday, 9:00 am to 6:00 pm
+  Monday to Thursday, 9:00 am to 4:30 pm; Friday, 9:00 am to 1:00 pm; Saturday, 8:00 am to 12:00 pm
 
 When you submit the form, our team calls you directly to arrange the day and time of your appointment.

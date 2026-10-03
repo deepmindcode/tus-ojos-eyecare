@@ -163,7 +163,7 @@ Estados Unidos
 Teléfono: (215) 634-6567
 Correo electrónico: contact@tusojoseyecare.com
 
-**Nuestras ubicaciones** — Lunes a sábado, 9:00 AM – 6:00 PM
+**Nuestras ubicaciones** — Lunes a sábado; el horario varía por sede y aparece en la página de cada una
 
 | Oficina | Dirección | Teléfono |
 |---|---|---|

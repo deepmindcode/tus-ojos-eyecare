@@ -32,14 +32,12 @@ type Location = (typeof LOCATIONS)[number];
 
 /** Horario en el formato que Google espera. */
 function openingHours(l: Location): Json[] {
-  return [
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: l.hours.dayOfWeek,
-      opens: l.hours.opens,
-      closes: l.hours.closes,
-    },
-  ];
+  return l.hours.map((h) => ({
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: h.dayOfWeek,
+    opens: h.opens,
+    closes: h.closes,
+  }));
 }
 
 /** Una sede como negocio local. */

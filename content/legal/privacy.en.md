@@ -163,7 +163,7 @@ United States
 Phone: (215) 634-6567
 Email: contact@tusojoseyecare.com
 
-**Our Locations** — Monday–Saturday, 9:00 AM–6:00 PM
+**Our Locations** — Monday–Saturday; hours vary by office, listed on each location page
 
 | Office | Address | Phone |
 |---|---|---|

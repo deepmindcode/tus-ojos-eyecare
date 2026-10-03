@@ -50,9 +50,13 @@ export function LocationsGrid({ locale }: { readonly locale: string }) {
               >
                 {l.phone}
               </a>
-              <p className="mt-1 text-[0.87rem] text-text-secondary">
-                {isES ? l.hours.daysES : l.hours.daysEN} · {l.hours.time}
-              </p>
+              <ul className="mt-1 space-y-0.5 text-[0.87rem] text-text-secondary">
+                {l.hours.map((h) => (
+                  <li key={h.daysEN}>
+                    {isES ? h.daysES : h.daysEN} · {h.time}
+                  </li>
+                ))}
+              </ul>
 
               <div className="mt-auto grid grid-cols-2 gap-2 pt-5">
                 <Link

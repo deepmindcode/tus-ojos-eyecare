@@ -18,16 +18,16 @@ Estamos listos para atenderte. Escríbenos o llámanos para preguntar por cobert
 * **Camden, NJ**
   1000 Atlantic Ave, Camden, NJ 08104
   Teléfono: (856) 365-1500
-  Lunes a sábado, de 9:00 am a 6:00 pm
+  Lunes a jueves, de 9:00 am a 5:00 pm; viernes, de 8:00 am a 4:00 pm; sábados, de 8:00 am a 12:00 pm
 
 * **Philadelphia, PA**
   412 W Lehigh Ave, Philadelphia, PA 19133
   Teléfono: (215) 634-6567
-  Lunes a sábado, de 9:00 am a 6:00 pm
+  Lunes a viernes, de 9:00 am a 5:00 pm; sábados, de 9:00 am a 1:00 pm
 
 * **Cherry Hill, NJ**
   122 HaddonTowne Ct, Cherry Hill, NJ 08034
   Teléfono: (856) 375-2454
-  Lunes a sábado, de 9:00 am a 6:00 pm
+  Lunes a jueves, de 9:00 am a 4:30 pm; viernes, de 9:00 am a 1:00 pm; sábados, de 8:00 am a 12:00 pm
 
 Al enviar tu solicitud en el formulario, nuestro equipo te llama por teléfono para coordinar el día y la hora de tu cita.

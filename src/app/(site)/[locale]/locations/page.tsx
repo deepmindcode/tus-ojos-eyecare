@@ -89,10 +89,19 @@ export default async function LocationsPage({
                   </span>
                 </p>
 
-                <p className="mt-3 flex items-center gap-2 text-[0.95rem] text-text-secondary">
-                  <Clock className="size-4 shrink-0 text-brand-secondary" aria-hidden="true" />
-                  {isES ? l.hours.daysES : l.hours.daysEN} {l.hours.time}
-                </p>
+                <div className="mt-3 flex items-start gap-2 text-[0.95rem] text-text-secondary">
+                  <Clock
+                    className="mt-1 size-4 shrink-0 text-brand-secondary"
+                    aria-hidden="true"
+                  />
+                  <ul className="space-y-0.5">
+                    {l.hours.map((h) => (
+                      <li key={h.daysEN}>
+                        {isES ? h.daysES : h.daysEN} · {h.time}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
                 <div className="mt-6 flex flex-col gap-2">
                   <a

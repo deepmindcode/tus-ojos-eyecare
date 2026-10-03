@@ -9,7 +9,7 @@ export const SUPPORTED_LOCALES = ["en", "es"] as const;
 export type Locale = (typeof SUPPORTED_LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = "en";
 
-export interface LocationHours {
+export interface HoursBlock {
   readonly daysEN: string;
   readonly daysES: string;
   readonly time: string;
@@ -18,6 +18,13 @@ export interface LocationHours {
   readonly closes: string;
   readonly dayOfWeek: readonly string[];
 }
+
+/**
+ * Una lista, no un único tramo: ninguna de las tres sedes abre igual toda
+ * la semana, y un horario que no coincide con la puerta es peor que no
+ * publicarlo, tanto para el paciente como para Google.
+ */
+export type LocationHours = readonly HoursBlock[];
 
 export interface LocationConfig {
   readonly id: string;
@@ -46,14 +53,81 @@ export interface LocationConfig {
   readonly active: boolean;
 }
 
-const STANDARD_HOURS: LocationHours = {
-  daysEN: "Monday – Saturday",
-  daysES: "Lunes – Sábado",
-  time: "9:00 AM – 6:00 PM",
-  opens: "09:00",
-  closes: "18:00",
-  dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-} as const;
+const MON_THU = ["Monday", "Tuesday", "Wednesday", "Thursday"] as const;
+const MON_FRI = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] as const;
+
+const PHILADELPHIA_HOURS: LocationHours = [
+  {
+    daysEN: "Monday – Friday",
+    daysES: "Lunes – Viernes",
+    time: "9:00 AM – 5:00 PM",
+    opens: "09:00",
+    closes: "17:00",
+    dayOfWeek: MON_FRI,
+  },
+  {
+    daysEN: "Saturday",
+    daysES: "Sábado",
+    time: "9:00 AM – 1:00 PM",
+    opens: "09:00",
+    closes: "13:00",
+    dayOfWeek: ["Saturday"],
+  },
+] as const;
+
+const CAMDEN_HOURS: LocationHours = [
+  {
+    daysEN: "Monday – Thursday",
+    daysES: "Lunes – Jueves",
+    time: "9:00 AM – 5:00 PM",
+    opens: "09:00",
+    closes: "17:00",
+    dayOfWeek: MON_THU,
+  },
+  {
+    daysEN: "Friday",
+    daysES: "Viernes",
+    time: "8:00 AM – 4:00 PM",
+    opens: "08:00",
+    closes: "16:00",
+    dayOfWeek: ["Friday"],
+  },
+  {
+    daysEN: "Saturday",
+    daysES: "Sábado",
+    time: "8:00 AM – 12:00 PM",
+    opens: "08:00",
+    closes: "12:00",
+    dayOfWeek: ["Saturday"],
+  },
+] as const;
+
+const CHERRY_HILL_HOURS: LocationHours = [
+  {
+    daysEN: "Monday – Thursday",
+    daysES: "Lunes – Jueves",
+    time: "9:00 AM – 4:30 PM",
+    opens: "09:00",
+    closes: "16:30",
+    dayOfWeek: MON_THU,
+  },
+  {
+    daysEN: "Friday",
+    daysES: "Viernes",
+    time: "9:00 AM – 1:00 PM",
+    opens: "09:00",
+    closes: "13:00",
+    dayOfWeek: ["Friday"],
+  },
+  {
+    daysEN: "Saturday",
+    daysES: "Sábado",
+    time: "8:00 AM – 12:00 PM",
+    opens: "08:00",
+    closes: "12:00",
+    dayOfWeek: ["Saturday"],
+  },
+] as const;
 
 export const LOCATIONS: readonly LocationConfig[] = [
   {
@@ -72,7 +146,7 @@ export const LOCATIONS: readonly LocationConfig[] = [
     googleMapsUrl: "https://share.google/f5aDULOQBRecDOF0a",
     latitude: null,
     longitude: null,
-    hours: STANDARD_HOURS,
+    hours: CAMDEN_HOURS,
     isPrincipal: false,
     active: true,
   },
@@ -92,7 +166,7 @@ export const LOCATIONS: readonly LocationConfig[] = [
     googleMapsUrl: "https://share.google/HQmGm5uaUVDqm5DN9",
     latitude: null,
     longitude: null,
-    hours: STANDARD_HOURS,
+    hours: PHILADELPHIA_HOURS,
     isPrincipal: true,
     active: true,
   },
@@ -112,7 +186,7 @@ export const LOCATIONS: readonly LocationConfig[] = [
     googleMapsUrl: "https://share.google/DhV7ONVylLjLGyVsu",
     latitude: null,
     longitude: null,
-    hours: STANDARD_HOURS,
+    hours: CHERRY_HILL_HOURS,
     isPrincipal: false,
     active: true,
   },

@@ -87,7 +87,7 @@ export function Hero({ locale }: { readonly locale: string }) {
           </div>
           <div className="absolute bottom-[3%] left-0 rounded-2xl border border-border-subtle bg-surface px-4 py-3 shadow-lg lg:-left-[4%]">
             <p className="font-display text-[0.92rem] font-bold text-brand-primary">{t("openLabel")}</p>
-            <p className="text-sm text-text-secondary">9:00 AM – 6:00 PM</p>
+            <p className="text-sm text-text-secondary">{t("hoursNote")}</p>
           </div>
         </div>
       </div>

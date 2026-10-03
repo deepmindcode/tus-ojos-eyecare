@@ -12,7 +12,7 @@ Eye examinations are performed by accredited eye care professionals, and our opt
 
 * **Address:** 412 W Lehigh Ave, Philadelphia, PA 19133
 * **Phone:** (215) 634-6567
-* **Hours:** Monday to Saturday, 9:00 am to 6:00 pm
+* **Hours:** Monday to Friday, 9:00 am to 5:00 pm; Saturday, 9:00 am to 1:00 pm
 * **Parking:** free
 * **Accessibility:** wheelchair accessible
 

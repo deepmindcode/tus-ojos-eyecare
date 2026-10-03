@@ -12,7 +12,7 @@ Eye examinations are performed by accredited eye care professionals, and our opt
 
 * **Address:** 122 HaddonTowne Ct, Cherry Hill, NJ 08034
 * **Phone:** (856) 375-2454
-* **Hours:** Monday to Saturday, 9:00 am to 6:00 pm
+* **Hours:** Monday to Thursday, 9:00 am to 4:30 pm; Friday, 9:00 am to 1:00 pm; Saturday, 8:00 am to 12:00 pm
 * **Parking:** free
 * **Accessibility:** wheelchair accessible
 
