@@ -4,6 +4,8 @@ import { Printer } from "lucide-react";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getAdminUser, can } from "@/lib/auth/roles";
 import { AppointmentsTable } from "@/components/admin/appointments-table";
+import { RefreshBar } from "@/components/admin/refresh-bar";
+import { officeClock } from "@/lib/office-time";
 import { LOCATIONS } from "@/config/site";
 
 export const dynamic = "force-dynamic";
@@ -136,6 +138,13 @@ export default async function AppointmentsPage({
             Print list
           </Link>
         )}
+      </div>
+
+      {/* Las solicitudes entran solas y el estado lo cambia otra persona
+          desde otra sede. Sin esto habría que recargar a mano para
+          enterarse, y nadie recarga. */}
+      <div className="mt-4 flex justify-end">
+        <RefreshBar updatedAt={officeClock()} label="Updated" />
       </div>
 
       {/* Filtros como enlaces: la URL guarda el estado, así recepción

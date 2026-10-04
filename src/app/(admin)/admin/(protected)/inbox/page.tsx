@@ -4,6 +4,8 @@ import { Inbox, Archive } from "lucide-react";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getAdminUser, can } from "@/lib/auth/roles";
 import { InboxList } from "@/components/admin/inbox-list";
+import { RefreshBar } from "@/components/admin/refresh-bar";
+import { officeClock } from "@/lib/office-time";
 import { LOCATIONS } from "@/config/site";
 import type { MessageStatus } from "./types";
 
@@ -91,20 +93,26 @@ export default async function InboxPage({
 
   return (
     <>
-      <div>
-        <h1 className="flex items-center gap-2 font-display text-2xl font-extrabold tracking-tight text-brand-primary">
-          {archivedView ? (
-            <Archive className="size-6" aria-hidden="true" />
-          ) : (
-            <Inbox className="size-6" aria-hidden="true" />
-          )}
-          {archivedView ? "Archived messages" : "Messages"}
-        </h1>
-        <p className="mt-1 text-sm text-text-secondary">
-          {archivedView
-            ? `${rows.length} archived · nothing here is deleted`
-            : `From the website contact form · ${rows.length} shown`}
-        </p>
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <h1 className="flex items-center gap-2 font-display text-2xl font-extrabold tracking-tight text-brand-primary">
+            {archivedView ? (
+              <Archive className="size-6" aria-hidden="true" />
+            ) : (
+              <Inbox className="size-6" aria-hidden="true" />
+            )}
+            {archivedView ? "Archived messages" : "Messages"}
+          </h1>
+          <p className="mt-1 text-sm text-text-secondary">
+            {archivedView
+              ? `${rows.length} archived · nothing here is deleted`
+              : `From the website contact form · ${rows.length} shown`}
+          </p>
+        </div>
+
+        {/* Un mensaje nuevo no avisa por si solo; esto lo trae sin que
+            nadie recargue. */}
+        <RefreshBar updatedAt={officeClock()} label="Updated" />
       </div>
 
       <div className="mt-6 flex flex-wrap gap-2">

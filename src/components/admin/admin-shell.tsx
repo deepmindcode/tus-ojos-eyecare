@@ -9,6 +9,7 @@ import {
   Tag,
   ScrollText,
   Users,
+  BookOpen,
   KeyRound,
   LogOut,
   Menu,
@@ -53,6 +54,8 @@ export function AdminShell({
     { href: "/admin/offers", label: "Offers", icon: Tag, show: canManageOffers },
     { href: "/admin/users", label: "Team", icon: Users, show: canManageUsers },
     { href: "/admin/audit", label: "Audit log", icon: ScrollText, show: canSeeAudit },
+    // El manual lo ve todo el mundo; dentro cambia segun el rol.
+    { href: "/admin/guide", label: "Guide", icon: BookOpen, show: true },
   ].filter((n) => n.show);
 
   async function signOut() {
