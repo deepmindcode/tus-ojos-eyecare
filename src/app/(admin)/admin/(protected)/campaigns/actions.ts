@@ -158,7 +158,104 @@ export async function previewAudience(campaignId: string) {
     withoutEmail: a.withoutEmail,
     unsubscribed: a.unsubscribed,
     alreadySent: a.alreadySent,
+    // La lista, para poder elegir a mano. Un recuento no deja comprobar
+    // a quien se escribe, y con datos de pacientes eso hay que poder
+    // verlo antes de pulsar enviar.
+    recipients: a.recipients.slice(0, 500),
   };
+}
+
+/** Contenido de la campaña, listo para enviar. */
+async function contentFor(campaignId: string) {
+  const { data: c } = await createSupabaseAdminClient()
+    .from("campaigns")
+    .select("subject_es, body_es, body_en, cta_label_es, promotions(slug, discount_label_es)")
+    .eq("id", campaignId)
+    .single();
+
+  const promo = c?.promotions as unknown as
+    | { slug: string | null; discount_label_es: string | null }
+    | null;
+
+  return {
+    subject: (c?.subject_es as string) ?? "",
+    body: (c?.body_es as string) ?? "",
+    bodyAlt: (c?.body_en as string) || null,
+    discount: promo?.discount_label_es ?? null,
+    ctaUrl: appointmentUrl(promo?.slug ?? null),
+    ctaLabel: (c?.cta_label_es as string) || "Pedir cita",
+  };
+}
+
+/**
+ * Envía a las personas marcadas a mano.
+ *
+ * Comprueba que cada dirección esté en el público actual de la campaña.
+ * Sin esa comprobación, la pantalla se convertiría en un formulario para
+ * escribir a cualquier dirección del mundo desde el dominio del negocio.
+ */
+export async function sendSelected(campaignId: string, emails: readonly string[]) {
+  const user = await leadership();
+  const supabase = createSupabaseAdminClient();
+
+  const a = await audienceFor(campaignId);
+  const allowed = new Map(a.recipients.map((r) => [r.email, r]));
+  const batch = emails
+    .map((e) => allowed.get(e.toLowerCase()))
+    .filter((r): r is Recipient => Boolean(r))
+    .slice(0, MAX_BATCH);
+
+  if (batch.length === 0) return { ok: false as const, error: "nobodySelected" };
+
+  const results = await sendBatch(await contentFor(campaignId), batch);
+
+  await supabase.from("campaign_sends").upsert(
+    results.map((r) => ({
+      campaign_id: campaignId,
+      email: r.email,
+      name: batch.find((b) => b.email === r.email)?.name ?? null,
+      status: r.ok ? "SENT" : "FAILED",
+      provider_id: r.providerId,
+      error: r.error,
+    })),
+    { onConflict: "campaign_id,email" },
+  );
+
+  const sent = results.filter((r) => r.ok).length;
+
+  await logAudit({
+    userId: user.id,
+    action: "campaign.selected_sent",
+    objectType: "campaign",
+    objectId: campaignId,
+    details: { sent, failed: results.length - sent },
+  });
+
+  revalidatePath("/admin/campaigns");
+  return { ok: true as const, sent, failed: results.length - sent };
+}
+
+/**
+ * Prueba a tu propia dirección.
+ *
+ * Va sólo al correo de quien ha iniciado sesión, nunca a una dirección
+ * escrita a mano: así la pantalla no sirve para mandar correo a nadie de
+ * fuera. Y NO se anota en campaign_sends, para que la prueba no gaste a
+ * nadie del público real.
+ */
+export async function sendTestToSelf(campaignId: string) {
+  const user = await leadership();
+  if (!user.email) return { ok: false as const, error: "noEmail" };
+
+  const c = await contentFor(campaignId);
+  const [r] = await sendBatch(
+    { ...c, subject: `[PRUEBA] ${c.subject}` },
+    [{ email: user.email, name: user.displayName }],
+  );
+
+  return r?.ok
+    ? { ok: true as const, to: user.email }
+    : { ok: false as const, error: r?.error ?? "sendFailed" };
 }
 
 /* ------------------------------------------------------------------ */
@@ -183,27 +280,7 @@ export async function sendNextBatch(campaignId: string, size: number) {
     return { ok: true as const, sent: 0, failed: 0, remaining: 0 };
   }
 
-  const { data: c } = await supabase
-    .from("campaigns")
-    .select("subject_es, body_es, body_en, cta_label_es, promotions(slug, discount_label_es)")
-    .eq("id", campaignId)
-    .single();
-
-  const promo = c?.promotions as unknown as
-    | { slug: string | null; discount_label_es: string | null }
-    | null;
-
-  const results = await sendBatch(
-    {
-      subject: (c?.subject_es as string) ?? "",
-      body: (c?.body_es as string) ?? "",
-      bodyAlt: (c?.body_en as string) || null,
-      discount: promo?.discount_label_es ?? null,
-      ctaUrl: appointmentUrl(promo?.slug ?? null),
-      ctaLabel: (c?.cta_label_es as string) || "Pedir cita",
-    },
-    batch,
-  );
+  const results = await sendBatch(await contentFor(campaignId), batch);
 
   // Se anota TODO, también lo que falló: así la siguiente tanda no repite
   // a quien ya recibió, y queda constancia de quién no lo recibió.

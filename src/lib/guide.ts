@@ -584,8 +584,10 @@ const LEADERSHIP_EXTRA_ES: readonly GuideSection[] = [
           "Elige el público: sede, motivo, o ambos. Vacío significa todos.",
           "Elige una promoción si quieres que el correo lleve descuento. El botón del correo deja la cita con ese descuento ya anotado, así sabrás cuántas citas salieron del envío.",
           "Escribe asunto y mensaje en español. El inglés es opcional y va debajo, en el mismo correo.",
-          "Guarda. Luego pulsa «Ver a cuántos va»: te dice cuántas personas quedan, cuántas ya lo recibieron, cuántas se dieron de baja y cuántas no tienen correo.",
-          "Envía una tanda de 25 o de 50. Repite otro día hasta terminar.",
+          "Guarda. Luego pulsa «Ver a quién va»: sale el recuento y debajo la lista con el nombre y el correo de cada persona.",
+          "Pulsa «Enviar prueba a mi correo» y mira cómo queda antes de que lo vea nadie. Esa prueba no cuenta como enviada a ningún cliente.",
+          "Marca en la lista a quien quieras: una persona, dos o diez. Hay buscador por nombre o correo, y botones para marcar todos o desmarcar. Luego «Enviar a los marcados».",
+          "Si prefieres ir por tandas sin elegir, usa «Enviar los 25 primeros» o «los 50 primeros». Repite otro día hasta terminar.",
         ],
       },
       {
@@ -596,8 +598,16 @@ const LEADERSHIP_EXTRA_ES: readonly GuideSection[] = [
         kind: "defs",
         defs: [
           {
+            term: "Elegir a mano",
+            desc: "Para escribir a una sola persona, créate una campaña con el mensaje que quieras, pulsa «Ver a quién va», búscala en la lista, marca su casilla y envía. No hace falta esperar a tener un grupo.",
+          },
+          {
+            term: "Direcciones de fuera",
+            desc: "No se puede teclear una dirección. Sólo se marca de la lista de clientes, y antes de enviar el sistema vuelve a comprobar que cada una sigue en el público. Es a propósito: esta pantalla escribe en nombre del negocio y no debe servir para mandar correo a cualquiera.",
+          },
+          {
             term: "Por qué por tandas",
-            desc: "La lista lleva hasta tres años sin contacto. Soltar trescientos correos de golpe desde un dominio que apenas envía es la forma más rápida de acabar en la carpeta de spam, y se lleva por delante también los avisos de citas. Empieza por tandas pequeñas y ve subiendo.",
+            desc: "La lista lleva hasta tres años sin contacto. Soltar trescientos correos de golpe desde un dominio que apenas envía es la forma más rápida de acabar en la carpeta de spam, y se lleva por delante también los avisos de citas. Empieza por tandas pequeñas y ve subiendo. De una vez salen 50 como máximo.",
           },
           {
             term: "Baja",
@@ -877,8 +887,10 @@ const LEADERSHIP_EXTRA_EN: readonly GuideSection[] = [
           "Pick the audience: office, reason, or both. Empty means everyone.",
           "Pick a promotion if the email should carry a discount. The button in the email lands the appointment with that discount already recorded, so you can see how many bookings came from the send.",
           "Write subject and message in Spanish. English is optional and goes underneath, in the same email.",
-          "Save, then press \"Ver a cuántos va\": it tells you how many are left, how many already received it, how many unsubscribed and how many have no email.",
-          "Send a batch of 25 or 50. Repeat another day until it is finished.",
+          "Save, then press \"Ver a quién va\": you get the counts, and under them the list with each person's name and email.",
+          "Press \"Enviar prueba a mi correo\" and see how it looks before anyone else does. That test does not count as sent to any client.",
+          "Tick whoever you want on the list: one person, two, or ten. There is a search box by name or email, and buttons to tick all or clear. Then \"Enviar a los marcados\".",
+          "If you would rather not choose, use \"Enviar los 25 primeros\" or \"los 50 primeros\". Repeat another day until it is finished.",
         ],
       },
       {
@@ -889,8 +901,16 @@ const LEADERSHIP_EXTRA_EN: readonly GuideSection[] = [
         kind: "defs",
         defs: [
           {
+            term: "Picking by hand",
+            desc: "To write to a single person, make a campaign with the message you want, press \"Ver a quién va\", find them on the list, tick their box and send. There is no need to wait until you have a group.",
+          },
+          {
+            term: "Outside addresses",
+            desc: "You cannot type an address in. They are only ticked off the client list, and before sending the system checks again that each one is still in the audience. That is deliberate: this screen writes on behalf of the business and should not be a way to email anyone at all.",
+          },
+          {
             term: "Why in batches",
-            desc: "The list has gone up to three years without contact. Releasing three hundred emails at once from a domain that barely sends is the fastest route to the spam folder, and it takes the appointment notifications down with it. Start small and build up.",
+            desc: "The list has gone up to three years without contact. Releasing three hundred emails at once from a domain that barely sends is the fastest route to the spam folder, and it takes the appointment notifications down with it. Start small and build up. At most 50 go out at a time.",
           },
           {
             term: "Unsubscribe",
