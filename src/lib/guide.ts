@@ -598,6 +598,22 @@ const LEADERSHIP_EXTRA_ES: readonly GuideSection[] = [
         kind: "defs",
         defs: [
           {
+            term: "Borrador, Enviando, Enviada, Cancelada",
+            desc: "El estado se mueve solo. Al guardar queda en Borrador: guardado no es enviado, no sale nada hasta que pulses enviar. En cuanto sale el primer correo pasa a Enviando, y a Enviada cuando ya no queda nadie en el público.",
+          },
+          {
+            term: "Cancelar y reabrir",
+            desc: "«Cancelar campaña» la detiene: desaparecen los botones de enviar y no sale ni un correo más. No se borra nada, y se conserva quién ya la había recibido para que un envío futuro no les repita. Si fue sin querer, «Reabrir» la devuelve a como estaba.",
+          },
+          {
+            term: "Borrar",
+            desc: "Sólo aparece mientras no haya salido ningún correo. En cuanto sale el primero, la campaña es además el registro de a quién se le escribió, y eso no se tira. Para ésas, cancelar.",
+          },
+          {
+            term: "Cerrar la lista",
+            desc: "La lista de personas se abre con «Ver a quién va» y se cierra con «Cerrar la lista» o con la X de la esquina. Cerrarla no cancela nada ni deshace lo enviado: sólo recoge la pantalla.",
+          },
+          {
             term: "Elegir a mano",
             desc: "Para escribir a una sola persona, créate una campaña con el mensaje que quieras, pulsa «Ver a quién va», búscala en la lista, marca su casilla y envía. No hace falta esperar a tener un grupo.",
           },
@@ -900,6 +916,22 @@ const LEADERSHIP_EXTRA_EN: readonly GuideSection[] = [
       {
         kind: "defs",
         defs: [
+          {
+            term: "Draft, Sending, Sent, Cancelled",
+            desc: "The status moves on its own. Saving leaves it in Draft: saved is not sent, and nothing goes out until you press send. The moment the first email goes out it becomes Sending, and Sent once nobody is left in the audience.",
+          },
+          {
+            term: "Cancel and reopen",
+            desc: "\"Cancelar campaña\" stops it: the send buttons go away and not one more email goes out. Nothing is deleted, and who already received it is kept so a future send does not repeat them. If it was a mistake, \"Reabrir\" puts it back.",
+          },
+          {
+            term: "Delete",
+            desc: "Only shows while no email has gone out. Once the first one does, the campaign is also the record of who was written to, and that is not thrown away. For those, cancel.",
+          },
+          {
+            term: "Closing the list",
+            desc: "The list of people opens with \"Ver a quién va\" and closes with \"Cerrar la lista\" or the X in the corner. Closing it cancels nothing and undoes nothing already sent: it just tidies the screen.",
+          },
           {
             term: "Picking by hand",
             desc: "To write to a single person, make a campaign with the message you want, press \"Ver a quién va\", find them on the list, tick their box and send. There is no need to wait until you have a group.",

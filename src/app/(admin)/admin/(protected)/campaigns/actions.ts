@@ -222,6 +222,15 @@ export async function sendSelected(campaignId: string, emails: readonly string[]
   );
 
   const sent = results.filter((r) => r.ok).length;
+  const remaining = a.recipients.length - batch.length;
+
+  // El estado tiene que decir la verdad. Antes sólo lo movían las tandas,
+  // así que una campaña enviada a mano seguía marcada «Draft» con correos
+  // ya en la calle.
+  await supabase
+    .from("campaigns")
+    .update({ status: remaining > 0 ? "SENDING" : "SENT", updated_at: new Date().toISOString() })
+    .eq("id", campaignId);
 
   await logAudit({
     userId: user.id,
@@ -233,6 +242,93 @@ export async function sendSelected(campaignId: string, emails: readonly string[]
 
   revalidatePath("/admin/campaigns");
   return { ok: true as const, sent, failed: results.length - sent };
+}
+
+/* ------------------------------------------------------------------ */
+
+/**
+ * Cancelar: la campaña deja de poder enviarse, pero NO se borra.
+ *
+ * Se conserva a propósito quién ya la recibió. Si se borrara, mañana una
+ * campaña parecida volvería a escribir a esas mismas personas sin que
+ * nadie se diera cuenta.
+ */
+export async function cancelCampaign(campaignId: string) {
+  const user = await leadership();
+
+  await createSupabaseAdminClient()
+    .from("campaigns")
+    .update({ status: "CANCELLED", updated_at: new Date().toISOString() })
+    .eq("id", campaignId);
+
+  await logAudit({
+    userId: user.id,
+    action: "campaign.cancelled",
+    objectType: "campaign",
+    objectId: campaignId,
+  });
+
+  revalidatePath("/admin/campaigns");
+  return { ok: true as const };
+}
+
+/** Volver a abrirla, por si se canceló sin querer. */
+export async function reopenCampaign(campaignId: string) {
+  const user = await leadership();
+  const supabase = createSupabaseAdminClient();
+
+  const { count } = await supabase
+    .from("campaign_sends")
+    .select("id", { count: "exact", head: true })
+    .eq("campaign_id", campaignId);
+
+  await supabase
+    .from("campaigns")
+    .update({
+      status: (count ?? 0) > 0 ? "SENDING" : "DRAFT",
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", campaignId);
+
+  await logAudit({
+    userId: user.id,
+    action: "campaign.reopened",
+    objectType: "campaign",
+    objectId: campaignId,
+  });
+
+  revalidatePath("/admin/campaigns");
+  return { ok: true as const };
+}
+
+/**
+ * Borrar. Sólo si NO ha salido ni un correo.
+ *
+ * En cuanto hay un envío, la campaña es también el registro de a quién se
+ * le escribió; borrarla borraría esa constancia. Para esas se cancela.
+ */
+export async function deleteCampaign(campaignId: string) {
+  const user = await leadership();
+  const supabase = createSupabaseAdminClient();
+
+  const { count } = await supabase
+    .from("campaign_sends")
+    .select("id", { count: "exact", head: true })
+    .eq("campaign_id", campaignId);
+
+  if ((count ?? 0) > 0) return { ok: false as const, error: "alreadySent" };
+
+  await supabase.from("campaigns").delete().eq("id", campaignId);
+
+  await logAudit({
+    userId: user.id,
+    action: "campaign.deleted",
+    objectType: "campaign",
+    objectId: campaignId,
+  });
+
+  revalidatePath("/admin/campaigns");
+  return { ok: true as const };
 }
 
 /**

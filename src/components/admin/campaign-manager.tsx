@@ -1,13 +1,16 @@
 "use client";
 
 import { useMemo, useState, useTransition } from "react";
-import { AlertTriangle, Mail, Plus, Search, Send, Users } from "lucide-react";
+import { AlertTriangle, Mail, Plus, Search, Send, Users, X } from "lucide-react";
 import {
   saveCampaign,
   previewAudience,
   sendNextBatch,
   sendSelected,
   sendTestToSelf,
+  cancelCampaign,
+  reopenCampaign,
+  deleteCampaign,
   type CampaignInput,
 } from "@/app/(admin)/admin/(protected)/campaigns/actions";
 
@@ -86,6 +89,23 @@ export function CampaignManager({
   const [pending, start] = useTransition();
   const [notice, setNotice] = useState<string | null>(null);
 
+  /**
+   * De qué campaña habla el aviso. Sin esto el mensaje sale arriba del
+   * todo y quien acaba de pulsar «enviar» está a media página de ahí: hizo
+   * algo, no vio respuesta, y vuelve a pulsar.
+   */
+  const [noticeId, setNoticeId] = useState<string | null>(null);
+
+  function say(id: string, text: string) {
+    setNotice(text);
+    setNoticeId(id);
+  }
+
+  function clearNotice() {
+    setNotice(null);
+    setNoticeId(null);
+  }
+
   const [audience, setAudience] = useState<Record<string, AudienceState>>({});
 
   /** Marcados a mano, por campaña. */
@@ -93,12 +113,12 @@ export function CampaignManager({
   const [query, setQuery] = useState<Record<string, string>>({});
 
   function openNew() {
-    setNotice(null);
+    clearNotice();
     setEditing({ ...EMPTY });
   }
 
   function openEdit(c: CampaignRow) {
-    setNotice(null);
+    clearNotice();
     setEditing({
       id: c.id,
       name: c.name,
@@ -118,9 +138,11 @@ export function CampaignManager({
       const res = await saveCampaign(editing);
       if (res.ok) {
         setNotice("Guardado.");
+        setNoticeId(null);
         setEditing(null);
         return;
       }
+      setNoticeId(null);
       setNotice(
         res.error === "missingFields"
           ? "Falta algo: el nombre, el asunto en español y el mensaje en español son obligatorios."
@@ -150,7 +172,8 @@ export function CampaignManager({
   function send(id: string, size: number) {
     start(async () => {
       const r = await sendNextBatch(id, size);
-      setNotice(
+      say(
+        id,
         r.sent === 0 && r.remaining === 0
           ? "No queda nadie por recibir esta campaña."
           : `Enviados ${r.sent}${r.failed ? `, fallaron ${r.failed}` : ""}. Quedan ${r.remaining}.`,
@@ -164,7 +187,8 @@ export function CampaignManager({
     if (emails.length === 0) return;
     start(async () => {
       const r = await sendSelected(id, emails);
-      setNotice(
+      say(
+        id,
         r.ok
           ? `Enviado a ${r.sent}${r.failed ? `, fallaron ${r.failed}` : ""}.`
           : "No se envió nada: ninguna de las personas marcadas sigue en el público.",
@@ -180,12 +204,56 @@ export function CampaignManager({
   function test(id: string) {
     start(async () => {
       const r = await sendTestToSelf(id);
-      setNotice(
+      say(
+        id,
         r.ok
           ? `Prueba enviada a ${r.to}. Llega con «[PRUEBA]» en el asunto y no cuenta como enviada a nadie.`
           : r.error === "noEmail"
             ? "Tu usuario no tiene correo registrado, así que no hay dónde mandar la prueba."
             : `No se pudo enviar la prueba. ${r.error}`,
+      );
+    });
+  }
+
+  /** Cerrar la lista y dejar la pantalla como estaba. */
+  function close(id: string) {
+    setAudience((prev) => {
+      const next = { ...prev };
+      delete next[id];
+      return next;
+    });
+    setPicked((prev) => ({ ...prev, [id]: [] }));
+    setQuery((prev) => ({ ...prev, [id]: "" }));
+  }
+
+  function cancel(id: string) {
+    start(async () => {
+      await cancelCampaign(id);
+      close(id);
+      say(id, "Campaña cancelada. No saldrá ningún correo más. Puedes reabrirla cuando quieras.");
+    });
+  }
+
+  function reopen(id: string) {
+    start(async () => {
+      await reopenCampaign(id);
+      say(id, "Campaña reabierta.");
+    });
+  }
+
+  function remove(id: string, name: string) {
+    if (!window.confirm(`¿Borrar la campaña «${name}»? No se puede deshacer.`)) return;
+    start(async () => {
+      const r = await deleteCampaign(id);
+      if (r.ok) {
+        close(id);
+        setNotice("Campaña borrada.");
+        setNoticeId(null);
+        return;
+      }
+      say(
+        id,
+        "No se puede borrar: ya salieron correos de esta campaña y hay que conservar quién los recibió. Cancélala en su lugar.",
       );
     });
   }
@@ -211,7 +279,9 @@ export function CampaignManager({
           <Plus className="size-4" aria-hidden="true" />
           Nueva campaña
         </button>
-        {notice && <p className="text-sm font-semibold text-brand-secondary-deep">{notice}</p>}
+        {notice && noticeId === null && (
+          <p className="text-sm font-semibold text-brand-secondary-deep">{notice}</p>
+        )}
       </div>
 
       {editing && (
@@ -365,12 +435,19 @@ export function CampaignManager({
 
         {initial.map((c) => {
           const a = audience[c.id];
+          const cancelled = c.status === "CANCELLED";
           return (
             <div key={c.id} className="rounded-2xl border border-border-subtle bg-surface p-5">
               <div className="flex flex-wrap items-center gap-3">
                 <h3 className="font-display text-base font-extrabold">{c.name}</h3>
-                <span className="rounded-full border border-border-subtle px-2.5 py-1 text-xs font-bold capitalize text-text-secondary">
-                  {c.status.toLowerCase()}
+                <span
+                  className={`rounded-full border px-2.5 py-1 text-xs font-bold ${
+                    cancelled
+                      ? "border-amber-300 bg-amber-50 text-amber-900"
+                      : "border-border-subtle text-text-secondary"
+                  }`}
+                >
+                  {STATUS[c.status] ?? c.status}
                 </span>
                 <span className="ml-auto text-sm text-text-secondary">
                   <Mail className="mr-1 inline size-4" aria-hidden="true" />
@@ -381,20 +458,52 @@ export function CampaignManager({
 
               <p className="mt-1 text-sm text-text-secondary">{c.subjectEs}</p>
 
+              {noticeId === c.id && notice && (
+                <p className="mt-3 flex items-start gap-3 rounded-xl border-2 border-brand-secondary bg-brand-secondary-tint p-3 text-sm font-semibold text-brand-secondary-deep">
+                  <span className="min-w-0 flex-1">{notice}</span>
+                  <button
+                    type="button"
+                    onClick={clearNotice}
+                    aria-label="Cerrar el aviso"
+                    className="shrink-0 rounded-full p-1 hover:bg-surface"
+                  >
+                    <X className="size-4" aria-hidden="true" />
+                  </button>
+                </p>
+              )}
+
+              {cancelled && (
+                <p className="mt-3 rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">
+                  Cancelada: no saldrá ningún correo más. Se guarda quién ya la
+                  recibió, para que un envío futuro no les repita.
+                </p>
+              )}
+
               {a && (
                 <>
-                  <div className="mt-4 rounded-xl bg-brand-secondary-tint p-4 text-sm text-brand-secondary-deep">
-                    <p className="flex items-center gap-2 font-bold">
-                      <Users className="size-4" aria-hidden="true" />
-                      Quedan {a.pending} personas por recibir esta campaña
-                    </p>
-                    <p className="mt-1.5 text-[0.85rem]">
-                      {a.total} en el público · {a.alreadySent} ya la recibieron ·{" "}
-                      {a.unsubscribed} dados de baja · {a.withoutEmail} sin correo
-                    </p>
+                  <div className="mt-4 flex items-start gap-3 rounded-xl bg-brand-secondary-tint p-4 text-sm text-brand-secondary-deep">
+                    <div className="min-w-0 flex-1">
+                      <p className="flex items-center gap-2 font-bold">
+                        <Users className="size-4" aria-hidden="true" />
+                        Quedan {a.pending} personas por recibir esta campaña
+                      </p>
+                      <p className="mt-1.5 text-[0.85rem]">
+                        {a.total} en el público · {a.alreadySent} ya la recibieron ·{" "}
+                        {a.unsubscribed} dados de baja · {a.withoutEmail} sin correo
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => close(c.id)}
+                      aria-label="Cerrar la lista"
+                      title="Cerrar la lista"
+                      className="shrink-0 rounded-full p-2 hover:bg-surface"
+                    >
+                      <X className="size-4" aria-hidden="true" />
+                    </button>
                   </div>
 
-                  {a.pending > 0 && (
+                  {a.pending > 0 && !cancelled && (
                     <Picker
                       recipients={a.recipients}
                       picked={picked[c.id] ?? []}
@@ -408,16 +517,18 @@ export function CampaignManager({
               )}
 
               <div className="mt-4 flex flex-wrap gap-2">
-                <button
-                  type="button"
-                  onClick={() => check(c.id)}
-                  disabled={pending}
-                  className="min-h-11 rounded-full border-2 border-border-subtle px-4 text-sm font-bold hover:border-brand-secondary disabled:opacity-60"
-                >
-                  {a ? "Actualizar la lista" : "Ver a quién va"}
-                </button>
+                {!cancelled && (
+                  <button
+                    type="button"
+                    onClick={() => (a ? close(c.id) : check(c.id))}
+                    disabled={pending}
+                    className="min-h-11 rounded-full border-2 border-border-subtle px-4 text-sm font-bold hover:border-brand-secondary disabled:opacity-60"
+                  >
+                    {a ? "Cerrar la lista" : "Ver a quién va"}
+                  </button>
+                )}
 
-                {a && a.pending > 0 && (
+                {a && !cancelled && a.pending > 0 && (
                   <>
                     <button
                       type="button"
@@ -443,7 +554,7 @@ export function CampaignManager({
                   </>
                 )}
 
-                {a && (
+                {a && !cancelled && (
                   <button
                     type="button"
                     onClick={() => test(c.id)}
@@ -454,13 +565,46 @@ export function CampaignManager({
                   </button>
                 )}
 
-                <button
-                  type="button"
-                  onClick={() => openEdit(c)}
-                  className="min-h-11 rounded-full border-2 border-border-subtle px-4 text-sm font-bold"
-                >
-                  Editar
-                </button>
+                {!cancelled && (
+                  <button
+                    type="button"
+                    onClick={() => openEdit(c)}
+                    className="min-h-11 rounded-full border-2 border-border-subtle px-4 text-sm font-bold"
+                  >
+                    Editar
+                  </button>
+                )}
+
+                {cancelled ? (
+                  <button
+                    type="button"
+                    onClick={() => reopen(c.id)}
+                    disabled={pending}
+                    className="min-h-11 rounded-full border-2 border-border-subtle px-4 text-sm font-bold hover:border-brand-secondary disabled:opacity-60"
+                  >
+                    Reabrir
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => cancel(c.id)}
+                    disabled={pending}
+                    className="min-h-11 rounded-full border-2 border-border-subtle px-4 text-sm font-bold text-amber-900 hover:border-amber-400 disabled:opacity-60"
+                  >
+                    Cancelar campaña
+                  </button>
+                )}
+
+                {c.sent === 0 && c.failed === 0 && (
+                  <button
+                    type="button"
+                    onClick={() => remove(c.id, c.name)}
+                    disabled={pending}
+                    className="min-h-11 rounded-full px-4 text-sm font-bold text-text-secondary underline hover:text-red-700 disabled:opacity-60"
+                  >
+                    Borrar
+                  </button>
+                )}
               </div>
 
               {(picked[c.id] ?? []).length > MAX_PICK && (
@@ -581,6 +725,17 @@ function Picker({
 
 /** Lo que acepta el servidor de una vez. Igual que MAX_BATCH en el envío. */
 const MAX_PICK = 50;
+
+/**
+ * El estado, en castellano. «Draft» en una pantalla que por lo demás está
+ * en español no dice nada a quien la usa todos los días.
+ */
+const STATUS: Record<string, string> = {
+  DRAFT: "Borrador",
+  SENDING: "Enviando",
+  SENT: "Enviada",
+  CANCELLED: "Cancelada",
+};
 
 const input =
   "mt-1 min-h-11 w-full rounded-xl border-2 border-border-subtle bg-surface px-3 py-2 text-sm focus:border-brand-primary focus:outline-none";
