@@ -166,7 +166,7 @@ export default async function AppointmentsPage({
           params={{ ...sp, follow: sp.follow === "1" ? undefined : "1", status: undefined }}
         />
         <FilterLink label="All statuses" active={!sp.status && sp.follow !== "1"} params={{ ...sp, status: undefined, follow: undefined }} />
-        {["NEW", "CONTACT_ATTEMPTED", "CONFIRMED", "NO_RESPONSE"].map((s) => (
+        {["NEW", "CONTACT_ATTEMPTED", "CONFIRMED", "NO_RESPONSE", "IMPORTED"].map((s) => (
           <FilterLink
             key={s}
             label={s.replace(/_/g, " ").toLowerCase()}

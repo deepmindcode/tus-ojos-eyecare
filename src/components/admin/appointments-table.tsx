@@ -44,6 +44,9 @@ const STATUSES = [
   "COMPLETED",
   "NO_RESPONSE",
   "SPAM",
+  // Historico del sitio anterior. No es trabajo pendiente: nadie tiene
+  // que llamar a nadie por una solicitud de hace meses ya atendida.
+  "IMPORTED",
 ] as const;
 
 const BADGE: Record<string, string> = {
@@ -56,6 +59,7 @@ const BADGE: Record<string, string> = {
   COMPLETED: "bg-[#E3F3EA] text-success",
   NO_RESPONSE: "bg-[#F1F1F1] text-text-secondary",
   SPAM: "bg-[#FDF0F0] text-error",
+  IMPORTED: "bg-[#F1F1F1] text-text-secondary",
 };
 
 function label(s: string) {

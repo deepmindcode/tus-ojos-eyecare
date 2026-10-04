@@ -101,6 +101,7 @@ const FRONT_DESK_ES: GuideDoc = {
             { term: "COMPLETED", desc: "Vino a la cita. Se marca después de la visita." },
             { term: "NO RESPONSE", desc: "Varios intentos y nunca contestó. Antes de marcarlo, prueba el otro medio que dejó (si dio teléfono y correo, usa los dos)." },
             { term: "SPAM", desc: "Formulario falso, publicidad o datos inventados. Márcalo y olvídalo: no pierdas tiempo llamando." },
+            { term: "IMPORTED", desc: "Registro traído del sitio web anterior, de mayo a septiembre de 2026. No es trabajo pendiente: nadie tiene que llamar por una solicitud de hace meses. Está ahí para que el historial del cliente esté completo." },
           ],
         },
         {
@@ -293,6 +294,7 @@ const FRONT_DESK_EN: GuideDoc = {
             { term: "COMPLETED", desc: "They came in. Set after the visit." },
             { term: "NO RESPONSE", desc: "Several attempts, never answered. Before setting this, try the other channel they gave (if both phone and email, use both)." },
             { term: "SPAM", desc: "Fake form, advertising or made-up details. Mark it and move on." },
+            { term: "IMPORTED", desc: "A record carried over from the previous website, May to September 2026. Not pending work: nobody has to call about a request from months ago. It is there so the client history is complete." },
           ],
         },
         {
@@ -547,6 +549,10 @@ const LEADERSHIP_EXTRA_ES: readonly GuideSection[] = [
       },
       {
         kind: "note",
+        text: "El directorio incluye 109 contactos traídos del sitio web anterior (mayo a septiembre de 2026), que es hasta donde llegaba el registro de correos del servidor. De esos registros antiguos no se sabe el motivo de consulta: el formulario de entonces no lo preguntaba, así que salen como «Other» y el filtro por motivo no los encuentra. Sus datos de contacto sí son buenos.",
+      },
+      {
+        kind: "note",
         text: "Las personas se agrupan por teléfono y por correo, porque el formulario no pide cuenta. Si dos familiares comparten teléfono pueden salir como una sola ficha: se nota al abrirla, porque los nombres del historial no coinciden.",
       },
       {
@@ -783,6 +789,10 @@ const LEADERSHIP_EXTRA_EN: readonly GuideSection[] = [
           "Click the name to open the full history.",
           "Print list prints exactly the list you are looking at, filter included; the print button inside a record prints that one person.",
         ],
+      },
+      {
+        kind: "note",
+        text: "The directory includes 109 contacts carried over from the previous website (May to September 2026, as far back as the server's mail log went). Those old records have no reason for visiting — the form of the day never asked — so they show as \"Other\" and the reason filter will not find them. Their contact details are good.",
       },
       {
         kind: "note",
