@@ -26,7 +26,7 @@ export const metadata = { title: "Clients — print" };
 export default async function ClientsPrintPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; reason?: string }>;
+  searchParams: Promise<{ q?: string; reason?: string; office?: string }>;
 }) {
   const user = await getAdminUser();
   if (!can(user, "clients:read")) redirect("/admin");
@@ -34,16 +34,23 @@ export default async function ClientsPrintPage({
   const sp = await searchParams;
   const q = sp.q?.trim() ?? "";
   const reason = sp.reason?.trim() ?? "";
+  const office = sp.office?.trim() ?? "";
 
   const all = await loadClients();
   let rows = reason ? all.filter((c) => hasReason(c, reason)) : all;
+  if (office) rows = rows.filter((c) => c.offices.includes(office));
   if (q) rows = rows.filter((c) => matchesQuery(c, q));
 
   await logAudit({
     userId: user!.id,
     action: "client.directory_printed",
     objectType: "client",
-    details: { count: rows.length, filtered: q.length > 0, reason: reason || "any" },
+    details: {
+      count: rows.length,
+      filtered: q.length > 0,
+      reason: reason || "any",
+      office: office || "any",
+    },
   });
 
   const printedAt = new Date();
@@ -68,6 +75,7 @@ export default async function ClientsPrintPage({
           <p className="mt-1 text-sm">
             <strong>{rows.length} people</strong>
             {reason && ` who asked about ${humanize(reason)}`}
+            {office && ` at ${office}`}
             {q && ` matching “${q}”`} · printed {shortDate(printedAt.toISOString())} at{" "}
             {officeClock(printedAt)}
           </p>

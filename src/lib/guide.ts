@@ -540,7 +540,7 @@ const LEADERSHIP_EXTRA_ES: readonly GuideSection[] = [
         kind: "steps",
         items: [
           "Busca por nombre, por teléfono o por correo. El teléfono funciona aunque lo escribas con guiones o sin ellos.",
-          "Filtra por motivo para sacar, por ejemplo, a todo el que alguna vez pidió cita por cataratas o por ojo seco. Debajo del nombre ves los motivos de cada persona sin tener que abrirla.",
+          "Filtra por motivo y por sede, juntos o por separado: por ejemplo, todo el que alguna vez pidió cita por ojo seco en Camden. Debajo del nombre ves los motivos de cada persona sin tener que abrirla.",
           "Haz clic en el nombre para abrir el historial completo.",
           "Print list saca en papel exactamente la lista que estás viendo, con el filtro aplicado; el botón de imprimir dentro de una ficha saca sólo esa persona.",
         ],
@@ -551,7 +551,7 @@ const LEADERSHIP_EXTRA_ES: readonly GuideSection[] = [
       },
       {
         kind: "text",
-        text: "Para qué sirve el filtro por motivo: es la forma de preparar una oferta dirigida. Sacas la lista de quien vino por ojo seco y le ofreces una revisión de seguimiento, en vez de mandar la misma promoción a todo el mundo. El filtro mira TODO el historial, no sólo la última solicitud: quien preguntó por cataratas hace un año sigue apareciendo.",
+        text: "Para qué sirven los filtros: preparar una oferta dirigida. Sacas la lista de quien vino por ojo seco y le ofreces una revisión de seguimiento, en vez de mandar la misma promoción a todo el mundo; y si la promoción es sólo de una sede, filtras también por sede y llamas únicamente a quien le queda cerca. Ambos miran TODO el historial, no sólo la última solicitud: quien preguntó por cataratas hace un año, o fue una vez a Camden, sigue apareciendo.",
       },
       {
         kind: "warn",
@@ -779,7 +779,7 @@ const LEADERSHIP_EXTRA_EN: readonly GuideSection[] = [
         kind: "steps",
         items: [
           "Search by name, phone or email. The phone works with or without dashes.",
-          "Filter by reason to pull, say, everyone who has ever asked about cataracts or dry eye. Each person's reasons show under their name, so you do not have to open them one by one.",
+          "Filter by reason and by office, together or apart: everyone who ever asked about dry eye at Camden, say. Each person's reasons show under their name, so you do not have to open them one by one.",
           "Click the name to open the full history.",
           "Print list prints exactly the list you are looking at, filter included; the print button inside a record prints that one person.",
         ],
@@ -790,7 +790,7 @@ const LEADERSHIP_EXTRA_EN: readonly GuideSection[] = [
       },
       {
         kind: "text",
-        text: "What the reason filter is for: building a targeted offer. Pull everyone who came about dry eye and offer them a follow-up check, instead of sending the same promotion to everybody. It looks at the WHOLE history, not just the latest request: someone who asked about cataracts a year ago still shows up.",
+        text: "What the filters are for: building a targeted offer. Pull everyone who came about dry eye and offer them a follow-up check, instead of sending the same promotion to everybody; and when the promotion belongs to one office, filter by office too and call only the people it is near. Both look at the WHOLE history, not just the latest request: someone who asked about cataracts a year ago, or went to Camden once, still shows up.",
       },
       {
         kind: "warn",

@@ -5,6 +5,7 @@ import { getAdminUser, can } from "@/lib/auth/roles";
 import { RefreshBar } from "@/components/admin/refresh-bar";
 import { officeClock } from "@/lib/office-time";
 import { formatPhone, matchesQuery, hasReason, allReasons } from "@/lib/clients";
+import { LOCATIONS } from "@/config/site";
 import { loadClients, shortDate, humanize } from "./data";
 
 /**
@@ -21,7 +22,7 @@ export const metadata = { title: "Clients" };
 export default async function ClientsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; reason?: string }>;
+  searchParams: Promise<{ q?: string; reason?: string; office?: string }>;
 }) {
   const user = await getAdminUser();
   if (!can(user, "clients:read")) redirect("/admin");
@@ -29,11 +30,16 @@ export default async function ClientsPage({
   const sp = await searchParams;
   const q = sp.q?.trim() ?? "";
   const reason = sp.reason?.trim() ?? "";
+  const office = sp.office?.trim() ?? "";
 
   const all = await loadClients();
   const reasons = allReasons(all);
 
+  // Por sede = ha pedido cita en ella alguna vez, igual que el motivo.
+  // Quien fue una vez a Camden entra en una promoción de Camden aunque
+  // la última vez fuera a Cherry Hill.
   let rows = reason ? all.filter((c) => hasReason(c, reason)) : all;
+  if (office) rows = rows.filter((c) => c.offices.includes(office));
   if (q) rows = rows.filter((c) => matchesQuery(c, q));
 
   const returning = all.filter((c) => c.appointmentCount + c.messageCount > 1).length;
@@ -41,7 +47,7 @@ export default async function ClientsPage({
   // El enlace de impresión tiene que llevarse los dos filtros, o se
   // imprime una lista distinta de la que se está viendo.
   const printQuery = new URLSearchParams(
-    Object.entries({ q, reason }).filter(([, v]) => v) as [string, string][],
+    Object.entries({ q, reason, office }).filter(([, v]) => v) as [string, string][],
   ).toString();
 
   return (
@@ -54,7 +60,7 @@ export default async function ClientsPage({
           </h1>
           <p className="mt-1 text-sm text-text-secondary">
             {all.length} people · {returning} have contacted us more than once
-            {(q || reason) && ` · ${rows.length} in this list`}
+            {(q || reason || office) && ` · ${rows.length} in this list`}
           </p>
         </div>
 
@@ -105,6 +111,20 @@ export default async function ClientsPage({
           ))}
         </select>
 
+        <select
+          name="office"
+          defaultValue={office}
+          aria-label="Filter by office"
+          className="min-h-11 rounded-full border-2 border-border-subtle bg-surface px-4 text-sm font-semibold focus:border-brand-primary focus:outline-none"
+        >
+          <option value="">Any office</option>
+          {LOCATIONS.filter((l) => l.active).map((l) => (
+            <option key={l.id} value={l.city}>
+              {l.city}
+            </option>
+          ))}
+        </select>
+
         <button
           type="submit"
           className="min-h-11 rounded-full bg-brand-primary px-5 text-sm font-bold text-white hover:bg-brand-primary-deep"
@@ -112,7 +132,7 @@ export default async function ClientsPage({
           Apply
         </button>
 
-        {(q || reason) && (
+        {(q || reason || office) && (
           <Link
             href="/admin/clients"
             className="min-h-11 rounded-full border-2 border-border-subtle px-4 text-sm font-bold leading-[2.4] text-text-secondary hover:border-brand-secondary"
@@ -122,17 +142,29 @@ export default async function ClientsPage({
         )}
       </form>
 
-      {reason && (
+      {(reason || office) && (
         <p className="mt-4 rounded-2xl border border-border-subtle bg-brand-secondary-tint p-4 text-sm text-brand-secondary-deep">
           <strong>{rows.length}</strong> {rows.length === 1 ? "person has" : "people have"} asked
-          for an appointment about <strong>{humanize(reason)}</strong> at some point. Everyone
-          here is a fit for an offer on that service.
+          for an appointment
+          {reason && (
+            <>
+              {" "}
+              about <strong>{humanize(reason)}</strong>
+            </>
+          )}
+          {office && (
+            <>
+              {" "}
+              at <strong>{office}</strong>
+            </>
+          )}{" "}
+          at some point. Everyone in this list is a fit for an offer on that.
         </p>
       )}
 
       {rows.length === 0 ? (
         <p className="mt-10 rounded-2xl border border-border-subtle bg-surface p-8 text-center text-text-secondary">
-          {q || reason
+          {q || reason || office
             ? "Nobody matches this filter."
             : "No one has contacted us through the site yet."}
         </p>
