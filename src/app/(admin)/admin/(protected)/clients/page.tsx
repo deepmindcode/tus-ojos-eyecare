@@ -4,8 +4,8 @@ import { Printer, Search, Users } from "lucide-react";
 import { getAdminUser, can } from "@/lib/auth/roles";
 import { RefreshBar } from "@/components/admin/refresh-bar";
 import { officeClock } from "@/lib/office-time";
-import { formatPhone, matchesQuery } from "@/lib/clients";
-import { loadClients, shortDate } from "./data";
+import { formatPhone, matchesQuery, hasReason, allReasons } from "@/lib/clients";
+import { loadClients, shortDate, humanize } from "./data";
 
 /**
  * src/app/(admin)/admin/(protected)/clients/page.tsx
@@ -21,18 +21,28 @@ export const metadata = { title: "Clients" };
 export default async function ClientsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string; reason?: string }>;
 }) {
   const user = await getAdminUser();
   if (!can(user, "clients:read")) redirect("/admin");
 
   const sp = await searchParams;
   const q = sp.q?.trim() ?? "";
+  const reason = sp.reason?.trim() ?? "";
 
   const all = await loadClients();
-  const rows = q ? all.filter((c) => matchesQuery(c, q)) : all;
+  const reasons = allReasons(all);
+
+  let rows = reason ? all.filter((c) => hasReason(c, reason)) : all;
+  if (q) rows = rows.filter((c) => matchesQuery(c, q));
 
   const returning = all.filter((c) => c.appointmentCount + c.messageCount > 1).length;
+
+  // El enlace de impresión tiene que llevarse los dos filtros, o se
+  // imprime una lista distinta de la que se está viendo.
+  const printQuery = new URLSearchParams(
+    Object.entries({ q, reason }).filter(([, v]) => v) as [string, string][],
+  ).toString();
 
   return (
     <>
@@ -44,14 +54,14 @@ export default async function ClientsPage({
           </h1>
           <p className="mt-1 text-sm text-text-secondary">
             {all.length} people · {returning} have contacted us more than once
-            {q && ` · ${rows.length} matching "${q}"`}
+            {(q || reason) && ` · ${rows.length} in this list`}
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
           <RefreshBar updatedAt={officeClock()} label="Updated" />
           <Link
-            href={`/admin/clients/print${q ? `?q=${encodeURIComponent(q)}` : ""}`}
+            href={`/admin/clients/print${printQuery ? `?${printQuery}` : ""}`}
             className="inline-flex min-h-11 items-center gap-2 rounded-full border-2 border-brand-primary px-5 text-sm font-bold text-brand-primary hover:bg-brand-primary-tint"
           >
             <Printer className="size-4" aria-hidden="true" />
@@ -62,8 +72,11 @@ export default async function ClientsPage({
 
       {/* Un formulario normal: la búsqueda queda en la dirección, así que
           se puede compartir el enlace o guardarlo en favoritos. */}
-      <form action="/admin/clients" className="mt-6 flex max-w-md gap-2">
-        <div className="relative flex-1">
+      {/* Buscador y motivo en la MISMA fila y el mismo formulario: son
+          dos recortes de la misma lista, y separarlos invita a creer que
+          uno sustituye al otro. */}
+      <form action="/admin/clients" className="mt-6 flex flex-wrap items-center gap-2">
+        <div className="relative min-w-[220px] flex-1 sm:max-w-sm">
           <Search
             className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-text-secondary"
             aria-hidden="true"
@@ -77,17 +90,51 @@ export default async function ClientsPage({
             className="min-h-11 w-full rounded-full border-2 border-border-subtle bg-surface pl-10 pr-4 text-sm focus:border-brand-primary focus:outline-none"
           />
         </div>
+
+        <select
+          name="reason"
+          defaultValue={reason}
+          aria-label="Filter by reason for the appointment"
+          className="min-h-11 rounded-full border-2 border-border-subtle bg-surface px-4 text-sm font-semibold focus:border-brand-primary focus:outline-none"
+        >
+          <option value="">Any reason</option>
+          {reasons.map((r) => (
+            <option key={r} value={r}>
+              {humanize(r)}
+            </option>
+          ))}
+        </select>
+
         <button
           type="submit"
           className="min-h-11 rounded-full bg-brand-primary px-5 text-sm font-bold text-white hover:bg-brand-primary-deep"
         >
-          Search
+          Apply
         </button>
+
+        {(q || reason) && (
+          <Link
+            href="/admin/clients"
+            className="min-h-11 rounded-full border-2 border-border-subtle px-4 text-sm font-bold leading-[2.4] text-text-secondary hover:border-brand-secondary"
+          >
+            Clear
+          </Link>
+        )}
       </form>
+
+      {reason && (
+        <p className="mt-4 rounded-2xl border border-border-subtle bg-brand-secondary-tint p-4 text-sm text-brand-secondary-deep">
+          <strong>{rows.length}</strong> {rows.length === 1 ? "person has" : "people have"} asked
+          for an appointment about <strong>{humanize(reason)}</strong> at some point. Everyone
+          here is a fit for an offer on that service.
+        </p>
+      )}
 
       {rows.length === 0 ? (
         <p className="mt-10 rounded-2xl border border-border-subtle bg-surface p-8 text-center text-text-secondary">
-          {q ? `Nobody matches "${q}".` : "No one has contacted us through the site yet."}
+          {q || reason
+            ? "Nobody matches this filter."
+            : "No one has contacted us through the site yet."}
         </p>
       ) : (
         <div className="mt-6 overflow-x-auto rounded-2xl border border-border-subtle bg-surface">
@@ -117,6 +164,12 @@ export default async function ClientsPage({
                     >
                       {c.name}
                     </Link>
+                    {c.reasons.length > 0 && (
+                      <span className="mt-0.5 block text-xs capitalize text-text-secondary">
+                        {c.reasons.slice(0, 2).map(humanize).join(", ")}
+                        {c.reasons.length > 2 && ` +${c.reasons.length - 2}`}
+                      </span>
+                    )}
                   </td>
                   <td className="whitespace-nowrap px-4 py-3">
                     {c.phones.length > 0 ? formatPhone(c.phones[0]!) : "—"}

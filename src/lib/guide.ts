@@ -540,13 +540,22 @@ const LEADERSHIP_EXTRA_ES: readonly GuideSection[] = [
         kind: "steps",
         items: [
           "Busca por nombre, por teléfono o por correo. El teléfono funciona aunque lo escribas con guiones o sin ellos.",
+          "Filtra por motivo para sacar, por ejemplo, a todo el que alguna vez pidió cita por cataratas o por ojo seco. Debajo del nombre ves los motivos de cada persona sin tener que abrirla.",
           "Haz clic en el nombre para abrir el historial completo.",
-          "Print list saca el directorio en papel; el botón de imprimir dentro de una ficha saca sólo esa persona.",
+          "Print list saca en papel exactamente la lista que estás viendo, con el filtro aplicado; el botón de imprimir dentro de una ficha saca sólo esa persona.",
         ],
       },
       {
         kind: "note",
         text: "Las personas se agrupan por teléfono y por correo, porque el formulario no pide cuenta. Si dos familiares comparten teléfono pueden salir como una sola ficha: se nota al abrirla, porque los nombres del historial no coinciden.",
+      },
+      {
+        kind: "text",
+        text: "Para qué sirve el filtro por motivo: es la forma de preparar una oferta dirigida. Sacas la lista de quien vino por ojo seco y le ofreces una revisión de seguimiento, en vez de mandar la misma promoción a todo el mundo. El filtro mira TODO el historial, no sólo la última solicitud: quien preguntó por cataratas hace un año sigue apareciendo.",
+      },
+      {
+        kind: "warn",
+        text: "Antes de llamar u ofrecer algo, comprueba en la ficha el consentimiento de SMS de esa persona. Y recuerda que una oferta basada en un motivo de consulta es información de salud: no la pongas en el asunto de un correo ni en un mensaje que pueda leer alguien por encima del hombro.",
       },
       {
         kind: "warn",
@@ -770,13 +779,22 @@ const LEADERSHIP_EXTRA_EN: readonly GuideSection[] = [
         kind: "steps",
         items: [
           "Search by name, phone or email. The phone works with or without dashes.",
+          "Filter by reason to pull, say, everyone who has ever asked about cataracts or dry eye. Each person's reasons show under their name, so you do not have to open them one by one.",
           "Click the name to open the full history.",
-          "Print list prints the directory; the print button inside a record prints that one person.",
+          "Print list prints exactly the list you are looking at, filter included; the print button inside a record prints that one person.",
         ],
       },
       {
         kind: "note",
         text: "People are grouped by phone and email, because the form asks for no account. Two family members sharing a phone can end up as one record — you can tell on opening it, because the names in the history do not match.",
+      },
+      {
+        kind: "text",
+        text: "What the reason filter is for: building a targeted offer. Pull everyone who came about dry eye and offer them a follow-up check, instead of sending the same promotion to everybody. It looks at the WHOLE history, not just the latest request: someone who asked about cataracts a year ago still shows up.",
+      },
+      {
+        kind: "warn",
+        text: "Before calling or offering anything, check that person's SMS consent on their record. And remember that an offer built on a reason for visiting is health information: keep it out of an email subject line and out of a message someone could read over a shoulder.",
       },
       {
         kind: "warn",

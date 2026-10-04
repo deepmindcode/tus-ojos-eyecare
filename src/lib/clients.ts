@@ -53,6 +53,8 @@ export interface ClientRecord {
   readonly phones: readonly string[];
   readonly emails: readonly string[];
   readonly offices: readonly string[];
+  /** Motivos por los que ha pedido cita, del más repetido al menos. */
+  readonly reasons: readonly string[];
   readonly firstSeen: string;
   readonly lastSeen: string;
   readonly appointmentCount: number;
@@ -187,6 +189,18 @@ export function buildClients(sources: readonly ClientSource[]): ClientRecord[] {
 
     const offices = [...new Set(events.map((e) => e.office).filter(Boolean))] as string[];
 
+    // Los motivos, ordenados por cuántas veces los ha pedido: quien ha
+    // venido tres veces por ojo seco y una por gafas es, para una oferta,
+    // un caso de ojo seco.
+    const reasonCount = new Map<string, number>();
+    for (const e of events) {
+      if (e.kind !== "appointment" || !e.reason) continue;
+      reasonCount.set(e.reason, (reasonCount.get(e.reason) ?? 0) + 1);
+    }
+    const reasons = [...reasonCount.entries()]
+      .sort((x, y) => y[1] - x[1])
+      .map(([r]) => r);
+
     out.push({
       // La clave es el identificador menor del grupo: no cambia mientras
       // la persona siga usando los mismos datos.
@@ -195,6 +209,7 @@ export function buildClients(sources: readonly ClientSource[]): ClientRecord[] {
       phones,
       emails,
       offices,
+      reasons,
       firstSeen: events[events.length - 1]!.at,
       lastSeen: events[0]!.at,
       appointmentCount: events.filter((e) => e.kind === "appointment").length,
@@ -220,4 +235,23 @@ export function matchesQuery(c: ClientRecord, query: string): boolean {
     c.emails.some((e) => e.includes(q)) ||
     c.offices.some((o) => o.toLowerCase().includes(q))
   );
+}
+
+/**
+ * ¿Ha pedido cita alguna vez por este motivo?
+ *
+ * Es lo que permite sacar la lista de quien vino por cataratas o por ojo
+ * seco y ofrecerle algo que de verdad le sirva. Mira TODO el historial,
+ * no sólo la última solicitud: alguien que preguntó por ojo seco hace un
+ * año sigue siendo un caso de ojo seco.
+ */
+export function hasReason(c: ClientRecord, reason: string): boolean {
+  return c.reasons.includes(reason);
+}
+
+/** Los motivos presentes en el conjunto, para poblar el desplegable. */
+export function allReasons(clients: readonly ClientRecord[]): string[] {
+  const seen = new Set<string>();
+  for (const c of clients) for (const r of c.reasons) seen.add(r);
+  return [...seen].sort();
 }

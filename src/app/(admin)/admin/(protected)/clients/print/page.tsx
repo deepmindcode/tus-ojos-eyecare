@@ -3,10 +3,10 @@ import Link from "next/link";
 import { getAdminUser, can } from "@/lib/auth/roles";
 import { logAudit } from "@/lib/auth/audit";
 import { PrintButton } from "@/components/admin/print-button";
-import { formatPhone, matchesQuery } from "@/lib/clients";
+import { formatPhone, matchesQuery, hasReason } from "@/lib/clients";
 import { BRAND } from "@/config/site";
 import { officeClock } from "@/lib/office-time";
-import { loadClients, shortDate } from "../data";
+import { loadClients, shortDate, humanize } from "../data";
 
 /**
  * src/app/(admin)/admin/(protected)/clients/print/page.tsx
@@ -26,22 +26,24 @@ export const metadata = { title: "Clients — print" };
 export default async function ClientsPrintPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string; reason?: string }>;
 }) {
   const user = await getAdminUser();
   if (!can(user, "clients:read")) redirect("/admin");
 
   const sp = await searchParams;
   const q = sp.q?.trim() ?? "";
+  const reason = sp.reason?.trim() ?? "";
 
   const all = await loadClients();
-  const rows = q ? all.filter((c) => matchesQuery(c, q)) : all;
+  let rows = reason ? all.filter((c) => hasReason(c, reason)) : all;
+  if (q) rows = rows.filter((c) => matchesQuery(c, q));
 
   await logAudit({
     userId: user!.id,
     action: "client.directory_printed",
     objectType: "client",
-    details: { count: rows.length, filtered: q.length > 0 },
+    details: { count: rows.length, filtered: q.length > 0, reason: reason || "any" },
   });
 
   const printedAt = new Date();
@@ -65,6 +67,7 @@ export default async function ClientsPrintPage({
           </h1>
           <p className="mt-1 text-sm">
             <strong>{rows.length} people</strong>
+            {reason && ` who asked about ${humanize(reason)}`}
             {q && ` matching “${q}”`} · printed {shortDate(printedAt.toISOString())} at{" "}
             {officeClock(printedAt)}
           </p>
@@ -77,6 +80,7 @@ export default async function ClientsPrintPage({
               <th className="py-2 pr-3 font-bold">Phone</th>
               <th className="py-2 pr-3 font-bold">Email</th>
               <th className="py-2 pr-3 font-bold">Office</th>
+              <th className="py-2 pr-3 font-bold">Asked about</th>
               <th className="py-2 pr-3 text-center font-bold">Req.</th>
               <th className="py-2 pr-3 text-center font-bold">Msg.</th>
               <th className="py-2 pr-3 font-bold">First</th>
@@ -104,6 +108,9 @@ export default async function ClientsPrintPage({
                   {c.emails.length === 0 && "—"}
                 </td>
                 <td className="py-2 pr-3">{c.offices.join(", ") || "—"}</td>
+                <td className="py-2 pr-3 capitalize">
+                  {c.reasons.map(humanize).join(", ") || "—"}
+                </td>
                 <td className="py-2 pr-3 text-center tabular-nums">
                   {c.appointmentCount || "—"}
                 </td>
