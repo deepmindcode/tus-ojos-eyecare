@@ -549,7 +549,7 @@ const LEADERSHIP_EXTRA_ES: readonly GuideSection[] = [
       },
       {
         kind: "note",
-        text: "El directorio incluye 109 contactos traídos del sitio web anterior (mayo a septiembre de 2026), que es hasta donde llegaba el registro de correos del servidor. De esos registros antiguos no se sabe el motivo de consulta: el formulario de entonces no lo preguntaba, así que salen como «Other» y el filtro por motivo no los encuentra. Sus datos de contacto sí son buenos.",
+        text: "El directorio incluye 315 solicitudes traídas del correo del sitio web anterior, desde septiembre de 2023. De esos registros antiguos casi nunca se sabe el motivo: el formulario de entonces o no lo preguntaba, o su campo lo llenaron sobre todo los robots de spam. Salen como «Other» y el filtro por motivo no los encuentra; sus datos de contacto sí son buenos. En 57 tampoco quedó la sede, y esos sólo los ve dirección: nadie en recepción puede trabajar una solicitud sin saber a qué oficina va.",
       },
       {
         kind: "note",
@@ -792,7 +792,7 @@ const LEADERSHIP_EXTRA_EN: readonly GuideSection[] = [
       },
       {
         kind: "note",
-        text: "The directory includes 109 contacts carried over from the previous website (May to September 2026, as far back as the server's mail log went). Those old records have no reason for visiting — the form of the day never asked — so they show as \"Other\" and the reason filter will not find them. Their contact details are good.",
+        text: "The directory includes 315 requests carried over from the previous website's email, going back to September 2023. Those old records almost never carry a reason: the form of the day either did not ask, or its field was filled mostly by spam bots. They show as \"Other\" and the reason filter will not find them; their contact details are good. In 57 of them the office was not recorded either, and those are visible to leadership only — nobody at the front desk can work a request without knowing which office it is for.",
       },
       {
         kind: "note",
