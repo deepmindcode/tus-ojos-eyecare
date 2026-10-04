@@ -35,6 +35,9 @@ export const PERMISSIONS = {
   // Cifras agregadas del negocio: ningun dato de paciente, pero es
   // informacion de direccion.
   "metrics:read": ["SUPER_ADMIN", "OWNER"],
+  // Una campana escribe a cientos de personas en nombre del negocio.
+  // No es una accion de mostrador.
+  "campaigns:manage": ["SUPER_ADMIN", "OWNER"],
   "offers:create": ["SUPER_ADMIN", "OWNER", "MANAGER", "CONTENT_EDITOR"],
   "offers:publish": ["SUPER_ADMIN", "OWNER", "MANAGER"],
   "offers:redeem": ["SUPER_ADMIN", "OWNER", "MANAGER", "FRONT_DESK"],

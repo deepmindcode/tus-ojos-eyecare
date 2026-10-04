@@ -9,6 +9,7 @@ import {
   Tag,
   Contact,
   TrendingUp,
+  Megaphone,
   ScrollText,
   Users,
   BookOpen,
@@ -38,6 +39,7 @@ export function AdminShell({
   canManageOffers,
   canSeeClients,
   canSeeTrends,
+  canSeeCampaigns,
 }: {
   readonly children: React.ReactNode;
   readonly email: string;
@@ -47,6 +49,7 @@ export function AdminShell({
   readonly canManageOffers: boolean;
   readonly canSeeClients: boolean;
   readonly canSeeTrends: boolean;
+  readonly canSeeCampaigns: boolean;
 }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -62,6 +65,7 @@ export function AdminShell({
     // solo direccion.
     { href: "/admin/clients", label: "Clients", icon: Contact, show: canSeeClients },
     { href: "/admin/trends", label: "Trends", icon: TrendingUp, show: canSeeTrends },
+    { href: "/admin/campaigns", label: "Campaigns", icon: Megaphone, show: canSeeCampaigns },
     { href: "/admin/users", label: "Team", icon: Users, show: canManageUsers },
     { href: "/admin/audit", label: "Audit log", icon: ScrollText, show: canSeeAudit },
     // El manual lo ve todo el mundo; dentro cambia segun el rol.

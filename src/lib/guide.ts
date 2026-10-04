@@ -570,6 +570,56 @@ const LEADERSHIP_EXTRA_ES: readonly GuideSection[] = [
     ],
   },
   {
+    id: "campanas",
+    title: "Campaigns: ofertas por correo a un grupo",
+    blocks: [
+      {
+        kind: "text",
+        text: "Campaigns envía una oferta o un seguimiento por correo al grupo que elijas: una sede, un motivo, o las dos cosas a la vez. Usa los mismos filtros del directorio, así que lo que ves en Clients es a quien le va a llegar.",
+      },
+      {
+        kind: "steps",
+        items: [
+          "Nueva campaña. El nombre interno es sólo para ti; no se publica.",
+          "Elige el público: sede, motivo, o ambos. Vacío significa todos.",
+          "Elige una promoción si quieres que el correo lleve descuento. El botón del correo deja la cita con ese descuento ya anotado, así sabrás cuántas citas salieron del envío.",
+          "Escribe asunto y mensaje en español. El inglés es opcional y va debajo, en el mismo correo.",
+          "Guarda. Luego pulsa «Ver a cuántos va»: te dice cuántas personas quedan, cuántas ya lo recibieron, cuántas se dieron de baja y cuántas no tienen correo.",
+          "Envía una tanda de 25 o de 50. Repite otro día hasta terminar.",
+        ],
+      },
+      {
+        kind: "warn",
+        text: "No pongas el motivo de consulta en el asunto. «Oferta en lentes» sí; «Seguimiento de su ojo seco» no. El asunto se lee desde la pantalla bloqueada del teléfono, a veces con alguien al lado, y eso es información de salud.",
+      },
+      {
+        kind: "defs",
+        defs: [
+          {
+            term: "Por qué por tandas",
+            desc: "La lista lleva hasta tres años sin contacto. Soltar trescientos correos de golpe desde un dominio que apenas envía es la forma más rápida de acabar en la carpeta de spam, y se lleva por delante también los avisos de citas. Empieza por tandas pequeñas y ve subiendo.",
+          },
+          {
+            term: "Baja",
+            desc: "Cada correo lleva su enlace para darse de baja y la dirección postal del negocio. Son obligatorios por ley y el sistema los añade solo: no se pueden quitar. Quien se da de baja queda excluido de todos los envíos futuros, para siempre.",
+          },
+          {
+            term: "Nadie recibe dos veces",
+            desc: "Si vuelves a enviar una tanda, quien ya lo recibió no vuelve a recibirlo. Lo impide la base de datos, no hace falta que lo lleves tú.",
+          },
+          {
+            term: "Sólo correo",
+            desc: "Por mensaje de texto no se puede. Mandar promociones por SMS exige consentimiento previo por escrito, y los contactos importados del sitio anterior no lo tienen porque el formulario de entonces nunca lo pidió. Las multas van por mensaje. El formulario actual sí lo recoge, así que con los clientes nuevos esto cambiará.",
+          },
+        ],
+      },
+      {
+        kind: "note",
+        text: "Cada envío queda en el registro de actividad con tu nombre, cuántos salieron y cuántos fallaron.",
+      },
+    ],
+  },
+  {
     id: "inbox-direccion",
     title: "La bandeja: archivar y borrar",
     blocks: [
@@ -809,6 +859,56 @@ const LEADERSHIP_EXTRA_EN: readonly GuideSection[] = [
       {
         kind: "warn",
         text: "Leadership only, and for good reason: it gathers everyone's phone, email and reason for visiting in one place. Every record opened and every directory printed is written to the activity log under your name.",
+      },
+    ],
+  },
+  {
+    id: "campanas",
+    title: "Campaigns: offers by email to a group",
+    blocks: [
+      {
+        kind: "text",
+        text: "Campaigns sends an offer or a follow-up by email to the group you choose: one office, one reason, or both at once. It uses the same filters as the directory, so what you see in Clients is who will receive it.",
+      },
+      {
+        kind: "steps",
+        items: [
+          "New campaign. The internal name is yours only; it is never published.",
+          "Pick the audience: office, reason, or both. Empty means everyone.",
+          "Pick a promotion if the email should carry a discount. The button in the email lands the appointment with that discount already recorded, so you can see how many bookings came from the send.",
+          "Write subject and message in Spanish. English is optional and goes underneath, in the same email.",
+          "Save, then press \"Ver a cuántos va\": it tells you how many are left, how many already received it, how many unsubscribed and how many have no email.",
+          "Send a batch of 25 or 50. Repeat another day until it is finished.",
+        ],
+      },
+      {
+        kind: "warn",
+        text: "Keep the reason for visiting out of the subject line. \"Offer on frames\" yes; \"Follow-up on your dry eye\" no. Subject lines are read off a locked phone screen, sometimes with someone else beside it, and that is health information.",
+      },
+      {
+        kind: "defs",
+        defs: [
+          {
+            term: "Why in batches",
+            desc: "The list has gone up to three years without contact. Releasing three hundred emails at once from a domain that barely sends is the fastest route to the spam folder, and it takes the appointment notifications down with it. Start small and build up.",
+          },
+          {
+            term: "Unsubscribe",
+            desc: "Every email carries its unsubscribe link and the business postal address. Both are required by law and the system adds them itself: they cannot be removed. Anyone who unsubscribes is excluded from every future send, permanently.",
+          },
+          {
+            term: "Nobody gets it twice",
+            desc: "Re-sending a batch never writes to someone who already received it. The database prevents it; you do not have to keep track.",
+          },
+          {
+            term: "Email only",
+            desc: "Text messages are not possible. Marketing by SMS requires prior written consent, and the contacts imported from the previous site do not have it — the form of the day never asked. Fines are per message. The current form does collect it, so this will change with new clients.",
+          },
+        ],
+      },
+      {
+        kind: "note",
+        text: "Every send is written to the activity log with your name, how many went out and how many failed.",
       },
     ],
   },
