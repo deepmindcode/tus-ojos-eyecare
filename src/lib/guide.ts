@@ -482,6 +482,32 @@ const LEADERSHIP_EXTRA_ES: readonly GuideSection[] = [
     ],
   },
   {
+    id: "clientes",
+    title: "El directorio de clientes",
+    blocks: [
+      {
+        kind: "text",
+        text: "Clients es la lista de todas las personas que han escrito por el sitio, una fila por persona. Quien ha pedido cita tres veces aparece una sola vez con un 3 al lado; al abrirla ves cada solicitud y cada mensaje con su fecha, su sede y su motivo. Nada se sobrescribe cuando alguien vuelve: se añade al historial.",
+      },
+      {
+        kind: "steps",
+        items: [
+          "Busca por nombre, por teléfono o por correo. El teléfono funciona aunque lo escribas con guiones o sin ellos.",
+          "Haz clic en el nombre para abrir el historial completo.",
+          "Print list saca el directorio en papel; el botón de imprimir dentro de una ficha saca sólo esa persona.",
+        ],
+      },
+      {
+        kind: "note",
+        text: "Las personas se agrupan por teléfono y por correo, porque el formulario no pide cuenta. Si dos familiares comparten teléfono pueden salir como una sola ficha: se nota al abrirla, porque los nombres del historial no coinciden.",
+      },
+      {
+        kind: "warn",
+        text: "Esta pantalla sólo la ve dirección, y con motivo: reúne el teléfono, el correo y el motivo de consulta de todo el mundo en un sitio. Cada vez que se abre una ficha o se imprime el directorio queda anotado en el registro de actividad con tu nombre.",
+      },
+    ],
+  },
+  {
     id: "inbox-direccion",
     title: "La bandeja: archivar y borrar",
     blocks: [
@@ -635,6 +661,32 @@ const LEADERSHIP_EXTRA_EN: readonly GuideSection[] = [
       {
         kind: "note",
         text: "If a promotion belongs to one office and a request arrives from another, the system saves the appointment without the discount: the offer did not apply there.",
+      },
+    ],
+  },
+  {
+    id: "clientes",
+    title: "The client directory",
+    blocks: [
+      {
+        kind: "text",
+        text: "Clients lists everyone who has written through the site, one row per person. Someone who asked three times appears once with a 3 beside them; opening the row shows every request and message with its date, office and reason. Nothing is overwritten when a person comes back: it is added to the history.",
+      },
+      {
+        kind: "steps",
+        items: [
+          "Search by name, phone or email. The phone works with or without dashes.",
+          "Click the name to open the full history.",
+          "Print list prints the directory; the print button inside a record prints that one person.",
+        ],
+      },
+      {
+        kind: "note",
+        text: "People are grouped by phone and email, because the form asks for no account. Two family members sharing a phone can end up as one record — you can tell on opening it, because the names in the history do not match.",
+      },
+      {
+        kind: "warn",
+        text: "Leadership only, and for good reason: it gathers everyone's phone, email and reason for visiting in one place. Every record opened and every directory printed is written to the activity log under your name.",
       },
     ],
   },

@@ -27,6 +27,11 @@ export const PERMISSIONS = {
   "appointments:export": ["SUPER_ADMIN", "OWNER", "MANAGER", "FRONT_DESK"],
   "messages:read": ["SUPER_ADMIN", "OWNER", "MANAGER", "FRONT_DESK"],
   "messages:reply": ["SUPER_ADMIN", "OWNER", "MANAGER", "FRONT_DESK"],
+  // El directorio reúne en una pantalla el teléfono, el correo y el
+  // motivo de consulta de todo el que ha escrito. Recepción necesita la
+  // solicitud que está trabajando, no el expediente de todos: por eso
+  // esto es sólo de dirección.
+  "clients:read": ["SUPER_ADMIN", "OWNER"],
   "offers:create": ["SUPER_ADMIN", "OWNER", "MANAGER", "CONTENT_EDITOR"],
   "offers:publish": ["SUPER_ADMIN", "OWNER", "MANAGER"],
   "offers:redeem": ["SUPER_ADMIN", "OWNER", "MANAGER", "FRONT_DESK"],
