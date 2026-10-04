@@ -557,6 +557,32 @@ const LEADERSHIP_EXTRA_ES: readonly GuideSection[] = [
       },
     ],
   },
+  {
+    id: "cambios-web",
+    title: "Cambiar textos, fotos o datos del sitio",
+    blocks: [
+      {
+        kind: "text",
+        text: "Desde el panel se gestiona el trabajo del día: citas, mensajes, promociones y personal. El contenido del sitio público —los textos de los servicios, las fotos, las direcciones, los teléfonos y los horarios— se cambia pidiéndoselo al desarrollador.",
+      },
+      {
+        kind: "text",
+        text: "No es una limitación por descuido. Esas páginas llevan avisos legales, horarios que tienen que coincidir con la ficha de Google y texto escrito para que los buscadores encuentren la óptica. Un editor abierto permitiría romper cualquiera de esas tres cosas sin darse cuenta, y nadie notaría el daño hasta semanas después, cuando el teléfono deja de sonar.",
+      },
+      {
+        kind: "steps",
+        items: [
+          "Escribe o llama al desarrollador con el cambio concreto: qué página, qué dice ahora y qué debe decir.",
+          "Para una foto, mándala al tamaño original, sin recortar ni comprimir.",
+          "Si cambia un horario o un teléfono, dilo también para la ficha de Google: los dos sitios tienen que decir lo mismo.",
+        ],
+      },
+      {
+        kind: "warn",
+        text: "Los horarios y los teléfonos del sitio y los de Google Business Profile tienen que coincidir carácter a carácter. Cuando no coinciden, Google se queda con los suyos y el sitio pierde posiciones en las búsquedas de la zona.",
+      },
+    ],
+  },
 ];
 
 const LEADERSHIP_EXTRA_EN: readonly GuideSection[] = [
@@ -685,6 +711,32 @@ const LEADERSHIP_EXTRA_EN: readonly GuideSection[] = [
       {
         kind: "text",
         text: "Audit log keeps who did what and when: status changes, staff added and removed, password resets and deletions. It is the answer to \"who changed this\". It cannot be edited, not even by you.",
+      },
+    ],
+  },
+  {
+    id: "cambios-web",
+    title: "Changing site text, photos or details",
+    blocks: [
+      {
+        kind: "text",
+        text: "The panel runs the day's work: requests, messages, promotions and staff. The public site's content — service pages, photos, addresses, phone numbers and hours — is changed by asking the developer.",
+      },
+      {
+        kind: "text",
+        text: "That is not an oversight. Those pages carry legal notices, hours that must match the Google listing, and wording written so search engines find the practice. An open editor would let any of the three break unnoticed, and the damage would only show up weeks later, when the phone stops ringing.",
+      },
+      {
+        kind: "steps",
+        items: [
+          "Call or text the developer with the specific change: which page, what it says now, what it should say.",
+          "For a photo, send the original file, uncropped and uncompressed.",
+          "If an hour or a phone number changes, say so for the Google listing too: both have to say the same thing.",
+        ],
+      },
+      {
+        kind: "warn",
+        text: "Hours and phone numbers on the site and on the Google Business Profile have to match character for character. When they disagree, Google trusts its own and the site slips in local search.",
       },
     ],
   },
