@@ -38,14 +38,16 @@ export default async function CampaignsPage() {
     supabase.from("campaigns").select("*").order("created_at", { ascending: false }),
     supabase.from("campaign_sends").select("campaign_id, status"),
     supabase.from("locations").select("id, city").order("city"),
-    // Sólo promociones ACTIVAS. Una en borrador o programada se vería
-    // bien en el correo, pero el formulario de cita no la reconoce
-    // todavía: el cliente llegaría con la promesa de un descuento que no
-    // queda anotado en su solicitud, y eso se descubre en el mostrador.
+    // Dos condiciones. ACTIVA, porque una en borrador se vería bien en el
+    // correo pero el formulario de cita no la reconoce todavía y el
+    // cliente llegaría al mostrador con un descuento que no consta. Y
+    // marcada para campañas, porque no toda oferta de la web debe
+    // mandarse por correo sin que alguien lo decida.
     supabase
       .from("promotions")
       .select("id, internal_name, discount_label_es, status")
       .eq("status", "ACTIVE")
+      .eq("allow_campaign", true)
       .order("created_at", { ascending: false }),
   ]);
 

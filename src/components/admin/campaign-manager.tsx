@@ -202,12 +202,13 @@ export function CampaignManager({
               <>
                 {" "}
                 <strong className="text-text-primary">
-                  No hay ninguna promoción activa.
+                  No hay ninguna oferta disponible para campañas.
                 </strong>{" "}
-                El descuento no se escribe aquí: créalo primero en Offers y
-                publícalo. Sólo salen las activas, porque una en borrador se vería
-                en el correo pero el formulario de cita no la reconocería, y el
-                cliente llegaría al mostrador con un descuento que no consta.
+                El descuento no se escribe aquí: se crea en Offers. Para que
+                aparezca en esta lista tiene que estar <strong>activa</strong> y
+                tener marcada la casilla <strong>«Campañas por correo»</strong>.
+                Si marcas sólo ésa y no la del sitio, el descuento será exclusivo
+                de quien reciba el correo.
               </>
             )}
           </p>

@@ -36,7 +36,7 @@ export async function listPromotions(): Promise<PromotionRow[]> {
     supabase
       .from("promotions")
       .select(
-        "id, slug, internal_name, title_en, title_es, description_en, description_es, discount_label_en, discount_label_es, offer_terms_en, offer_terms_es, cta_label_en, cta_label_es, display_type, delay_seconds, frequency, start_at, end_at, status, is_demo, exclusive_location_id, locations:exclusive_location_id(slug)",
+        "id, slug, internal_name, title_en, title_es, description_en, description_es, discount_label_en, discount_label_es, offer_terms_en, offer_terms_es, cta_label_en, cta_label_es, display_type, delay_seconds, frequency, start_at, end_at, status, is_demo, show_popup, allow_campaign, exclusive_location_id, locations:exclusive_location_id(slug)",
       )
       .order("created_at", { ascending: false })
       .limit(100),
@@ -83,6 +83,8 @@ export async function listPromotions(): Promise<PromotionRow[]> {
       startAt: (p.start_at as string) ?? null,
       endAt: (p.end_at as string) ?? null,
       status: p.status as PromotionStatus,
+      showPopup: p.show_popup !== false,
+      allowCampaign: Boolean(p.allow_campaign),
       isDemo: Boolean(p.is_demo),
       impressions: m?.impressions ?? 0,
       ctaClicks: m?.ctaClicks ?? 0,
@@ -140,6 +142,12 @@ export async function savePromotion(input: PromotionInput) {
     display_type: input.displayType,
     delay_seconds: Math.max(3, input.delaySeconds),
     frequency: input.frequency,
+    // Dos destinos independientes. Una oferta puede ser solo del correo,
+    // solo de la web, o las dos: si fuera un unico interruptor no habria
+    // forma de premiar a quien recibe la campana con algo que el resto
+    // no ve.
+    show_popup: input.showPopup,
+    allow_campaign: input.allowCampaign,
     trigger_type: "delay",
     dismissible: true,
     start_at: input.startAt || null,

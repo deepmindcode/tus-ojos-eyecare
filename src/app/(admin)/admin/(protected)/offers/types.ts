@@ -35,6 +35,10 @@ export interface PromotionRow {
   readonly startAt: string | null;
   readonly endAt: string | null;
   readonly status: PromotionStatus;
+  /** Si sale como ventana emergente en el sitio. */
+  readonly showPopup: boolean;
+  /** Si puede elegirse como descuento de una campana de correo. */
+  readonly allowCampaign: boolean;
   readonly isDemo: boolean;
   readonly impressions: number;
   readonly ctaClicks: number;
@@ -60,6 +64,8 @@ export interface PromotionInput {
   displayType: string;
   delaySeconds: number;
   frequency: string;
+  showPopup: boolean;
+  allowCampaign: boolean;
   startAt: string;
   endAt: string;
 }

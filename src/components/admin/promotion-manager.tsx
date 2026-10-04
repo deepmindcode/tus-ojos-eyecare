@@ -113,6 +113,8 @@ function emptyDraft(): PromotionInput {
     ctaLabelEs: "Agendar ahora",
     exclusiveLocationSlug: "",
     displayType: "CORNER",
+    showPopup: true,
+    allowCampaign: false,
     delaySeconds: 7,
     frequency: "once_24h",
     startAt: "",
@@ -137,6 +139,8 @@ function toDraft(p: PromotionRow): PromotionInput {
     ctaLabelEs: p.ctaLabelEs ?? "",
     exclusiveLocationSlug: p.exclusiveLocationSlug ?? "",
     displayType: p.displayType,
+    showPopup: p.showPopup,
+    allowCampaign: p.allowCampaign,
     delaySeconds: p.delaySeconds,
     frequency: p.frequency,
     startAt: p.startAt ? p.startAt.slice(0, 16) : "",
@@ -452,6 +456,54 @@ export function PromotionManager({ initialPromotions, locations, canPublish }: P
             </div>
 
             {/* --- Comportamiento --- */}
+            {/* Dos destinos independientes. Sin esto, toda oferta
+                publicada salía como ventana emergente, y no había forma
+                de premiar a quien recibe la campaña con algo que el
+                resto del mundo no ve. */}
+            <fieldset className="sm:col-span-2">
+              <legend className={LABEL}>Dónde se usa esta oferta</legend>
+
+              <label className="mt-2 flex items-start gap-3 rounded-xl border border-border-subtle p-3">
+                <input
+                  type="checkbox"
+                  className="mt-1 size-4 shrink-0 accent-[#800080]"
+                  checked={draft.showPopup}
+                  onChange={(e) => set("showPopup", e.target.checked)}
+                />
+                <span className="text-sm">
+                  <strong>Ventana emergente en el sitio</strong>
+                  <span className="mt-0.5 block text-text-secondary">
+                    La ve cualquiera que entre en la web.
+                  </span>
+                </span>
+              </label>
+
+              <label className="mt-2 flex items-start gap-3 rounded-xl border border-border-subtle p-3">
+                <input
+                  type="checkbox"
+                  className="mt-1 size-4 shrink-0 accent-[#800080]"
+                  checked={draft.allowCampaign}
+                  onChange={(e) => set("allowCampaign", e.target.checked)}
+                />
+                <span className="text-sm">
+                  <strong>Campañas por correo</strong>
+                  <span className="mt-0.5 block text-text-secondary">
+                    Se puede elegir al escribir una campaña. Si marcas sólo
+                    ésta, el descuento es exclusivo de quien reciba el correo:
+                    no aparece en la web, pero su enlace sí deja la cita con el
+                    descuento anotado.
+                  </span>
+                </span>
+              </label>
+
+              {!draft.showPopup && !draft.allowCampaign && (
+                <p className="mt-2 text-xs font-semibold text-amber-900">
+                  Sin ninguna de las dos marcada, esta oferta no se mostrará en
+                  ningún sitio.
+                </p>
+              )}
+            </fieldset>
+
             <div>
               <label className={LABEL} htmlFor="p-display">
                 Dónde aparece
