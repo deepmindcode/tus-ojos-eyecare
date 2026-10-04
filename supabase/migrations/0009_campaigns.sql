@@ -16,32 +16,16 @@
 --      que impide que al reenviar una tanda le llegue dos veces a la
 --      misma persona: la base lo rechaza, no hace falta acordarse.
 
-CREATE TABLE IF NOT EXISTS public.email_unsubscribes (
-  email       citext PRIMARY KEY,
-  source      text NOT NULL DEFAULT 'link',
-  campaign_id uuid,
-  created_at  timestamptz NOT NULL DEFAULT now()
-);
-
-DO $$ BEGIN
-  CREATE TYPE campaign_status AS ENUM ('DRAFT','SENDING','PAUSED','SENT');
-EXCEPTION WHEN duplicate_object THEN NULL; END $$;
-
-CREATE TABLE IF NOT EXISTS public.campaigns (
-  id           uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
-  name         text NOT NULL,
-  subject_en   text NOT NULL,
-  subject_es   text NOT NULL,
-  body_en      text NOT NULL,
-  body_es      text NOT NULL,
-  location_id  uuid REFERENCES public.locations(id),
-  reason       appointment_reason,
-  promotion_id uuid REFERENCES public.promotions(id),
-  status       campaign_status NOT NULL DEFAULT 'DRAFT',
-  created_by   uuid REFERENCES auth.users(id),
-  created_at   timestamptz NOT NULL DEFAULT now(),
-  updated_at   timestamptz NOT NULL DEFAULT now()
-);
+-- `campaigns` y `email_unsubscribes` YA EXISTÍAN en la base antes de esta
+-- pantalla, con estos nombres de columna:
+--
+--   campaigns:          filter_location_id, filter_reason, status text
+--                       ('DRAFT','SENDING','SENT','CANCELLED'), cta_label_es
+--   email_unsubscribes: email citext (clave), source, created_at
+--
+-- Se dejan como estaban. Esta migración sólo añade lo que faltaba. Si
+-- alguna vez se recrea la base desde cero, esas dos tablas vienen de las
+-- migraciones anteriores, no de aquí.
 
 CREATE TABLE IF NOT EXISTS public.campaign_sends (
   id          uuid PRIMARY KEY DEFAULT uuid_generate_v4(),

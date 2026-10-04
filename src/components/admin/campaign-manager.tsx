@@ -100,8 +100,16 @@ export function CampaignManager({
     if (!editing) return;
     start(async () => {
       const res = await saveCampaign(editing);
-      setNotice(res.ok ? "Guardado." : "No se pudo guardar: revisa nombre, asunto y mensaje.");
-      if (res.ok) setEditing(null);
+      if (res.ok) {
+        setNotice("Guardado.");
+        setEditing(null);
+        return;
+      }
+      setNotice(
+        res.error === "missingFields"
+          ? "Falta algo: el nombre, el asunto en español y el mensaje en español son obligatorios."
+          : `No se pudo guardar. ${res.detail ?? ""}`.trim(),
+      );
     });
   }
 

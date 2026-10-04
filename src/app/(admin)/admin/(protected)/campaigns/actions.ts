@@ -48,14 +48,17 @@ export async function saveCampaign(input: CampaignInput) {
     return { ok: false as const, error: "missingFields" };
   }
 
+  // Los nombres de columna son los de la tabla, que ya existia antes de
+  // esta pantalla: filter_location_id y filter_reason, no location_id ni
+  // reason.
   const row = {
     name: input.name.trim(),
     subject_es: input.subjectEs.trim(),
     subject_en: (input.subjectEn || input.subjectEs).trim(),
     body_es: input.bodyEs.trim(),
-    body_en: input.bodyEn.trim(),
-    location_id: input.locationId || null,
-    reason: input.reason || null,
+    body_en: (input.bodyEn || input.bodyEs).trim(),
+    filter_location_id: input.locationId || null,
+    filter_reason: input.reason || null,
     promotion_id: input.promotionId || null,
     updated_at: new Date().toISOString(),
   };
@@ -70,7 +73,9 @@ export async function saveCampaign(input: CampaignInput) {
 
   if (error) {
     console.error("[campaigns] guardar:", error);
-    return { ok: false as const, error: "saveFailed" };
+    // Se devuelve el mensaje real. Decir "revisa nombre y asunto" cuando
+    // lo que fallo fue la base manda a buscar donde no hay nada.
+    return { ok: false as const, error: "saveFailed", detail: error.message };
   }
 
   await logAudit({
@@ -105,12 +110,12 @@ async function audienceFor(campaignId: string): Promise<Audience> {
 
   const { data: c } = await supabase
     .from("campaigns")
-    .select("location_id, reason, locations(city)")
+    .select("filter_location_id, filter_reason, locations:filter_location_id(city)")
     .eq("id", campaignId)
     .single();
 
   const city = (c?.locations as unknown as { city?: string } | null)?.city ?? null;
-  const reason = (c?.reason as string) ?? null;
+  const reason = (c?.filter_reason as string) ?? null;
 
   const clients = await loadClients();
 
@@ -180,7 +185,7 @@ export async function sendNextBatch(campaignId: string, size: number) {
 
   const { data: c } = await supabase
     .from("campaigns")
-    .select("subject_es, subject_en, body_es, body_en, promotion_id, promotions(slug, discount_label_es)")
+    .select("subject_es, body_es, body_en, cta_label_es, promotions(slug, discount_label_es)")
     .eq("id", campaignId)
     .single();
 
@@ -195,7 +200,7 @@ export async function sendNextBatch(campaignId: string, size: number) {
       bodyAlt: (c?.body_en as string) || null,
       discount: promo?.discount_label_es ?? null,
       ctaUrl: appointmentUrl(promo?.slug ?? null),
-      ctaLabel: "Pedir cita",
+      ctaLabel: (c?.cta_label_es as string) || "Pedir cita",
     },
     batch,
   );
