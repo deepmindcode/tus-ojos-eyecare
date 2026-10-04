@@ -32,6 +32,9 @@ export const PERMISSIONS = {
   // solicitud que está trabajando, no el expediente de todos: por eso
   // esto es sólo de dirección.
   "clients:read": ["SUPER_ADMIN", "OWNER"],
+  // Cifras agregadas del negocio: ningun dato de paciente, pero es
+  // informacion de direccion.
+  "metrics:read": ["SUPER_ADMIN", "OWNER"],
   "offers:create": ["SUPER_ADMIN", "OWNER", "MANAGER", "CONTENT_EDITOR"],
   "offers:publish": ["SUPER_ADMIN", "OWNER", "MANAGER"],
   "offers:redeem": ["SUPER_ADMIN", "OWNER", "MANAGER", "FRONT_DESK"],

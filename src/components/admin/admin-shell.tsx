@@ -8,6 +8,7 @@ import {
   Inbox,
   Tag,
   Contact,
+  TrendingUp,
   ScrollText,
   Users,
   BookOpen,
@@ -36,6 +37,7 @@ export function AdminShell({
   canManageUsers,
   canManageOffers,
   canSeeClients,
+  canSeeTrends,
 }: {
   readonly children: React.ReactNode;
   readonly email: string;
@@ -44,6 +46,7 @@ export function AdminShell({
   readonly canManageUsers: boolean;
   readonly canManageOffers: boolean;
   readonly canSeeClients: boolean;
+  readonly canSeeTrends: boolean;
 }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -58,6 +61,7 @@ export function AdminShell({
     // Reune los datos de contacto de todo el mundo en una pantalla:
     // solo direccion.
     { href: "/admin/clients", label: "Clients", icon: Contact, show: canSeeClients },
+    { href: "/admin/trends", label: "Trends", icon: TrendingUp, show: canSeeTrends },
     { href: "/admin/users", label: "Team", icon: Users, show: canManageUsers },
     { href: "/admin/audit", label: "Audit log", icon: ScrollText, show: canSeeAudit },
     // El manual lo ve todo el mundo; dentro cambia segun el rol.

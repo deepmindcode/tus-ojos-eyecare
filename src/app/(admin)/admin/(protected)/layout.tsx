@@ -30,6 +30,7 @@ export default async function ProtectedAdminLayout({
       canManageUsers={can(user, "users:manage")}
       canManageOffers={can(user, "offers:create")}
       canSeeClients={can(user, "clients:read")}
+      canSeeTrends={can(user, "metrics:read")}
     >
       {children}
     </AdminShell>

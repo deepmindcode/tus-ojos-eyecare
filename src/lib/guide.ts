@@ -482,6 +482,53 @@ const LEADERSHIP_EXTRA_ES: readonly GuideSection[] = [
     ],
   },
   {
+    id: "trends",
+    title: "Trends: en qué meses y años hay más solicitudes",
+    blocks: [
+      {
+        kind: "text",
+        text: "Trends responde a dos preguntas: cuándo entra el trabajo y por qué viene la gente. Arriba hay cuatro cifras de un vistazo —total de solicitudes, mes más cargado, motivo más pedido y mensajes de contacto— y debajo las gráficas con el número y el porcentaje de cada barra.",
+      },
+      {
+        kind: "defs",
+        defs: [
+          {
+            term: "Solicitudes por mes",
+            desc: "Por defecto suma TODOS los años en los doce meses. Eso es lo que enseña la temporada: si septiembre es alto cada año, se ve de golpe. Elige un año arriba para ver sólo ése.",
+          },
+          {
+            term: "Por qué piden cita",
+            desc: "Los motivos ordenados de mayor a menor, con cuántas solicitudes y qué porcentaje del total. Es lo que dice en qué conviene invertir y de qué hablar en las promociones.",
+          },
+          {
+            term: "Solicitudes por sede",
+            desc: "El reparto entre Camden, Philadelphia y Cherry Hill en el periodo elegido.",
+          },
+          {
+            term: "Solicitudes por año",
+            desc: "Siempre el histórico completo, sin filtrar: su trabajo es comparar un año con otro.",
+          },
+        ],
+      },
+      {
+        kind: "steps",
+        items: [
+          "Los botones de año de arriba afectan a todo lo de abajo a la vez.",
+          "Pasa el ratón por una barra para ver el mes, la cifra y el porcentaje.",
+          "Debajo de la gráfica de meses, «Show the numbers» abre la tabla con los mismos datos, por si prefieres leerlos o imprimirlos.",
+        ],
+      },
+      {
+        kind: "note",
+        text: "Sólo se etiqueta con su cifra la barra más alta. Poner el número sobre las doce convierte la gráfica en ruido; el resto se lee pasando el ratón o en la tabla.",
+      },
+      {
+        kind: "warn",
+        text: "Aquí se cuentan SOLICITUDES RECIBIDAS, no citas cumplidas. Un mes con muchas solicitudes y pocas confirmadas no es un buen mes: es un mes en el que no se devolvieron las llamadas. Para eso está el filtro Needs follow-up en Appointments.",
+      },
+    ],
+  },
+  {
     id: "clientes",
     title: "El directorio de clientes",
     blocks: [
@@ -661,6 +708,53 @@ const LEADERSHIP_EXTRA_EN: readonly GuideSection[] = [
       {
         kind: "note",
         text: "If a promotion belongs to one office and a request arrives from another, the system saves the appointment without the discount: the offer did not apply there.",
+      },
+    ],
+  },
+  {
+    id: "trends",
+    title: "Trends: which months and years bring the most requests",
+    blocks: [
+      {
+        kind: "text",
+        text: "Trends answers two questions: when the work arrives, and why people come. Four figures at a glance across the top — total requests, busiest month, most requested reason and contact messages — and below them the charts, each bar carrying its count and its share.",
+      },
+      {
+        kind: "defs",
+        defs: [
+          {
+            term: "Requests by month",
+            desc: "By default it adds up EVERY year into twelve months. That is what shows the season: if September runs high year after year, it is obvious at once. Pick a year at the top to see that one alone.",
+          },
+          {
+            term: "Why they ask for an appointment",
+            desc: "Reasons ranked highest to lowest, with the count and the share of the total. This is what tells you where to invest and what the promotions should talk about.",
+          },
+          {
+            term: "Requests by office",
+            desc: "How the chosen period splits across Camden, Philadelphia and Cherry Hill.",
+          },
+          {
+            term: "Requests by year",
+            desc: "Always the full history, unfiltered: its job is to compare one year with another.",
+          },
+        ],
+      },
+      {
+        kind: "steps",
+        items: [
+          "The year buttons at the top scope everything below them at once.",
+          "Hover a bar to see the month, the count and the percentage.",
+          "Under the month chart, \"Show the numbers\" opens a table with the same data, for reading or printing.",
+        ],
+      },
+      {
+        kind: "note",
+        text: "Only the tallest bar carries its figure. A number on all twelve turns the chart into noise; the rest is read on hover or in the table.",
+      },
+      {
+        kind: "warn",
+        text: "These are REQUESTS RECEIVED, not appointments kept. A month with many requests and few confirmed is not a good month: it is a month where the calls were not returned. The Needs follow-up filter in Appointments is what shows that.",
       },
     ],
   },
