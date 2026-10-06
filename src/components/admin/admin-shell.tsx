@@ -13,6 +13,7 @@ import {
   ScrollText,
   Users,
   BookOpen,
+  History,
   KeyRound,
   LogOut,
   Menu,
@@ -70,6 +71,8 @@ export function AdminShell({
     { href: "/admin/audit", label: "Audit log", icon: ScrollText, show: canSeeAudit },
     // El manual lo ve todo el mundo; dentro cambia segun el rol.
     { href: "/admin/guide", label: "Guide", icon: BookOpen, show: true },
+    // Control de versiones del sitio: informacion de direccion.
+    { href: "/admin/updates", label: "Updates", icon: History, show: canManageUsers },
   ].filter((n) => n.show);
 
   async function signOut() {
