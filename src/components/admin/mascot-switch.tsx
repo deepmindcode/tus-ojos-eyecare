@@ -107,8 +107,9 @@ export function MascotSwitch({
             sale, para no apilar dos tarjetas en un teléfono.
           </p>
           <p className="mt-1.5 text-sm text-text-secondary">
-            Sale una vez al día por visitante. Nunca en las páginas legales ni en
-            el formulario de cita.
+            Aparece abajo a un lado de las páginas públicas —inicio, servicios,
+            salud visual, sedes, nosotros— unos segundos después de cargar.
+            Nunca en las páginas legales, en el formulario de cita ni aquí dentro.
           </p>
 
           {/* La frecuencia se puede ajustar aunque este apagado: asi se
