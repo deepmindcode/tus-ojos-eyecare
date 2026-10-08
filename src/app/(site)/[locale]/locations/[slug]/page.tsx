@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { LOCATIONS } from "@/config/site";
+import { routing } from "@/i18n/routing";
 import { loadContent } from "@/lib/content";
 import { ContentPageBody } from "@/components/content/content-page";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -19,6 +20,16 @@ import { opticianSchema, breadcrumbSchema } from "@/lib/schema";
 function findLocation(slug: string) {
   return LOCATIONS.find(
     (l) => l.active && (l.slug === slug || l.slugES === slug),
+  );
+}
+
+/**
+ * Son tres sedes y estan en el codigo: prerenderizar las seis paginas
+ * (tres por dos idiomas) no cuesta nada y evita el primer render lento.
+ */
+export async function generateStaticParams() {
+  return routing.locales.flatMap((locale) =>
+    LOCATIONS.map((l) => ({ locale, slug: l.slug })),
   );
 }
 

@@ -27,6 +27,27 @@ export interface Release {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: 18,
+    date: "2026-10-08",
+    title: { es: "El sitio va más rápido", en: "The site is faster" },
+    changes: {
+      es: [
+        "Las páginas del sitio descargan bastante menos: se quitó un archivo pesado que viajaba a todas ellas sin hacer falta.",
+        "Las páginas de servicios, de salud visual y de cada sede ahora están listas de antemano, así que la primera persona que entra ya no espera a que se preparen.",
+        "El logotipo y la foto de la página «Nosotros» se descargan al tamaño en que se ven, no a diez veces más.",
+        "Las imágenes y los iconos se quedan guardados en el navegador: a partir de la segunda visita no se vuelven a descargar.",
+        "El panel responde más rápido en las pantallas con muchas filas, como el directorio de clientes y las campañas.",
+      ],
+      en: [
+        "Pages download considerably less: a heavy file that was travelling to all of them unnecessarily was removed.",
+        "The service, eye-health and office pages are now prepared in advance, so the first visitor no longer waits for them to be built.",
+        "The logo and the photo on the About page now download at the size they are shown, not ten times larger.",
+        "Images and icons stay in the browser: from the second visit on they are not downloaded again.",
+        "The panel responds faster on screens with many rows, such as the client directory and campaigns.",
+      ],
+    },
+  },
+  {
     version: 17,
     date: "2026-10-08",
     title: {

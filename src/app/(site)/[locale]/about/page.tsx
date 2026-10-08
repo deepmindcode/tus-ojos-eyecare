@@ -86,6 +86,10 @@ export default async function AboutPage({
               alt={t("owner.photoAlt")}
               width={880}
               height={1100}
+              /* El hueco real es ~480 px en escritorio y ~360 en movil.
+                 Sin esto el navegador asumia el ancho completo de la
+                 pantalla y se bajaba la version mas grande. */
+              sizes="(max-width: 1024px) 92vw, 42vw"
               className="h-auto w-full object-cover"
             />
           </div>

@@ -52,8 +52,21 @@ export function LogoLockup({
     <Image
       src={variant === "dark" ? "/brand/logo-lockup-dark.png" : "/brand/logo-lockup.png"}
       alt={alt}
-      width={700}
-      height={194}
+      /*
+       * 290x80 y no el tamaño del archivo (700x193).
+       *
+       * `h-10` son 40 px de alto, o sea 145 px de ancho pintados. Con
+       * width=700 Next generaba un srcset de 700w y 1400w, y un móvil
+       * con pantalla de doble densidad se bajaba una imagen de 1400 px
+       * para un hueco de 145. Estas medidas son exactamente el doble de
+       * lo que se ve: nítido en pantallas densas y nada más.
+       *
+       * Va en todas las páginas y encima del pliegue, así que es de lo
+       * poco que retrasa lo primero que el visitante ve.
+       */
+      width={290}
+      height={80}
+      sizes="145px"
       priority={priority}
       className={`h-10 w-auto ${className ?? ""}`}
     />

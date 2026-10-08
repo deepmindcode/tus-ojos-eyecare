@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import { X, Tag } from "lucide-react";
-import { createClient } from "@/lib/supabase/client";
 import { consentPending } from "@/components/layout/cookie-notice";
 
 /**
@@ -98,14 +97,21 @@ export function PromotionPopup() {
     neutralPath.startsWith("/appointment") ||
     pathname.startsWith("/admin");
 
+  /**
+   * Las estadisticas van por una ruta del propio sitio, no a Supabase.
+   *
+   * keepalive para que el evento salga aunque la persona cierre la
+   * pestana en ese mismo instante: sin el, "dismiss" y "click" se
+   * perderian justo en los casos que mas interesa contar.
+   */
   const track = useCallback(
     (event: string, id: string) => {
-      void createClient().rpc("track_promotion_event", {
-        p_promotion_id: id,
-        p_event: event,
-        p_locale: locale,
-        p_location: null,
-      });
+      void fetch("/api/promotion/event", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, event, locale }),
+        keepalive: true,
+      }).catch(() => {});
     },
     [locale],
   );
@@ -118,12 +124,20 @@ export function PromotionPopup() {
     let cancelled = false;
 
     async function load() {
-      const { data, error } = await createClient()
-        .rpc("get_promotion_for_page", { p_path: neutralPath, p_locale: locale })
-        .maybeSingle();
+      let data: unknown = null;
+      try {
+        const res = await fetch(
+          `/api/promotion?path=${encodeURIComponent(neutralPath)}&locale=${locale}`,
+        );
+        if (!res.ok) return;
+        data = await res.json();
+      } catch {
+        // Sin promocion no pasa nada: la pagina funciona igual.
+        return;
+      }
 
-      if (cancelled || error || !data) return;
-      const p = data as unknown as Promotion;
+      if (cancelled || !data) return;
+      const p = data as Promotion;
       if (wasSeen(p.slug, p.frequency)) return;
 
       const timer = setTimeout(

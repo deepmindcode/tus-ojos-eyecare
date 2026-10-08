@@ -85,6 +85,16 @@ const nextConfig: NextConfig = {
           { key: "Cache-Control", value: "no-store, max-age=0, must-revalidate" },
         ],
       },
+      // Los archivos de `public/` no cambian nunca sin cambiar de nombre:
+      // el logotipo, la foto, los iconos. Sin esta cabecera el navegador
+      // vuelve a preguntar por ellos en cada visita aunque ya los tenga.
+      //
+      // Va DESPUES de la regla de /admin a proposito: las reglas se
+      // acumulan en orden y no debe pisar el `no-store` del panel.
+      {
+        source: "/:file(.*\\.(?:png|jpg|jpeg|svg|webp|avif|ico|woff2))",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
     ];
   },
 
@@ -99,6 +109,10 @@ const nextConfig: NextConfig = {
     ],
     // Un SVG subido al CMS puede contener <script>. No lo habilites.
     dangerouslyAllowSVG: false,
+    // Una foto reescalada se guarda un ano. El valor por defecto son 60
+    // segundos, y con eso el optimizador vuelve a recodificar la misma
+    // imagen una y otra vez sin que nada haya cambiado.
+    minimumCacheTTL: 31_536_000,
   },
   typescript: { ignoreBuildErrors: false },
 };

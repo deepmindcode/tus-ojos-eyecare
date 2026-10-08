@@ -43,13 +43,19 @@ export async function middleware(request: NextRequest) {
   }
 
   // ------------------------------------------------------------------
-  // Sitio público: primero next-intl resuelve el locale y la ruta
-  // localizada, después refrescamos la sesión sobre ESA respuesta para
-  // no perder las cookies en una redirección de idioma.
+  // Sitio público: sólo next-intl resuelve el locale y la ruta
+  // localizada. Nada más.
+  //
+  // Aquí ya NO se refresca la sesión. Antes se hacía, y costaba dos
+  // cosas en cada visita de cada persona: construir un cliente de
+  // autenticación que nadie iba a usar —ninguna página pública lee el
+  // usuario—, y, a quien tuviera sesión abierta, devolverle una cookie
+  // nueva, lo que impide que la CDN guarde esa respuesta y la reutilice.
+  //
+  // La sesión del equipo se sigue refrescando donde importa: cada
+  // visita a /admin pasa por la rama de arriba.
   // ------------------------------------------------------------------
-  const response = intlMiddleware(request);
-  const { response: withSession } = await updateSession(request, response);
-  return withSession;
+  return intlMiddleware(request);
 }
 
 export const config = {

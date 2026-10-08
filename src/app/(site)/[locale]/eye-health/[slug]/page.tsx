@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { loadContent } from "@/lib/content";
+import { loadContent, listContentSlugs } from "@/lib/content";
+import { routing } from "@/i18n/routing";
 import { ContentPageBody } from "@/components/content/content-page";
 import { JsonLd } from "@/components/seo/json-ld";
 import { articleSchema } from "@/lib/schema";
@@ -11,6 +12,19 @@ import { articleSchema } from "@/lib/schema";
  * Articulo de salud visual. El slug es el nombre del archivo, igual en
  * los dos idiomas; lo que cambia es el tramo de la URL (/salud-visual/).
  */
+
+/**
+ * Prerenderizado de todas las fichas en las dos lenguas.
+ *
+ * Antes no estaba, por no tener que mantener una lista a mano. Pero la
+ * lista no hace falta escribirla: `listContentSlugs` lee la carpeta, y
+ * ya se usaba para el sitemap. Sin esto, la primera persona que entra a
+ * cada ficha despues de publicar espera a que se genere.
+ */
+export async function generateStaticParams() {
+  const slugs = await listContentSlugs("eye-health");
+  return routing.locales.flatMap((locale) => slugs.map((slug) => ({ locale, slug })));
+}
 
 export async function generateMetadata({
   params,
