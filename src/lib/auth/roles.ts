@@ -39,6 +39,10 @@ export const PERMISSIONS = {
   // No es una accion de mostrador.
   "campaigns:manage": ["SUPER_ADMIN", "OWNER"],
   "offers:create": ["SUPER_ADMIN", "OWNER", "MANAGER", "CONTENT_EDITOR"],
+  // Encender o apagar a Manzanito cambia lo que ve TODO visitante del
+  // sitio, no una oferta concreta. Por eso no basta con poder crear
+  // ofertas: es decision de direccion.
+  "mascot:manage": ["SUPER_ADMIN", "OWNER"],
   "offers:publish": ["SUPER_ADMIN", "OWNER", "MANAGER"],
   "offers:redeem": ["SUPER_ADMIN", "OWNER", "MANAGER", "FRONT_DESK"],
   "content:edit": ["SUPER_ADMIN", "OWNER", "MANAGER", "CONTENT_EDITOR"],

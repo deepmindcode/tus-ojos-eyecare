@@ -1,422 +1,297 @@
 <title>Manzanito</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&display=swap">
-
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Source+Sans+3:wght@400;600;700&display=swap">
 <style>
-  /* Escenario claro con el personaje abajo; los controles debajo, en una
-     tira aparte, para que nada tape la animación. */
-  :root {
-    --purple:      #800080;
-    --purple-deep: #6b006b;
-    --purple-tint: #f6e8f6;
-    --teal:        #008080;
-    --teal-deep:   #005f5f;
-    --teal-tint:   #e3f0f0;
-    --apple:       #c8372d;
-    --apple-dark:  #9c২b23;
-    --bg:          #eef1f0;
-    --surface:     #ffffff;
-    --ink:         #1d2422;
-    --ink-soft:    #55605d;
-    --line:        #dde4e2;
-    --stage:       #f7f9f8;
+:root{
+  --purple:#800080;--purple-deep:#6b006b;--purple-tint:#f6e8f6;
+  --teal:#008080;--teal-deep:#005f5f;--teal-tint:#e3f0f0;
+  --bg:#eef1f0;--surface:#fff;--ink:#1d2422;--ink-soft:#55605d;--line:#dde4e2;--stage:#f7f9f8;
+  --display:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --body:"Source Sans 3",system-ui,-apple-system,sans-serif;
+  /* los nombres que usa el CSS real del componente */
+  --color-surface:#fff;--color-text-primary:#1d2422;--color-text-secondary:#55605d;
+  --color-brand-primary:#800080;--color-brand-primary-deep:#6b006b;--color-brand-primary-tint:#f6e8f6;
+  --color-brand-secondary-deep:#005f5f;--color-brand-secondary-tint:#e3f0f0;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --purple:#d98ad9;--purple-deep:#eab4ea;--purple-tint:#2e1a2e;
+  --teal:#5fc2c2;--teal-deep:#8ad8d8;--teal-tint:#142a2a;
+  --bg:#141a19;--surface:#1e2726;--ink:#eef3f1;--ink-soft:#a3b0ad;--line:#2c3837;--stage:#192120;
+  --color-surface:#1e2726;--color-text-primary:#eef3f1;--color-text-secondary:#a3b0ad;
+  --color-brand-primary:#d98ad9;--color-brand-primary-deep:#eab4ea;--color-brand-primary-tint:#2e1a2e;
+  --color-brand-secondary-deep:#8ad8d8;--color-brand-secondary-tint:#142a2a;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --purple:#d98ad9;--purple-deep:#eab4ea;--purple-tint:#2e1a2e;
+  --teal:#5fc2c2;--teal-deep:#8ad8d8;--teal-tint:#142a2a;
+  --bg:#141a19;--surface:#1e2726;--ink:#eef3f1;--ink-soft:#a3b0ad;--line:#2c3837;--stage:#192120;
+  --color-surface:#1e2726;--color-text-primary:#eef3f1;--color-text-secondary:#a3b0ad;
+  --color-brand-primary:#d98ad9;--color-brand-primary-deep:#eab4ea;--color-brand-primary-tint:#2e1a2e;
+  --color-brand-secondary-deep:#8ad8d8;--color-brand-secondary-tint:#142a2a;
+  color-scheme:dark}
 
-    --display: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
-    --body: "Source Sans 3", system-ui, -apple-system, sans-serif;
-  }
-  :root { --apple-dark: #9c2b23; }
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;
+ padding-inline:16px;padding-block:28px 56px}
+.wrap{max-width:760px;margin-inline:auto;display:grid;gap:22px}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(1.7rem,5vw,2.4rem);letter-spacing:-.02em;
+ line-height:1.1;margin:0;color:var(--purple);text-wrap:balance}
+.lede{margin:0;color:var(--ink-soft);max-width:62ch}
+.stage{position:relative;height:330px;border:1px solid var(--line);border-radius:18px;
+ background:var(--stage);overflow:hidden}
+.stage::after{content:"";position:absolute;inset-inline:0;bottom:14px;border-bottom:2px dashed var(--line)}
+.stage-tag{position:absolute;top:12px;left:14px;font-size:.72rem;font-weight:700;letter-spacing:.08em;
+ text-transform:uppercase;color:var(--ink-soft)}
 
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --purple: #d98ad9; --purple-deep: #eab4ea; --purple-tint: #2e1a2e;
-      --teal: #5fc2c2; --teal-deep: #8ad8d8; --teal-tint: #142a2a;
-      --apple: #d8574c; --apple-dark: #a8382f;
-      --bg: #141a19; --surface: #1e2726; --ink: #eef3f1; --ink-soft: #a3b0ad;
-      --line: #2c3837; --stage: #192120;
-      color-scheme: dark;
-    }
-  }
-  :root[data-theme="dark"] {
-    --purple: #d98ad9; --purple-deep: #eab4ea; --purple-tint: #2e1a2e;
-    --teal: #5fc2c2; --teal-deep: #8ad8d8; --teal-tint: #142a2a;
-    --apple: #d8574c; --apple-dark: #a8382f;
-    --bg: #141a19; --surface: #1e2726; --ink: #eef3f1; --ink-soft: #a3b0ad;
-    --line: #2c3837; --stage: #192120;
-    color-scheme: dark;
-  }
+/* ---- CSS REAL del componente, copiado tal cual al generar ---- */
 
-  body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: var(--body);
-    font-size: 16px;
-    line-height: 1.55;
-    padding-inline: 16px;
-    padding-block: 28px 56px;
-  }
-  .wrap { max-width: 760px; margin-inline: auto; display: grid; gap: 22px; }
+.mz{position:fixed;bottom:16px;z-index:60;width:116px;pointer-events:none}
+.mz-bubble,.mz-toon{pointer-events:auto}
+.mz-left{left:16px;transform:translateX(-280px)}
+.mz-right{right:16px;transform:translateX(280px)}
+.mz-walking,.mz-talking{transform:translateX(0);transition:transform 2.1s cubic-bezier(.33,.02,.45,1)}
+.mz-leaving{opacity:0;transition:opacity .3s ease}
+.mz-toon{display:block;width:100%;height:auto;overflow:visible;filter:drop-shadow(0 6px 10px rgb(0 0 0/.18))}
+.mz-walking .mz-toon{animation:mzbob .36s ease-in-out infinite}
+@keyframes mzbob{0%,100%{translate:0 0}50%{translate:0 -4px}}
+.mz-leg{transform-box:view-box;transform-origin:48px 112px}
+.mz-leg.mz-r{transform-origin:62px 112px}
+.mz-walking .mz-leg{animation:mzstep .36s ease-in-out infinite}
+.mz-walking .mz-leg.mz-r{animation-delay:-.18s}
+@keyframes mzstep{0%,100%{transform:rotate(15deg)}50%{transform:rotate(-15deg)}}
+.mz-arm{transform-box:view-box;transform-origin:34px 78px}
+.mz-arm.mz-r{transform-origin:76px 78px}
+.mz-walking .mz-arm{animation:mzswing .36s ease-in-out infinite}
+.mz-walking .mz-arm.mz-r{animation-delay:-.18s}
+@keyframes mzswing{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(10deg)}}
+.mz-talking .mz-arm.mz-r{animation:mzwave .6s ease-in-out 3}
+@keyframes mzwave{0%,100%{transform:rotate(0)}35%{transform:rotate(42deg)}70%{transform:rotate(18deg)}}
+.mz-lid{transform-box:view-box;transform-origin:55px 20px;transform:scaleY(0);animation:mzblink 5.4s infinite}
+@keyframes mzblink{0%,94%,100%{transform:scaleY(0)}96%,97%{transform:scaleY(1)}}
+.mz-bubble{position:absolute;bottom:calc(100% - 4px);width:236px;max-width:calc(100vw - 48px);
+ background:var(--color-surface,#fff);color:var(--color-text-primary,#1d2422);
+ border:2px solid var(--color-brand-primary,#800080);border-radius:16px;padding:13px 14px 14px;
+ box-shadow:0 12px 30px rgb(0 0 0/.16);opacity:0;transform:scale(.84) translateY(8px);
+ transition:opacity .22s ease,transform .3s cubic-bezier(.2,1.5,.5,1)}
+.mz-left .mz-bubble{left:0;transform-origin:bottom left}
+.mz-right .mz-bubble{right:0;transform-origin:bottom right}
+.mz-talking .mz-bubble{opacity:1;transform:scale(1) translateY(0)}
+.mz-bubble::after{content:"";position:absolute;top:100%;width:14px;height:14px;
+ background:var(--color-surface,#fff);border-right:2px solid var(--color-brand-primary,#800080);
+ border-bottom:2px solid var(--color-brand-primary,#800080);transform:translateY(-8px) rotate(45deg)}
+.mz-left .mz-bubble::after{left:34px}
+.mz-right .mz-bubble::after{right:34px}
+.mz-say{margin:0 14px 9px 0;font-size:.92rem;line-height:1.4}
+.mz-deal{margin:0 0 10px;font-weight:800;font-size:.95rem;color:var(--color-brand-secondary-deep,#005f5f);
+ background:var(--color-brand-secondary-tint,#e3f0f0);border-radius:9px;padding:7px 9px}
+.mz-cta{display:flex;align-items:center;justify-content:center;min-height:42px;
+ background:var(--color-brand-primary,#800080);color:#fff;border-radius:999px;
+ font-weight:700;font-size:.9rem;text-decoration:none}
+.mz-cta:hover{background:var(--color-brand-primary-deep,#6b006b)}
+.mz-x{position:absolute;top:4px;right:4px;width:30px;height:30px;display:grid;place-items:center;
+ background:none;border:0;border-radius:50%;color:var(--color-text-secondary,#55605d);
+ font-size:15px;line-height:1;cursor:pointer}
+.mz-x:hover{background:var(--color-brand-primary-tint,#f6e8f6);color:var(--color-brand-primary,#800080)}
+@media (max-width:640px){.mz{width:92px;bottom:88px}.mz-bubble{width:210px}}
+@media (prefers-reduced-motion:reduce){
+ .mz-walking,.mz-talking{transition:none}
+ .mz-toon,.mz-leg,.mz-arm,.mz-lid{animation:none!important}
+}
 
-  h1 {
-    font-family: var(--display);
-    font-weight: 800;
-    font-size: clamp(1.7rem, 5vw, 2.4rem);
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-    margin: 0;
-    text-wrap: balance;
-    color: var(--purple);
-  }
-  .lede { margin: 0; color: var(--ink-soft); max-width: 62ch; }
+/* ---- sólo para la vista previa: dentro del escenario, no en la ventana ---- */
+.stage .mz{position:absolute;bottom:14px;z-index:1}
+@media (max-width:640px){.stage .mz{bottom:14px}}
 
-  /* ---------- escenario ---------- */
-  .stage {
-    position: relative;
-    height: 320px;
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    background:
-      linear-gradient(var(--stage), var(--stage)) padding-box,
-      var(--stage);
-    overflow: hidden;
-  }
-  .stage::after {
-    /* línea de suelo, para que se entienda que camina sobre algo */
-    content: "";
-    position: absolute; inset-inline: 0; bottom: 26px;
-    border-bottom: 2px dashed var(--line);
-  }
-  .stage-tag {
-    position: absolute; top: 12px; left: 14px;
-    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
-    text-transform: uppercase; color: var(--ink-soft);
-  }
-
-  /* ---------- Manzanito ---------- */
-  #manzanito {
-    position: absolute;
-    bottom: 22px;
-    width: 128px;
-    opacity: 0;
-    pointer-events: none;
-  }
-  #manzanito.live { opacity: 1; pointer-events: auto; }
-
-  #manzanito.side-left  { left: 22px;  transform: translateX(-260px); }
-  #manzanito.side-right { right: 22px; transform: translateX(260px); }
-  #manzanito.arrived    { transform: translateX(0); transition: transform 2.1s cubic-bezier(.33,.02,.45,1); }
-
-  .toon { display: block; width: 100%; height: auto; overflow: visible; }
-  #manzanito.walking .toon { animation: bob .36s steps(2, jump-none) infinite; }
-  @keyframes bob { 0%, 100% { translate: 0 0 } 50% { translate: 0 -4px } }
-
-  .leg { transform-box: view-box; transform-origin: 43px 101px; }
-  .leg.r { transform-origin: 61px 101px; }
-  #manzanito.walking .leg   { animation: step .36s ease-in-out infinite; }
-  #manzanito.walking .leg.r { animation-delay: -.18s; }
-  @keyframes step { 0%, 100% { transform: rotate(16deg) } 50% { transform: rotate(-16deg) } }
-
-  .arm { transform-box: view-box; transform-origin: 18px 68px; }
-  .arm.r { transform-origin: 82px 68px; }
-  #manzanito.walking .arm   { animation: swing .36s ease-in-out infinite; }
-  #manzanito.walking .arm.r { animation-delay: -.18s; }
-  @keyframes swing { 0%, 100% { transform: rotate(-12deg) } 50% { transform: rotate(12deg) } }
-  /* Al llegar, saluda con la derecha. */
-  #manzanito.greeting .arm.r { animation: wave .55s ease-in-out 3; transform-origin: 82px 68px; }
-  @keyframes wave { 0%, 100% { transform: rotate(0) } 35% { transform: rotate(-58deg) } 70% { transform: rotate(-38deg) } }
-
-  .pupil { transform-box: view-box; animation: blink 5.2s infinite; transform-origin: center }
-  @keyframes blink { 0%, 95%, 100% { opacity: 1 } 97% { opacity: .08 } }
-
-  /* ---------- bocadillo ---------- */
-  .bubble {
-    position: absolute;
-    bottom: calc(100% + 14px);
-    width: 232px;
-    background: var(--surface);
-    color: var(--ink);
-    border: 2px solid var(--purple);
-    border-radius: 16px;
-    padding: 13px 14px 14px;
-    box-shadow: 0 10px 26px rgb(0 0 0 / .13);
-    opacity: 0;
-    transform: scale(.82) translateY(8px);
-    transform-origin: bottom left;
-    transition: opacity .22s ease, transform .28s cubic-bezier(.2,1.5,.5,1);
-  }
-  #manzanito.side-right .bubble { right: 0; transform-origin: bottom right; }
-  #manzanito.side-left  .bubble { left: 0; }
-  #manzanito.talking .bubble { opacity: 1; transform: scale(1) translateY(0); }
-
-  .bubble::after {
-    content: "";
-    position: absolute; top: 100%;
-    width: 14px; height: 14px;
-    background: var(--surface);
-    border-right: 2px solid var(--purple);
-    border-bottom: 2px solid var(--purple);
-    transform: translateY(-8px) rotate(45deg);
-  }
-  #manzanito.side-left  .bubble::after { left: 34px; }
-  #manzanito.side-right .bubble::after { right: 34px; }
-
-  .bubble p { margin: 0 0 11px; font-size: .93rem; line-height: 1.4; padding-right: 14px; }
-  .bubble .cta {
-    display: inline-flex; align-items: center; justify-content: center;
-    min-height: 40px; width: 100%;
-    background: var(--purple); color: #fff;
-    border: 0; border-radius: 999px;
-    font: 700 .9rem/1 var(--body);
-    cursor: pointer;
-    text-decoration: none;
-  }
-  .bubble .cta:hover { background: var(--purple-deep); }
-  .bubble .shut {
-    position: absolute; top: 5px; right: 5px;
-    width: 28px; height: 28px;
-    display: grid; place-items: center;
-    background: none; border: 0; border-radius: 50%;
-    color: var(--ink-soft); font-size: 17px; line-height: 1; cursor: pointer;
-  }
-  .bubble .shut:hover { background: var(--purple-tint); color: var(--purple); }
-
-  /* ---------- controles ---------- */
-  .panel {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 16px;
-    display: grid; gap: 14px;
-  }
-  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-  .row > .label {
-    font-size: .72rem; font-weight: 700; letter-spacing: .08em;
-    text-transform: uppercase; color: var(--ink-soft);
-    min-width: 72px;
-  }
-  button.ctl {
-    min-height: 40px; padding-inline: 15px;
-    background: var(--surface); color: var(--ink);
-    border: 2px solid var(--line); border-radius: 999px;
-    font: 700 .85rem/1 var(--body); cursor: pointer;
-  }
-  button.ctl:hover { border-color: var(--teal); }
-  button.ctl[aria-pressed="true"] { background: var(--teal); border-color: var(--teal); color: #fff; }
-  button.ctl.go { background: var(--purple); border-color: var(--purple); color: #fff; }
-  button.ctl.go:hover { background: var(--purple-deep); border-color: var(--purple-deep); }
-  :focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
-
-  /* ---------- notas ---------- */
-  .notes { display: grid; gap: 14px; }
-  .note {
-    border-left: 3px solid var(--teal);
-    background: var(--teal-tint);
-    border-radius: 0 12px 12px 0;
-    padding: 12px 14px;
-  }
-  .note h2 {
-    font-family: var(--display); font-weight: 800; font-size: .95rem;
-    margin: 0 0 6px; color: var(--teal-deep);
-  }
-  .note ul { margin: 0; padding-left: 18px; }
-  .note li { margin-block: 3px; font-size: .92rem; }
-  .note li b { font-variant-numeric: tabular-nums; }
-
-  @media (prefers-reduced-motion: reduce) {
-    #manzanito.arrived { transition: none }
-    .toon, .leg, .arm, .pupil { animation: none !important }
-    .bubble { transition: opacity .2s ease }
-  }
-
-  @media (max-width: 520px) {
-    .stage { height: 290px }
-    #manzanito { width: 104px }
-    .bubble { width: 196px }
-  }
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:grid;gap:14px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.row>.label{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+ color:var(--ink-soft);min-width:74px}
+button.ctl{min-height:40px;padding-inline:15px;background:var(--surface);color:var(--ink);
+ border:2px solid var(--line);border-radius:999px;font:700 .85rem/1 var(--body);cursor:pointer}
+button.ctl:hover{border-color:var(--teal)}
+button.ctl[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:#fff}
+button.ctl.go{background:var(--purple);border-color:var(--purple);color:#fff}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.notes{display:grid;gap:14px}
+.note{border-left:3px solid var(--teal);background:var(--teal-tint);border-radius:0 12px 12px 0;padding:12px 14px}
+.note h2{font-family:var(--display);font-weight:800;font-size:.95rem;margin:0 0 6px;color:var(--teal-deep)}
+.note ul{margin:0;padding-left:18px}
+.note li{margin-block:3px;font-size:.92rem}
 </style>
 
 <div class="wrap">
   <header>
     <h1>Manzanito</h1>
-    <p class="lede">
-      Sale caminando por un lado al azar, saluda y propone pedir cita. Dibujado
-      con código, no es una imagen ni un vídeo: no descarga nada y no frena la página.
-    </p>
+    <p class="lede">Un ojo con bata de óptico. Sale caminando por un lado al azar, saluda
+    y propone pedir cita; si hay una oferta activa, la anuncia él. Dibujado con código:
+    no descarga nada y no frena la página.</p>
   </header>
 
   <div class="stage">
     <span class="stage-tag">Vista previa</span>
-
-    <div id="manzanito" class="side-left">
-      <div class="bubble" role="dialog" aria-label="Manzanito">
-        <button class="shut" type="button" aria-label="Cerrar" data-shut>&#10005;</button>
-        <p data-say>¡Hola! Soy Manzanito. ¿Hace cuánto que no te revisas la vista?</p>
-        <a class="cta" href="#" data-cta>Pedir cita</a>
+    <div id="mz" class="mz mz-left">
+      <div class="mz-bubble">
+        <button class="mz-x" type="button" data-shut aria-label="Cerrar">&#10005;</button>
+        <p class="mz-say" data-say></p>
+        <p class="mz-deal" data-deal hidden></p>
+        <a class="mz-cta" href="#" data-cta></a>
       </div>
-
-      <!-- Manzanito: una manzanita con gafas. El nombre viene de Manzano,
-           y las gafas lo atan a la óptica. Morado y verde azulado son los
-           colores de la marca; el rojo es el de la fruta. -->
-      <svg class="toon" viewBox="0 0 100 126" role="img" aria-label="Manzanito, la mascota de Tus Ojos Eyecare">
-        <!-- piernas, detrás del cuerpo -->
-        <g class="leg l">
-          <rect x="38" y="99" width="10" height="19" rx="5" fill="var(--apple-dark)"/>
-          <ellipse cx="42" cy="119" rx="8" ry="4.5" fill="var(--purple)"/>
-        </g>
-        <g class="leg r">
-          <rect x="56" y="99" width="10" height="19" rx="5" fill="var(--apple-dark)"/>
-          <ellipse cx="60" cy="119" rx="8" ry="4.5" fill="var(--purple)"/>
-        </g>
-
-        <!-- brazos -->
-        <g class="arm l">
-          <rect x="8" y="64" width="11" height="30" rx="5.5" fill="var(--apple-dark)"/>
-        </g>
-        <g class="arm r">
-          <rect x="81" y="64" width="11" height="30" rx="5.5" fill="var(--apple-dark)"/>
-        </g>
-
-        <!-- rabito y hoja -->
-        <path d="M50 30 C51 22 53 17 56 12" stroke="#6b4a2a" stroke-width="4.5" stroke-linecap="round" fill="none"/>
-        <path d="M57 16 C66 8 78 10 80 14 C82 19 72 26 63 23 C59 22 57 19 57 16 Z" fill="var(--teal)"/>
-
-        <!-- cuerpo -->
-        <path d="M50 33 C47 25 37 21 29 26 C16 34 12 49 15 65 C18 91 33 107 50 107 C67 107 82 91 85 65 C88 49 84 34 71 26 C63 21 53 25 50 33 Z" fill="var(--apple)"/>
-        <path d="M30 34 C24 39 21 48 22 57" stroke="#fff" stroke-opacity=".32" stroke-width="6" stroke-linecap="round" fill="none"/>
-
-        <!-- gafas -->
-        <circle cx="36" cy="60" r="15" fill="#fff"/>
-        <circle cx="64" cy="60" r="15" fill="#fff"/>
-        <circle class="pupil" cx="37" cy="61" r="5.4" fill="#1d2422"/>
-        <circle class="pupil" cx="65" cy="61" r="5.4" fill="#1d2422"/>
-        <circle cx="36" cy="60" r="15" fill="none" stroke="var(--purple)" stroke-width="4.5"/>
-        <circle cx="64" cy="60" r="15" fill="none" stroke="var(--purple)" stroke-width="4.5"/>
-        <path d="M51 58 h-2" stroke="var(--purple)" stroke-width="4.5" stroke-linecap="round"/>
-        <path d="M21 56 l-7 -3 M79 56 l7 -3" stroke="var(--purple)" stroke-width="4" stroke-linecap="round"/>
-
-        <!-- sonrisa -->
-        <path d="M41 84 C45 91 55 91 59 84" stroke="#5c1b16" stroke-width="4" stroke-linecap="round" fill="none"/>
-      </svg>
+      <svg
+      class="mz-toon"
+      viewBox="0 12 110 128"
+      role="img"
+      aria-label="Manzanito, la mascota de Tus Ojos Eyecare"
+      focusable="false"
+    >
+      {}
+      <g class="mz-leg mz-l">
+        <rect x="42" y="112" width="12" height="20" rx="4" fill="#005f5f" />
+        <ellipse cx="45" cy="133" rx="9.5" ry="5" fill="#27312f" />
+      </g>
+      <g class="mz-leg mz-r">
+        <rect x="56" y="112" width="12" height="20" rx="4" fill="#005f5f" />
+        <ellipse cx="65" cy="133" rx="9.5" ry="5" fill="#27312f" />
+      </g>
+      {}
+      <g class="mz-arm mz-l">
+        <path d="M34 78 L18 110" stroke="#c6d2cf" stroke-width="15" stroke-linecap="round" fill="none" />
+        <path d="M34 78 L18 110" stroke="#ffffff" stroke-width="11.5" stroke-linecap="round" fill="none" />
+        <circle cx="16" cy="113" r="7" fill="#f0c49c" />
+      </g>
+      <g class="mz-arm mz-r">
+        <path d="M76 78 L92 110" stroke="#c6d2cf" stroke-width="15" stroke-linecap="round" fill="none" />
+        <path d="M76 78 L92 110" stroke="#ffffff" stroke-width="11.5" stroke-linecap="round" fill="none" />
+        <circle cx="94" cy="113" r="7" fill="#f0c49c" />
+      </g>
+      {}
+      <rect x="48" y="50" width="14" height="24" rx="5" fill="#dfe8e5" />
+      {}
+      <path
+        d="M24 120 C23 96 31 74 45 69 L55 81 L65 69 C79 74 87 96 86 120 Z"
+        fill="#ffffff"
+        stroke="#c6d2cf"
+        stroke-width="2"
+        stroke-linejoin="round"
+      />
+      <path d="M45 69 L55 81 L49 85 L41 73 Z" fill="#edf2f0" />
+      <path d="M65 69 L55 81 L61 85 L69 73 Z" fill="#edf2f0" />
+      <circle cx="55" cy="94" r="2.2" fill="#b9c6c3" />
+      <circle cx="55" cy="104" r="2.2" fill="#b9c6c3" />
+      {}
+      <rect x="64" y="90" width="11" height="6.5" rx="1.8" fill="#008080" />
+      {}
+      <path
+        d="M17 42 C30 18 80 18 93 42 C80 66 30 66 17 42 Z"
+        fill="#ffffff"
+        stroke="#27312f"
+        stroke-width="3.6"
+        stroke-linejoin="round"
+      />
+      <g class="mz-gaze">
+        <circle cx="55" cy="42" r="17" fill="#800080" />
+        <circle cx="55" cy="42" r="17" fill="none" stroke="#6b006b" stroke-width="2.5" />
+        <circle cx="55" cy="42" r="8" fill="#1d1420" />
+        <circle cx="48.5" cy="36" r="5" fill="#ffffff" opacity=".95" />
+        <circle cx="61" cy="48" r="2.4" fill="#ffffff" opacity=".6" />
+      </g>
+      {}
+      <path
+        class="mz-lid"
+        d="M17 42 C30 18 80 18 93 42 C80 66 30 66 17 42 Z"
+        fill="#e8b89a"
+        stroke="#27312f"
+        stroke-width="3.6"
+        stroke-linejoin="round"
+      />
+    </svg>
     </div>
   </div>
 
   <div class="panel">
-    <div class="row">
-      <span class="label">Probar</span>
+    <div class="row"><span class="label">Probar</span>
       <button class="ctl go" type="button" data-run>Que salga</button>
       <button class="ctl" type="button" data-side="left" aria-pressed="false">Por la izquierda</button>
       <button class="ctl" type="button" data-side="right" aria-pressed="false">Por la derecha</button>
       <button class="ctl" type="button" data-side="random" aria-pressed="true">Al azar</button>
     </div>
-    <div class="row">
-      <span class="label">Idioma</span>
+    <div class="row"><span class="label">Idioma</span>
       <button class="ctl" type="button" data-lang="es" aria-pressed="true">Español</button>
       <button class="ctl" type="button" data-lang="en" aria-pressed="false">English</button>
+    </div>
+    <div class="row"><span class="label">Oferta</span>
+      <button class="ctl" type="button" data-deal="0" aria-pressed="true">Sin oferta activa</button>
+      <button class="ctl" type="button" data-deal="1" aria-pressed="false">Con oferta activa</button>
     </div>
   </div>
 
   <div class="notes">
     <div class="note">
-      <h2>Lo que cuesta</h2>
+      <h2>Quién lo enciende</h2>
       <ul>
-        <li><b>0</b> descargas nuevas: el dibujo va dentro de la página.</li>
-        <li><b>~6 KB</b> en total, menos que el icono de una red social.</li>
-        <li>Se mueve con la tarjeta gráfica, no con el procesador: no traba el desplazamiento ni gasta batería notable.</li>
-        <li>Aparece <b>después</b> de que la página esté cargada, así que no retrasa nada de lo que el visitante vino a ver.</li>
+        <li>En el panel, en <b>Offers</b>, hay un interruptor. Sólo Wilfredo y el super admin lo ven.</li>
+        <li>Llega <b>apagado</b>. Hasta que se encienda, en la web no cambia nada.</li>
+        <li>Encendido, es Manzanito quien anuncia las ofertas y la ventana emergente de promoción no sale: dos tarjetas a la vez no caben en un teléfono.</li>
+        <li>Apagado, la ventana de promoción vuelve a funcionar como hasta ahora.</li>
       </ul>
     </div>
     <div class="note">
-      <h2>Dónde saldría y dónde no</h2>
+      <h2>Cómo se comporta</h2>
       <ul>
-        <li><b>Sí:</b> inicio, servicios, salud visual, sedes, sobre nosotros.</li>
-        <li><b>No:</b> páginas legales, el formulario de cita (ya está pidiendo cita) ni el panel.</li>
-        <li><b>Una vez al día</b> por visitante. Si lo cierra, no vuelve a salir ese día.</li>
-        <li>No se apila con la ventana de promoción ni con el aviso de cookies: si una está en pantalla, Manzanito espera.</li>
-        <li>Quien tenga activado «reducir movimiento» en su teléfono lo ve aparecer sin caminar.</li>
+        <li>Habla en el <b>idioma de la página</b>: español en /es, inglés en el resto.</li>
+        <li>Sale <b>una vez al día</b> por visitante. Si lo cierra, ese día no vuelve.</li>
+        <li><b>Nunca</b> en las páginas legales, en el formulario de cita ni en el panel.</li>
+        <li>Espera si el aviso de cookies está en pantalla.</li>
+        <li>Con «reducir movimiento» activado, aparece sin caminar.</li>
+        <li><b>~3 KB</b>, cero descargas nuevas, y se mueve con la tarjeta gráfica.</li>
       </ul>
     </div>
   </div>
 </div>
 
 <script>
-  (function () {
-    var el = document.getElementById("manzanito");
-    var bubble = el.querySelector(".bubble");
-    var say = el.querySelector("[data-say]");
-    var cta = el.querySelector("[data-cta]");
-    var mode = "random";
-    var lang = "es";
-    var timers = [];
-
-    var COPY = {
-      es: { say: "¡Hola! Soy Manzanito. ¿Hace cuánto que no te revisas la vista?", cta: "Pedir cita" },
-      en: { say: "Hi! I'm Manzanito. When did you last get your eyes checked?", cta: "Book an appointment" }
-    };
-
-    function clear() { timers.forEach(clearTimeout); timers = []; }
-    function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
-
-    var calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    function run() {
-      clear();
-      el.className = "";
-      // Reinicio forzado: sin leer una propiedad de disposición el
-      // navegador agrupa el quitar y poner la clase en un solo paso y la
-      // animación no se repite.
-      void el.offsetWidth;
-
-      var side = mode === "random" ? (Math.random() < 0.5 ? "left" : "right") : mode;
-      el.classList.add("side-" + side, "live");
-      void el.offsetWidth;
-
-      if (calm) {
-        el.classList.add("arrived", "talking");
-        return;
-      }
-
-      el.classList.add("walking", "arrived");
-      later(function () {
-        el.classList.remove("walking");
-        el.classList.add("greeting", "talking");
-      }, 2100);
-    }
-
-    function paint() {
-      say.textContent = COPY[lang].say;
-      cta.textContent = COPY[lang].cta;
-    }
-
-    document.querySelector("[data-run]").addEventListener("click", run);
-
-    el.querySelector("[data-shut]").addEventListener("click", function () {
-      clear();
-      el.classList.remove("talking");
-      later(function () { el.classList.remove("live"); }, 240);
-    });
-
-    cta.addEventListener("click", function (e) { e.preventDefault(); });
-
-    document.querySelectorAll("[data-side]").forEach(function (b) {
-      b.addEventListener("click", function () {
-        mode = b.dataset.side;
-        document.querySelectorAll("[data-side]").forEach(function (o) {
-          o.setAttribute("aria-pressed", String(o === b));
-        });
-        run();
+(function(){
+  var el=document.getElementById("mz");
+  var say=el.querySelector("[data-say]"), deal=el.querySelector("[data-deal]"), cta=el.querySelector("[data-cta]");
+  var mode="random", lang="es", withDeal=false, timers=[];
+  var COPY={
+    es:{hello:"¡Hola! Soy Manzanito. ¿Hace cuánto que no te revisas la vista?",
+        offer:"¡Hola! Soy Manzanito y traigo una oferta para ti:",
+        deal:"20% de descuento en examen de la vista",cta:"Pedir cita"},
+    en:{hello:"Hi! I'm Manzanito. When did you last get your eyes checked?",
+        offer:"Hi! I'm Manzanito, and I have an offer for you:",
+        deal:"20% off your eye exam",cta:"Book an appointment"}
+  };
+  var calm=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function clear(){timers.forEach(clearTimeout);timers=[]}
+  function paint(){
+    var c=COPY[lang];
+    say.textContent=withDeal?c.offer:c.hello;
+    deal.textContent=c.deal; deal.hidden=!withDeal;
+    cta.textContent=c.cta;
+  }
+  function run(){
+    clear(); el.className="mz"; void el.offsetWidth;
+    var side=mode==="random"?(Math.random()<0.5?"left":"right"):mode;
+    el.classList.add("mz-"+side); void el.offsetWidth;
+    if(calm){el.classList.add("mz-talking");return}
+    el.classList.add("mz-walking");
+    timers.push(setTimeout(function(){el.classList.remove("mz-walking");el.classList.add("mz-talking")},2100));
+  }
+  function group(attr,fn){
+    document.querySelectorAll("["+attr+"]").forEach(function(b){
+      b.addEventListener("click",function(){
+        document.querySelectorAll("["+attr+"]").forEach(function(o){o.setAttribute("aria-pressed",String(o===b))});
+        fn(b.getAttribute(attr));
       });
     });
-
-    document.querySelectorAll("[data-lang]").forEach(function (b) {
-      b.addEventListener("click", function () {
-        lang = b.dataset.lang;
-        document.querySelectorAll("[data-lang]").forEach(function (o) {
-          o.setAttribute("aria-pressed", String(o === b));
-        });
-        paint();
-      });
-    });
-
-    paint();
-    later(run, 400);
-  })();
+  }
+  document.querySelector("[data-run]").addEventListener("click",run);
+  el.querySelector("[data-shut]").addEventListener("click",function(){
+    clear(); el.classList.remove("mz-talking");
+  });
+  cta.addEventListener("click",function(e){e.preventDefault()});
+  group("data-side",function(v){mode=v;run()});
+  group("data-lang",function(v){lang=v;paint()});
+  group("data-deal",function(v){withDeal=v==="1";paint();run()});
+  paint(); timers.push(setTimeout(run,400));
+})();
 </script>

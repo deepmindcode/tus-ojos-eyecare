@@ -27,6 +27,29 @@ export interface Release {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: 19,
+    date: "2026-10-08",
+    title: { es: "Manzanito, la mascota", en: "Manzanito, the mascot" },
+    changes: {
+      es: [
+        "Nueva mascota: un ojito con bata de óptico que sale caminando por un lado de la web, saluda e invita a pedir cita.",
+        "Habla en el idioma de la página: español a quien lee en español, inglés a quien lee en inglés.",
+        "Si hay una oferta activa, Manzanito la anuncia y lleva al formulario con el descuento ya puesto.",
+        "Se enciende y se apaga desde Offers, en el panel. Llega apagado: en la web no cambia nada hasta que lo enciendas.",
+        "Mientras esté encendido, la ventana emergente de ofertas no sale: la anuncia él. Al apagarlo, vuelve como antes.",
+        "Sale una vez al día por visitante, y nunca en las páginas legales ni en el formulario de cita.",
+      ],
+      en: [
+        "New mascot: a little eye in an optician's coat who walks in from one side of the site, waves, and invites the visitor to book.",
+        "He speaks the page's language: Spanish to Spanish readers, English to English readers.",
+        "When an offer is running, Manzanito announces it and takes the visitor to the form with the discount already applied.",
+        "He is switched on and off from Offers in the panel. He arrives switched off: nothing changes on the site until you turn him on.",
+        "While he is on, the offer popup does not appear — he announces it instead. Switch him off and it comes back as before.",
+        "He appears once a day per visitor, and never on the legal pages or the appointment form.",
+      ],
+    },
+  },
+  {
     version: 18,
     date: "2026-10-08",
     title: { es: "El sitio va más rápido", en: "The site is faster" },

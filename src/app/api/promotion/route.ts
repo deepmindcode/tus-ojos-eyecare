@@ -31,32 +31,40 @@ export async function GET(request: Request) {
   // El path entra desde el navegador, así que se acota antes de usarlo:
   // tiene que parecer una ruta de este sitio y nada más.
   if (!/^\/[\w\-/]*$/.test(path) || path.length > 120) {
-    return NextResponse.json(null, { status: 400 });
+    return NextResponse.json({ promo: null, manzanito: false }, { status: 400 });
   }
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (!supabaseUrl || !anonKey) {
-    // Sin configuración no hay promoción, pero tampoco un error que
-    // rompa la página: el popup simplemente no aparece.
-    return NextResponse.json(null);
+    // Sin configuración no hay promoción ni mascota, pero tampoco un
+    // error que rompa la página: simplemente no aparece nada.
+    return NextResponse.json({ promo: null, manzanito: false });
   }
 
   const supabase = createClient(supabaseUrl, anonKey, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
 
-  const { data, error } = await supabase
-    .rpc("get_promotion_for_page", { p_path: path, p_locale: locale })
-    .maybeSingle();
+  // Las dos cosas en una sola ida y vuelta: la oferta de esta página y
+  // si Manzanito está encendido. Son la misma decisión —qué se le
+  // enseña a quien entra— y pedirlas por separado serían dos peticiones
+  // por visita para ahorrar nada.
+  const [promoRes, flagRes] = await Promise.all([
+    supabase.rpc("get_promotion_for_page", { p_path: path, p_locale: locale }).maybeSingle(),
+    supabase.from("site_settings").select("value").eq("key", "manzanito_enabled").maybeSingle(),
+  ]);
 
-  if (error) {
-    console.error("[promotion] fallo leyendo la promoción:", error.message);
-    return NextResponse.json(null);
+  if (promoRes.error) {
+    console.error("[promotion] fallo leyendo la promoción:", promoRes.error.message);
   }
 
-  return NextResponse.json(data ?? null, {
+  // Apagado si no hay fila o no se pudo leer: una mascota que aparece
+  // sola porque falló una consulta es peor que una que no aparece.
+  const manzanito = flagRes.data?.value === true;
+
+  return NextResponse.json({ promo: promoRes.data ?? null, manzanito }, {
     headers: {
       // Un minuto de caché compartida. Una promoción recién publicada
       // tarda como mucho ese minuto en aparecer, y a cambio la base deja

@@ -253,3 +253,49 @@ export async function setPromotionStatus(id: string, status: PromotionStatus) {
   revalidatePath("/admin/offers");
   return { ok: true as const };
 }
+/* ------------------------------------------------------------------ */
+
+/**
+ * Encender o apagar a Manzanito.
+ *
+ * El ajuste se escribe con service_role, no con la sesión: `site_settings`
+ * sólo deja escribir a administradores por RLS, y aquí el permiso ya se
+ * ha comprobado arriba con `mascot:manage`. Dos puertas, no una.
+ */
+export async function setManzanito(on: boolean) {
+  const user = await getAdminUser();
+  if (!can(user, "mascot:manage")) return { ok: false as const, error: "forbidden" };
+
+  const { error } = await createSupabaseAdminClient()
+    .from("site_settings")
+    .update({ value: on, updated_by: user!.id, updated_at: new Date().toISOString() })
+    .eq("key", "manzanito_enabled");
+
+  if (error) {
+    console.error("[mascot] no se pudo guardar el interruptor:", error);
+    return { ok: false as const, error: "server" };
+  }
+
+  // Queda en el registro: cambia lo que ve todo el que entra al sitio.
+  after(async () => {
+    await logAudit({
+      userId: user!.id,
+      action: on ? "mascot.enabled" : "mascot.disabled",
+      objectType: "site_setting",
+      details: { key: "manzanito_enabled" },
+    });
+  });
+
+  revalidatePath("/admin/offers");
+  return { ok: true as const };
+}
+
+/** Si Manzanito está encendido ahora mismo. */
+export async function manzanitoEnabled(): Promise<boolean> {
+  const { data } = await createSupabaseAdminClient()
+    .from("site_settings")
+    .select("value")
+    .eq("key", "manzanito_enabled")
+    .maybeSingle();
+  return data?.value === true;
+}

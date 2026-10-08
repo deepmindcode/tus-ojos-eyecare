@@ -136,8 +136,15 @@ export function PromotionPopup() {
         return;
       }
 
-      if (cancelled || !data) return;
-      const p = data as Promotion;
+      const body = data as { promo?: unknown; manzanito?: boolean } | null;
+      if (cancelled || !body) return;
+
+      // Si Manzanito esta encendido, el anuncia las ofertas y esta
+      // ventana se queda callada. Dos tarjetas a la vez no caben en un
+      // movil, y dos invitaciones seguidas cansan.
+      if (body.manzanito) return;
+      if (!body.promo) return;
+      const p = body.promo as Promotion;
       if (wasSeen(p.slug, p.frequency)) return;
 
       const timer = setTimeout(

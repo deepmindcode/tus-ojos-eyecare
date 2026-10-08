@@ -712,6 +712,48 @@ const LEADERSHIP_EXTRA_ES: readonly GuideSection[] = [
     ],
   },
   {
+    id: "manzanito",
+    title: "Manzanito, la mascota",
+    blocks: [
+      {
+        kind: "text",
+        text: "Manzanito es un ojito con bata de óptico que sale caminando por un lado de la web, saluda e invita a pedir cita. Si hay una oferta activa, es él quien la anuncia.",
+      },
+      {
+        kind: "steps",
+        items: [
+          "Se enciende y se apaga en Offers, arriba del todo. Sólo tú y el super admin veis ese interruptor.",
+          "Tarda hasta un minuto en aparecer o desaparecer para todos: la web guarda la respuesta un rato para ir más rápida.",
+        ],
+      },
+      {
+        kind: "defs",
+        defs: [
+          {
+            term: "Habla el idioma de la página",
+            desc: "En español a quien está leyendo en español, en inglés a quien está en inglés. No hay nada que configurar.",
+          },
+          {
+            term: "Manzanito o la ventana de promoción, no los dos",
+            desc: "Con Manzanito encendido, la ventana emergente de ofertas no sale: la anuncia él. En un teléfono no caben dos tarjetas encima, y dos invitaciones seguidas cansan. Al apagarlo, la ventana vuelve a funcionar como antes.",
+          },
+          {
+            term: "Una vez al día",
+            desc: "A cada visitante le sale una vez al día. Si lo cierra, ese día no vuelve a salirle. No se guarda nada en la base de datos: esa memoria vive en el navegador de cada persona.",
+          },
+          {
+            term: "Dónde no sale",
+            desc: "Nunca en las páginas legales, ni en el formulario de cita —quien ya está pidiendo cita no necesita que le inviten— ni en el panel.",
+          },
+        ],
+      },
+      {
+        kind: "note",
+        text: "Encenderlo y apagarlo queda en el registro de actividad con tu nombre: cambia lo que ve todo el que entra al sitio.",
+      },
+    ],
+  },
+  {
     id: "campanas",
     title: "Campaigns: ofertas por correo a un grupo",
     blocks: [
@@ -1027,6 +1069,48 @@ const LEADERSHIP_EXTRA_EN: readonly GuideSection[] = [
       {
         kind: "warn",
         text: "Leadership only, and for good reason: it gathers everyone's phone, email and reason for visiting in one place. Every record opened and every directory printed is written to the activity log under your name.",
+      },
+    ],
+  },
+  {
+    id: "manzanito",
+    title: "Manzanito, the mascot",
+    blocks: [
+      {
+        kind: "text",
+        text: "Manzanito is a little eye in an optician's coat who walks in from one side of the site, waves, and invites the visitor to book. When an offer is running, he is the one who announces it.",
+      },
+      {
+        kind: "steps",
+        items: [
+          "He is switched on and off in Offers, at the top. Only you and the super admin see that switch.",
+          "It takes up to a minute to appear or disappear for everyone: the site holds the answer briefly to stay fast.",
+        ],
+      },
+      {
+        kind: "defs",
+        defs: [
+          {
+            term: "He speaks the page's language",
+            desc: "Spanish to someone reading in Spanish, English to someone reading in English. Nothing to configure.",
+          },
+          {
+            term: "Manzanito or the promotion popup, not both",
+            desc: "With Manzanito on, the offer popup does not appear — he announces it instead. Two cards do not fit on a phone, and two invitations in a row wear people out. Switch him off and the popup works as before.",
+          },
+          {
+            term: "Once a day",
+            desc: "Each visitor sees him once a day. If they close him, he does not come back that day. Nothing is stored in the database: that memory lives in each person's own browser.",
+          },
+          {
+            term: "Where he never appears",
+            desc: "Never on the legal pages, never on the appointment form — someone already booking does not need inviting — and never in the panel.",
+          },
+        ],
+      },
+      {
+        kind: "note",
+        text: "Switching him on or off is written to the activity log with your name: it changes what every visitor to the site sees.",
       },
     ],
   },

@@ -74,6 +74,10 @@ export function CookieNotice() {
   return (
     <div
       role="region"
+      /* Manzanito y la ventana de promocion miran este atributo para no
+         apilarse encima: en un movil no caben dos tarjetas, y el aviso
+         de cookies es el que no se puede posponer. */
+      data-cookie-notice
       aria-label={isES ? "Aviso de cookies" : "Cookie notice"}
       className="fixed bottom-20 left-4 z-[95] w-[min(400px,calc(100vw-2rem))] rounded-2xl border border-border-subtle bg-surface p-5 shadow-2xl lg:bottom-4"
     >
