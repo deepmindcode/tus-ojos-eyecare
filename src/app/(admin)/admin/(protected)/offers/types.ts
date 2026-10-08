@@ -78,3 +78,7 @@ export interface PromotionInput {
  */
 export const MASCOT_FREQUENCIES = ["daily", "weekly", "session", "always"] as const;
 export type MascotFrequency = (typeof MASCOT_FREQUENCIES)[number];
+
+/** Por qué lado entra Manzanito. "random" alterna solo. */
+export const MASCOT_SIDES = ["random", "left", "right"] as const;
+export type MascotSide = (typeof MASCOT_SIDES)[number];

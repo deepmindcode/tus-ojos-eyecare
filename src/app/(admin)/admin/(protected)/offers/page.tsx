@@ -41,7 +41,11 @@ export default async function OffersPage() {
 
       {/* Solo direccion: encenderlo cambia lo que ve todo visitante. */}
       {can(user, "mascot:manage") && (
-        <MascotSwitch initial={mascot.enabled} initialFrequency={mascot.frequency} />
+        <MascotSwitch
+          initial={mascot.enabled}
+          initialFrequency={mascot.frequency}
+          initialSide={mascot.side}
+        />
       )}
 
       <PromotionManager

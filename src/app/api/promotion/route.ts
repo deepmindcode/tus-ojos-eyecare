@@ -31,7 +31,7 @@ export async function GET(request: Request) {
   // El path entra desde el navegador, así que se acota antes de usarlo:
   // tiene que parecer una ruta de este sitio y nada más.
   if (!/^\/[\w\-/]*$/.test(path) || path.length > 120) {
-    return NextResponse.json({ promo: null, manzanito: false, frequency: "daily" }, { status: 400 });
+    return NextResponse.json({ promo: null, manzanito: false, frequency: "daily", side: "random" }, { status: 400 });
   }
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -40,7 +40,7 @@ export async function GET(request: Request) {
   if (!supabaseUrl || !anonKey) {
     // Sin configuración no hay promoción ni mascota, pero tampoco un
     // error que rompa la página: simplemente no aparece nada.
-    return NextResponse.json({ promo: null, manzanito: false, frequency: "daily" });
+    return NextResponse.json({ promo: null, manzanito: false, frequency: "daily", side: "random" });
   }
 
   const supabase = createClient(supabaseUrl, anonKey, {
@@ -56,7 +56,7 @@ export async function GET(request: Request) {
     supabase
       .from("site_settings")
       .select("key, value")
-      .in("key", ["manzanito_enabled", "manzanito_frequency"]),
+      .in("key", ["manzanito_enabled", "manzanito_frequency", "manzanito_side"]),
   ]);
 
   if (promoRes.error) {
@@ -70,8 +70,10 @@ export async function GET(request: Request) {
   const raw = settings.get("manzanito_frequency");
   const frequency =
     raw === "session" || raw === "weekly" || raw === "always" ? raw : "daily";
+  const rawSide = settings.get("manzanito_side");
+  const side = rawSide === "left" || rawSide === "right" ? rawSide : "random";
 
-  return NextResponse.json({ promo: promoRes.data ?? null, manzanito, frequency }, {
+  return NextResponse.json({ promo: promoRes.data ?? null, manzanito, frequency, side }, {
     headers: {
       // Un minuto de caché compartida. Una promoción recién publicada
       // tarda como mucho ese minuto en aparecer, y a cambio la base deja

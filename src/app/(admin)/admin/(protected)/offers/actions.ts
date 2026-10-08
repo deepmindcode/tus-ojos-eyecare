@@ -5,7 +5,12 @@ import { after } from "next/server";
 import { createSupabaseServerClient, createSupabaseAdminClient } from "@/lib/supabase/server";
 import { getAdminUser, can } from "@/lib/auth/roles";
 import { logAudit } from "@/lib/auth/audit";
-import { MASCOT_FREQUENCIES, type MascotFrequency } from "./types";
+import {
+  MASCOT_FREQUENCIES,
+  MASCOT_SIDES,
+  type MascotFrequency,
+  type MascotSide,
+} from "./types";
 import type { PromotionStatus, PromotionRow, PromotionInput } from "./types";
 
 /**
@@ -325,22 +330,49 @@ export async function setManzanitoFrequency(freq: string) {
   return { ok: true as const };
 }
 
-/** Estado actual de la mascota: encendida y cada cuánto sale. */
+/** Por qué lado entra. */
+export async function setManzanitoSide(side: string) {
+  const user = await getAdminUser();
+  if (!can(user, "mascot:manage")) return { ok: false as const, error: "forbidden" };
+  if (!(MASCOT_SIDES as readonly string[]).includes(side)) {
+    return { ok: false as const, error: "invalid" };
+  }
+
+  const { error } = await createSupabaseAdminClient()
+    .from("site_settings")
+    .update({ value: side, updated_by: user!.id, updated_at: new Date().toISOString() })
+    .eq("key", "manzanito_side");
+
+  if (error) {
+    console.error("[mascot] no se pudo guardar el lado:", error);
+    return { ok: false as const, error: "server" };
+  }
+
+  revalidatePath("/admin/offers");
+  return { ok: true as const };
+}
+
+/** Estado actual de la mascota. */
 export async function manzanitoSettings(): Promise<{
   enabled: boolean;
   frequency: MascotFrequency;
+  side: MascotSide;
 }> {
   const { data } = await createSupabaseAdminClient()
     .from("site_settings")
     .select("key, value")
-    .in("key", ["manzanito_enabled", "manzanito_frequency"]);
+    .in("key", ["manzanito_enabled", "manzanito_frequency", "manzanito_side"]);
 
   const map = new Map((data ?? []).map((r) => [r.key as string, r.value]));
   const raw = map.get("manzanito_frequency");
+  const rawSide = map.get("manzanito_side");
   return {
     enabled: map.get("manzanito_enabled") === true,
     frequency: (MASCOT_FREQUENCIES as readonly string[]).includes(raw as string)
       ? (raw as MascotFrequency)
       : "daily",
+    side: (MASCOT_SIDES as readonly string[]).includes(rawSide as string)
+      ? (rawSide as MascotSide)
+      : "random",
   };
 }

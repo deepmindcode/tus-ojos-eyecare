@@ -722,7 +722,9 @@ const LEADERSHIP_EXTRA_ES: readonly GuideSection[] = [
       {
         kind: "steps",
         items: [
-          "Se enciende y se apaga en Offers, arriba del todo. Sólo tú y el super admin veis ese interruptor.",
+          "Se enciende y se apaga en Offers, arriba del todo. Sólo tú y el super admin veis esa tarjeta.",
+          "Ahí mismo lo ves moverse antes de encenderlo, y puedes mirarlo en español o en inglés, con oferta o sin ella. Eso es sólo para ver: no cambia nada en la web.",
+          "Eliges por qué lado sale: al azar, siempre por la izquierda o siempre por la derecha.",
           "Tarda hasta un minuto en aparecer o desaparecer para todos: la web guarda la respuesta un rato para ir más rápida.",
         ],
       },
@@ -1087,7 +1089,9 @@ const LEADERSHIP_EXTRA_EN: readonly GuideSection[] = [
       {
         kind: "steps",
         items: [
-          "He is switched on and off in Offers, at the top. Only you and the super admin see that switch.",
+          "He is switched on and off in Offers, at the top. Only you and the super admin see that card.",
+          "You can watch him move there before switching him on, in Spanish or English, with or without an offer. That is only for looking: it changes nothing on the site.",
+          "You choose which side he comes in from: at random, always from the left, or always from the right.",
           "It takes up to a minute to appear or disappear for everyone: the site holds the answer briefly to stay fast.",
         ],
       },

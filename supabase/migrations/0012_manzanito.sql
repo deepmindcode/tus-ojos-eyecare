@@ -39,3 +39,14 @@ VALUES (
   'Cada cuanto sale Manzanito a la misma persona: daily, weekly, session o always.'
 )
 ON CONFLICT (key) DO NOTHING;
+
+-- Por que lado entra. "random" alterna solo en cada visita; si Wilfredo
+-- prefiere que siempre salga por el mismo sitio, lo fija aqui.
+INSERT INTO public.site_settings (key, value, is_public, description)
+VALUES (
+  'manzanito_side',
+  '"random"'::jsonb,
+  true,
+  'Por que lado entra Manzanito: random, left o right.'
+)
+ON CONFLICT (key) DO NOTHING;

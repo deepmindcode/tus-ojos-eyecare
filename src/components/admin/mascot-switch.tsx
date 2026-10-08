@@ -5,8 +5,13 @@ import { Eye, EyeOff } from "lucide-react";
 import {
   setManzanito,
   setManzanitoFrequency,
+  setManzanitoSide,
 } from "@/app/(admin)/admin/(protected)/offers/actions";
-import type { MascotFrequency } from "@/app/(admin)/admin/(protected)/offers/types";
+import type {
+  MascotFrequency,
+  MascotSide,
+} from "@/app/(admin)/admin/(protected)/offers/types";
+import { MascotPreview } from "./mascot-preview";
 
 /**
  * src/components/admin/mascot-switch.tsx
@@ -40,15 +45,24 @@ const FREQS: readonly {
   },
 ];
 
+const SIDES: readonly { value: MascotSide; label: string }[] = [
+  { value: "random", label: "Al azar" },
+  { value: "left", label: "Por la izquierda" },
+  { value: "right", label: "Por la derecha" },
+];
+
 export function MascotSwitch({
   initial,
   initialFrequency,
+  initialSide,
 }: {
   readonly initial: boolean;
   readonly initialFrequency: MascotFrequency;
+  readonly initialSide: MascotSide;
 }) {
   const [on, setOn] = useState(initial);
   const [freq, setFreq] = useState<MascotFrequency>(initialFrequency);
+  const [side, setSide] = useState<MascotSide>(initialSide);
   const [pending, start] = useTransition();
   const [note, setNote] = useState<string | null>(null);
 
@@ -63,6 +77,18 @@ export function MascotSwitch({
           : "No se pudo guardar la frecuencia.",
       );
       if (!r.ok) setFreq(before);
+    });
+  }
+
+  function changeSide(value: MascotSide) {
+    const before = side;
+    setSide(value);
+    start(async () => {
+      const r = await setManzanitoSide(value);
+      if (!r.ok) {
+        setSide(before);
+        setNote("No se pudo guardar el lado.");
+      }
     });
   }
 
@@ -144,6 +170,32 @@ export function MascotSwitch({
               {FREQS.find((f) => f.value === freq)?.help}
             </p>
           </div>
+
+          <div className="mt-4">
+            <span className="text-xs font-bold uppercase tracking-wider text-text-secondary">
+              Por qué lado sale
+            </span>
+            <div className="mt-1.5 flex flex-wrap gap-2">
+              {SIDES.map((o) => (
+                <button
+                  key={o.value}
+                  type="button"
+                  onClick={() => changeSide(o.value)}
+                  disabled={pending}
+                  aria-pressed={o.value === side}
+                  className={`min-h-10 rounded-full border-2 px-4 text-sm font-bold disabled:opacity-60 ${
+                    o.value === side
+                      ? "border-brand-secondary bg-brand-secondary text-white"
+                      : "border-border-subtle hover:border-brand-secondary"
+                  }`}
+                >
+                  {o.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <MascotPreview side={side} />
 
           <div className="mt-4 flex flex-wrap items-center gap-3">
             <button
