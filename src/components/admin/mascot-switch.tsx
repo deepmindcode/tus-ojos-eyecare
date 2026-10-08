@@ -2,7 +2,11 @@
 
 import { useState, useTransition } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import { setManzanito } from "@/app/(admin)/admin/(protected)/offers/actions";
+import {
+  setManzanito,
+  setManzanitoFrequency,
+} from "@/app/(admin)/admin/(protected)/offers/actions";
+import type { MascotFrequency } from "@/app/(admin)/admin/(protected)/offers/types";
 
 /**
  * src/components/admin/mascot-switch.tsx
@@ -14,10 +18,53 @@ import { setManzanito } from "@/app/(admin)/admin/(protected)/offers/actions";
  * anuncia las ofertas: tenerlo a la vista mientras se crea una promoción
  * es justo cuando hace falta recordar que existe.
  */
-export function MascotSwitch({ initial }: { readonly initial: boolean }) {
+/**
+ * Las cuatro frecuencias, con el nombre que entiende quien las elige y
+ * una linea de que significan. «Siempre» lleva aviso: esta porque se
+ * pidio, no porque convenga.
+ */
+const FREQS: readonly {
+  value: MascotFrequency;
+  label: string;
+  help: string;
+  warn?: boolean;
+}[] = [
+  { value: "daily", label: "Una vez al día", help: "Recomendado. No vuelve a salirle a esa persona hasta mañana." },
+  { value: "weekly", label: "Una vez por semana", help: "Más discreto. Para cuando la oferta no corre prisa." },
+  { value: "session", label: "Una vez por visita", help: "Vuelve a salir si cierra el navegador y entra más tarde." },
+  {
+    value: "always",
+    label: "En cada página",
+    help: "No recomendado: un muñeco que salta encima del texto en cada página echa gente del sitio, y Google penaliza lo que tapa contenido en el móvil.",
+    warn: true,
+  },
+];
+
+export function MascotSwitch({
+  initial,
+  initialFrequency,
+}: {
+  readonly initial: boolean;
+  readonly initialFrequency: MascotFrequency;
+}) {
   const [on, setOn] = useState(initial);
+  const [freq, setFreq] = useState<MascotFrequency>(initialFrequency);
   const [pending, start] = useTransition();
   const [note, setNote] = useState<string | null>(null);
+
+  function changeFreq(value: MascotFrequency) {
+    const before = freq;
+    setFreq(value);
+    start(async () => {
+      const r = await setManzanitoFrequency(value);
+      setNote(
+        r.ok
+          ? "Guardado. Tarda hasta un minuto en aplicarse."
+          : "No se pudo guardar la frecuencia.",
+      );
+      if (!r.ok) setFreq(before);
+    });
+  }
 
   function toggle() {
     const next = !on;
@@ -63,6 +110,39 @@ export function MascotSwitch({ initial }: { readonly initial: boolean }) {
             Sale una vez al día por visitante. Nunca en las páginas legales ni en
             el formulario de cita.
           </p>
+
+          {/* La frecuencia se puede ajustar aunque este apagado: asi se
+              deja elegida antes de encenderlo. */}
+          <div className="mt-4">
+            <label
+              htmlFor="mz-freq"
+              className="text-xs font-bold uppercase tracking-wider text-text-secondary"
+            >
+              Cada cuánto le sale a la misma persona
+            </label>
+            <select
+              id="mz-freq"
+              value={freq}
+              disabled={pending}
+              onChange={(e) => changeFreq(e.target.value as MascotFrequency)}
+              className="mt-1 block min-h-11 w-full max-w-sm rounded-xl border-2 border-border-subtle bg-surface px-3 text-sm font-semibold focus:border-brand-primary focus:outline-none disabled:opacity-60"
+            >
+              {FREQS.map((f) => (
+                <option key={f.value} value={f.value}>
+                  {f.label}
+                </option>
+              ))}
+            </select>
+            <p
+              className={`mt-1.5 max-w-xl text-sm leading-relaxed ${
+                FREQS.find((f) => f.value === freq)?.warn
+                  ? "font-semibold text-amber-900"
+                  : "text-text-secondary"
+              }`}
+            >
+              {FREQS.find((f) => f.value === freq)?.help}
+            </p>
+          </div>
 
           <div className="mt-4 flex flex-wrap items-center gap-3">
             <button

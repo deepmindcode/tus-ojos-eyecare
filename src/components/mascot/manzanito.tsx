@@ -39,6 +39,29 @@ interface Promo {
 const SEEN_KEY = "tusojos_manzanito_seen";
 const DAY = 86_400_000;
 
+/**
+ * Cada cuánto vuelve a salirle a la misma persona. Lo elige dirección
+ * desde el panel.
+ *
+ *   daily   — una vez cada 24 horas (lo sensato, y lo de fábrica)
+ *   weekly  — una vez por semana
+ *   session — una vez por visita: si cierra el navegador y vuelve, sale
+ *   always  — cada página. Está porque se pidió; molesta.
+ *
+ * La memoria vive SIEMPRE en el navegador de cada persona, nunca en la
+ * base: que alguien haya visto una mascota no es un dato de nadie.
+ */
+export type Frequency = "daily" | "weekly" | "session" | "always";
+
+/** `session` usa sessionStorage, que el navegador borra al cerrarse. */
+function store(freq: Frequency): Storage | null {
+  try {
+    return freq === "session" ? window.sessionStorage : window.localStorage;
+  } catch {
+    return null;
+  }
+}
+
 const COPY = {
   es: {
     alt: "Manzanito, la mascota de Tus Ojos Eyecare",
@@ -67,10 +90,13 @@ function barred(path: string): boolean {
   );
 }
 
-function seenToday(): boolean {
+function alreadySeen(freq: Frequency): boolean {
+  if (freq === "always") return false;
   try {
-    const raw = window.localStorage.getItem(SEEN_KEY);
-    return raw !== null && Date.now() - Number(raw) < DAY;
+    const raw = store(freq)?.getItem(SEEN_KEY);
+    if (raw === null || raw === undefined) return false;
+    if (freq === "session") return true;
+    return Date.now() - Number(raw) < (freq === "weekly" ? 7 * DAY : DAY);
   } catch {
     // Navegación privada o almacenamiento bloqueado: se trata como no
     // visto. Preferible que salga de más a que no salga nunca.
@@ -78,9 +104,10 @@ function seenToday(): boolean {
   }
 }
 
-function markSeen() {
+function markSeen(freq: Frequency) {
+  if (freq === "always") return;
   try {
-    window.localStorage.setItem(SEEN_KEY, String(Date.now()));
+    store(freq)?.setItem(SEEN_KEY, String(Date.now()));
   } catch {
     /* sin memoria, saldrá otra vez; no es un error que mostrar */
   }
@@ -102,11 +129,10 @@ export function Manzanito() {
     const timers: ReturnType<typeof setTimeout>[] = [];
 
     async function start() {
-      if (seenToday()) return;
-
-      // La misma ruta que usa la ventana de promoción, y está en caché:
-      // preguntar por Manzanito no añade ni una consulta a la base.
-      let payload: { manzanito?: boolean; promo?: Promo | null };
+      // La comprobación de "ya lo vio" va DESPUÉS de preguntar, y no
+      // antes, porque es el servidor quien dice cada cuánto debe salir.
+      // La respuesta está en caché de CDN, así que preguntar es barato.
+      let payload: { manzanito?: boolean; promo?: Promo | null; frequency?: Frequency };
       try {
         const res = await fetch(
           `/api/promotion?path=${encodeURIComponent(pathname)}&locale=${locale}`,
@@ -117,7 +143,8 @@ export function Manzanito() {
         return;
       }
 
-      if (dead || !payload.manzanito) return;
+      const freq: Frequency = payload.frequency ?? "daily";
+      if (dead || !payload.manzanito || alreadySeen(freq)) return;
 
       // El aviso de cookies tiene prioridad: se espera a que se decida.
       const wait = document.querySelector("[data-cookie-notice]") ? 6000 : 2500;
@@ -135,7 +162,7 @@ export function Manzanito() {
             setPhase("walking");
             timers.push(setTimeout(() => !dead && setPhase("talking"), 2100));
           }
-          markSeen();
+          markSeen(freq);
         }, wait),
       );
     }
@@ -155,7 +182,6 @@ export function Manzanito() {
 
   function dismiss() {
     setPhase("leaving");
-    markSeen();
     setTimeout(() => setPhase("off"), 320);
   }
 

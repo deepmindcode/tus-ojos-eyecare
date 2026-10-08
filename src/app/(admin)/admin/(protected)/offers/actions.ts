@@ -5,6 +5,7 @@ import { after } from "next/server";
 import { createSupabaseServerClient, createSupabaseAdminClient } from "@/lib/supabase/server";
 import { getAdminUser, can } from "@/lib/auth/roles";
 import { logAudit } from "@/lib/auth/audit";
+import { MASCOT_FREQUENCIES, type MascotFrequency } from "./types";
 import type { PromotionStatus, PromotionRow, PromotionInput } from "./types";
 
 /**
@@ -290,12 +291,56 @@ export async function setManzanito(on: boolean) {
   return { ok: true as const };
 }
 
-/** Si Manzanito está encendido ahora mismo. */
-export async function manzanitoEnabled(): Promise<boolean> {
+/** Cada cuánto vuelve a salirle Manzanito a la misma persona. */
+export async function setManzanitoFrequency(freq: string) {
+  const user = await getAdminUser();
+  if (!can(user, "mascot:manage")) return { ok: false as const, error: "forbidden" };
+
+  // Se valida contra la lista, no se guarda lo que llegue: esta columna
+  // la lee el sitio público y no debe poder contener cualquier cosa.
+  if (!(MASCOT_FREQUENCIES as readonly string[]).includes(freq)) {
+    return { ok: false as const, error: "invalid" };
+  }
+
+  const { error } = await createSupabaseAdminClient()
+    .from("site_settings")
+    .update({ value: freq, updated_by: user!.id, updated_at: new Date().toISOString() })
+    .eq("key", "manzanito_frequency");
+
+  if (error) {
+    console.error("[mascot] no se pudo guardar la frecuencia:", error);
+    return { ok: false as const, error: "server" };
+  }
+
+  after(async () => {
+    await logAudit({
+      userId: user!.id,
+      action: "mascot.frequency_changed",
+      objectType: "site_setting",
+      details: { frequency: freq },
+    });
+  });
+
+  revalidatePath("/admin/offers");
+  return { ok: true as const };
+}
+
+/** Estado actual de la mascota: encendida y cada cuánto sale. */
+export async function manzanitoSettings(): Promise<{
+  enabled: boolean;
+  frequency: MascotFrequency;
+}> {
   const { data } = await createSupabaseAdminClient()
     .from("site_settings")
-    .select("value")
-    .eq("key", "manzanito_enabled")
-    .maybeSingle();
-  return data?.value === true;
+    .select("key, value")
+    .in("key", ["manzanito_enabled", "manzanito_frequency"]);
+
+  const map = new Map((data ?? []).map((r) => [r.key as string, r.value]));
+  const raw = map.get("manzanito_frequency");
+  return {
+    enabled: map.get("manzanito_enabled") === true,
+    frequency: (MASCOT_FREQUENCIES as readonly string[]).includes(raw as string)
+      ? (raw as MascotFrequency)
+      : "daily",
+  };
 }

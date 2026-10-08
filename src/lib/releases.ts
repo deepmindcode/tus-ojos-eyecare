@@ -37,7 +37,7 @@ export const RELEASES: readonly Release[] = [
         "Si hay una oferta activa, Manzanito la anuncia y lleva al formulario con el descuento ya puesto.",
         "Se enciende y se apaga desde Offers, en el panel. Llega apagado: en la web no cambia nada hasta que lo enciendas.",
         "Mientras esté encendido, la ventana emergente de ofertas no sale: la anuncia él. Al apagarlo, vuelve como antes.",
-        "Sale una vez al día por visitante, y nunca en las páginas legales ni en el formulario de cita.",
+        "Tú eliges cada cuánto le sale a la misma persona: una vez al día, una vez por semana, una vez por visita o en cada página. Nunca en las páginas legales ni en el formulario de cita.",
       ],
       en: [
         "New mascot: a little eye in an optician's coat. He walks in from one side of the site and, on arrival, hops with his little arms up inviting the visitor to book. He blinks.",
@@ -45,7 +45,7 @@ export const RELEASES: readonly Release[] = [
         "When an offer is running, Manzanito announces it and takes the visitor to the form with the discount already applied.",
         "He is switched on and off from Offers in the panel. He arrives switched off: nothing changes on the site until you turn him on.",
         "While he is on, the offer popup does not appear — he announces it instead. Switch him off and it comes back as before.",
-        "He appears once a day per visitor, and never on the legal pages or the appointment form.",
+        "You choose how often he appears to the same person: once a day, once a week, once per visit, or on every page. Never on the legal pages or the appointment form.",
       ],
     },
   },

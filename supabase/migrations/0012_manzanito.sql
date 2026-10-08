@@ -19,3 +19,23 @@ VALUES (
   'Manzanito, la mascota que invita a pedir cita. Lo encienden OWNER y SUPER_ADMIN desde Offers. Apagado de fabrica.'
 )
 ON CONFLICT (key) DO NOTHING;
+
+-- Cada cuánto vuelve a salirle a la misma persona. Lo elige dirección
+-- desde el mismo sitio que el interruptor.
+--
+--   daily   — una vez cada 24 horas (de fábrica)
+--   weekly  — una vez por semana
+--   session — una vez por visita
+--   always  — en cada página
+--
+-- `always` existe porque se pidió, no porque se recomiende: un muñeco
+-- que salta encima del texto en cada página echa gente del sitio, y
+-- Google penaliza lo que tapa contenido en móvil.
+INSERT INTO public.site_settings (key, value, is_public, description)
+VALUES (
+  'manzanito_frequency',
+  '"daily"'::jsonb,
+  true,
+  'Cada cuanto sale Manzanito a la misma persona: daily, weekly, session o always.'
+)
+ON CONFLICT (key) DO NOTHING;

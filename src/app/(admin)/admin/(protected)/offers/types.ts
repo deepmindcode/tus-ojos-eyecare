@@ -69,3 +69,12 @@ export interface PromotionInput {
   startAt: string;
   endAt: string;
 }
+/**
+ * Cada cuánto vuelve a salirle Manzanito a la misma persona.
+ *
+ * Vive aquí y no en `actions.ts` porque aquel archivo es "use server" y
+ * ahí sólo se pueden exportar funciones: exportar esta lista desde allí
+ * rompía la compilación de la página entera.
+ */
+export const MASCOT_FREQUENCIES = ["daily", "weekly", "session", "always"] as const;
+export type MascotFrequency = (typeof MASCOT_FREQUENCIES)[number];

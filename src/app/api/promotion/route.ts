@@ -31,7 +31,7 @@ export async function GET(request: Request) {
   // El path entra desde el navegador, así que se acota antes de usarlo:
   // tiene que parecer una ruta de este sitio y nada más.
   if (!/^\/[\w\-/]*$/.test(path) || path.length > 120) {
-    return NextResponse.json({ promo: null, manzanito: false }, { status: 400 });
+    return NextResponse.json({ promo: null, manzanito: false, frequency: "daily" }, { status: 400 });
   }
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -40,7 +40,7 @@ export async function GET(request: Request) {
   if (!supabaseUrl || !anonKey) {
     // Sin configuración no hay promoción ni mascota, pero tampoco un
     // error que rompa la página: simplemente no aparece nada.
-    return NextResponse.json({ promo: null, manzanito: false });
+    return NextResponse.json({ promo: null, manzanito: false, frequency: "daily" });
   }
 
   const supabase = createClient(supabaseUrl, anonKey, {
@@ -53,7 +53,10 @@ export async function GET(request: Request) {
   // por visita para ahorrar nada.
   const [promoRes, flagRes] = await Promise.all([
     supabase.rpc("get_promotion_for_page", { p_path: path, p_locale: locale }).maybeSingle(),
-    supabase.from("site_settings").select("value").eq("key", "manzanito_enabled").maybeSingle(),
+    supabase
+      .from("site_settings")
+      .select("key, value")
+      .in("key", ["manzanito_enabled", "manzanito_frequency"]),
   ]);
 
   if (promoRes.error) {
@@ -62,9 +65,13 @@ export async function GET(request: Request) {
 
   // Apagado si no hay fila o no se pudo leer: una mascota que aparece
   // sola porque falló una consulta es peor que una que no aparece.
-  const manzanito = flagRes.data?.value === true;
+  const settings = new Map((flagRes.data ?? []).map((r) => [r.key as string, r.value]));
+  const manzanito = settings.get("manzanito_enabled") === true;
+  const raw = settings.get("manzanito_frequency");
+  const frequency =
+    raw === "session" || raw === "weekly" || raw === "always" ? raw : "daily";
 
-  return NextResponse.json({ promo: promoRes.data ?? null, manzanito }, {
+  return NextResponse.json({ promo: promoRes.data ?? null, manzanito, frequency }, {
     headers: {
       // Un minuto de caché compartida. Una promoción recién publicada
       // tarda como mucho ese minuto en aparecer, y a cambio la base deja

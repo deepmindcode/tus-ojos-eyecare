@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getAdminUser, can } from "@/lib/auth/roles";
-import { listPromotions, manzanitoEnabled } from "./actions";
+import { listPromotions, manzanitoSettings } from "./actions";
 import { PromotionManager } from "@/components/admin/promotion-manager";
 import { MascotSwitch } from "@/components/admin/mascot-switch";
 import { LOCATIONS } from "@/config/site";
@@ -23,7 +23,7 @@ export default async function OffersPage() {
   if (!user) redirect("/admin/login");
   if (!can(user, "offers:create")) redirect("/admin");
 
-  const [promotions, mascotOn] = await Promise.all([listPromotions(), manzanitoEnabled()]);
+  const [promotions, mascot] = await Promise.all([listPromotions(), manzanitoSettings()]);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
@@ -40,7 +40,9 @@ export default async function OffersPage() {
       </header>
 
       {/* Solo direccion: encenderlo cambia lo que ve todo visitante. */}
-      {can(user, "mascot:manage") && <MascotSwitch initial={mascotOn} />}
+      {can(user, "mascot:manage") && (
+        <MascotSwitch initial={mascot.enabled} initialFrequency={mascot.frequency} />
+      )}
 
       <PromotionManager
         initialPromotions={promotions}

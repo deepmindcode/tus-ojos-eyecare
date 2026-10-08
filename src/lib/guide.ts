@@ -738,8 +738,12 @@ const LEADERSHIP_EXTRA_ES: readonly GuideSection[] = [
             desc: "Con Manzanito encendido, la ventana emergente de ofertas no sale: la anuncia él. En un teléfono no caben dos tarjetas encima, y dos invitaciones seguidas cansan. Al apagarlo, la ventana vuelve a funcionar como antes.",
           },
           {
-            term: "Una vez al día",
-            desc: "A cada visitante le sale una vez al día. Si lo cierra, ese día no vuelve a salirle. No se guarda nada en la base de datos: esa memoria vive en el navegador de cada persona.",
+            term: "Cada cuánto sale",
+            desc: "Debajo del interruptor eliges entre: una vez al día (lo recomendado), una vez por semana, una vez por visita —vuelve a salir si la persona cierra el navegador y entra más tarde—, o en cada página. Esta última no la uses: un muñeco que salta encima del texto en cada página echa gente del sitio, y Google penaliza lo que tapa contenido en el móvil. Si lo cierra con la X, cuenta como visto igual.",
+          },
+          {
+            term: "La cuenta la lleva cada navegador",
+            desc: "No se guarda nada en la base de datos: que alguien haya visto una mascota no es un dato de nadie. Por eso el mismo señor lo ve una vez en el móvil y otra en el ordenador, y quien navegue en ventana privada lo verá otra vez.",
           },
           {
             term: "Dónde no sale",
@@ -1099,8 +1103,12 @@ const LEADERSHIP_EXTRA_EN: readonly GuideSection[] = [
             desc: "With Manzanito on, the offer popup does not appear — he announces it instead. Two cards do not fit on a phone, and two invitations in a row wear people out. Switch him off and the popup works as before.",
           },
           {
-            term: "Once a day",
-            desc: "Each visitor sees him once a day. If they close him, he does not come back that day. Nothing is stored in the database: that memory lives in each person's own browser.",
+            term: "How often he appears",
+            desc: "Under the switch you choose between: once a day (recommended), once a week, once per visit — he comes back if the person closes the browser and returns later — or on every page. Do not use that last one: a character jumping over the text on every page drives people off the site, and Google penalises anything that covers content on mobile. Closing him with the X counts as seen either way.",
+          },
+          {
+            term: "Each browser keeps its own count",
+            desc: "Nothing is stored in the database: someone having seen a mascot is not anybody's data. That is why the same person sees him once on the phone and once on the computer, and anyone browsing privately will see him again.",
           },
           {
             term: "Where he never appears",
