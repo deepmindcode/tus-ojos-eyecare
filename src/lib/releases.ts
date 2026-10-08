@@ -27,6 +27,28 @@ export interface Release {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: 17,
+    date: "2026-10-08",
+    title: {
+      es: "Notas de la llamada, el panel en el teléfono y avisos",
+      en: "Call notes, the panel on your phone, and alerts",
+    },
+    changes: {
+      es: [
+        "En cada solicitud se puede escribir una nota con lo que salió de la llamada. Queda con tu nombre y la hora, junto al resto del historial.",
+        "Las notas no se pueden editar ni borrar: para corregir una, se escribe otra.",
+        "El panel se puede instalar como una aplicación, con su icono, en el teléfono y en el ordenador.",
+        "Se puede activar un aviso que suena cuando entra una solicitud nueva que nadie ha contactado, aunque el panel esté cerrado. El aviso nunca dice el nombre del paciente ni el motivo: sólo la oficina.",
+      ],
+      en: [
+        "On every request you can write a note with what came out of the call. It is kept with your name and the time, alongside the rest of the history.",
+        "Notes cannot be edited or deleted: to correct one, write another.",
+        "The panel can be installed as an app, with its own icon, on your phone and on your computer.",
+        "You can turn on an alert that buzzes when a new request arrives that nobody has contacted, even with the panel closed. The alert never says the patient's name or reason — only the office.",
+      ],
+    },
+  },
+  {
     version: 16,
     date: "2026-10-06",
     title: { es: "Control de versiones", en: "Version history" },
