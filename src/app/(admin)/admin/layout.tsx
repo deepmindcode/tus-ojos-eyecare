@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Source_Sans_3 } from "next/font/google";
 import "../../globals.css";
 
@@ -27,7 +27,22 @@ export const metadata: Metadata = {
   title: "Tus Ojos Admin",
   // El panel nunca se indexa, aunque alguien filtre la URL.
   robots: { index: false, follow: false },
-  icons: { icon: "/favicon.svg" },
+  icons: { icon: "/favicon.svg", apple: "/apple-touch-icon.png" },
+  // El panel se puede instalar como app. El manifiesto sólo cuelga de
+  // /admin: el sitio público no es una app y no debe ofrecer instalarse.
+  manifest: "/admin.webmanifest",
+  appleWebApp: {
+    capable: true,
+    title: "Tus Ojos",
+    statusBarStyle: "default",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#800080",
+  // Instalado como app, el contenido no debe quedar bajo la barra de
+  // estado ni bajo el indicador de inicio del iPhone.
+  viewportFit: "cover",
 };
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

@@ -5,6 +5,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getAdminUser, can } from "@/lib/auth/roles";
 import { AppointmentsTable } from "@/components/admin/appointments-table";
 import { RefreshBar } from "@/components/admin/refresh-bar";
+import { AlertsSetup } from "@/components/admin/alerts-setup";
 import { officeClock } from "@/lib/office-time";
 import { LOCATIONS } from "@/config/site";
 
@@ -44,6 +45,10 @@ export default async function AppointmentsPage({
 
   const sp = await searchParams;
   const supabase = await createSupabaseServerClient();
+
+  // Si no hay clave VAPID configurada, la tarjeta de avisos ni se enseña:
+  // un botón que no puede funcionar es peor que ningún botón.
+  const vapidKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? "";
 
   // Rango por defecto: 30 días. Cargar el histórico completo en cada
   // visita es lento y además expone más datos de los necesarios.
@@ -175,6 +180,15 @@ export default async function AppointmentsPage({
           />
         ))}
       </div>
+
+      {/* Encender los avisos sólo puede hacerlo un clic de la persona en
+          su propio aparato: el permiso lo da el navegador, no el
+          servidor. Por eso vive aquí y no en los ajustes. */}
+      {vapidKey && (
+        <div className="mt-6">
+          <AlertsSetup vapidKey={vapidKey} />
+        </div>
+      )}
 
       <div className="mt-6">
         <AppointmentsTable

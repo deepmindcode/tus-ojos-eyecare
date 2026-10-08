@@ -87,6 +87,67 @@ export async function updateAppointmentStatus(id: string, status: string) {
 }
 
 /**
+ * Nota de la conversación con el paciente.
+ *
+ * Va a la MISMA tabla que los cambios de estado, no a una aparte, para
+ * que el historial quede en una sola línea de tiempo y en orden: «llamé,
+ * no contestó, volví a llamar, dijo que viene el martes». Dos listas
+ * separadas obligarían a leer dos veces y cruzar las horas a ojo.
+ *
+ * No se edita ni se borra. Es el expediente de un paciente, y una nota
+ * que se puede reescribir después no sirve de nada ante una discrepancia:
+ * si algo quedó mal escrito, se añade otra nota corrigiéndolo.
+ *
+ * Se escribe con el cliente de SESIÓN: quien no puede ver la cita por RLS
+ * tampoco puede anotarle nada.
+ */
+export async function addAppointmentNote(id: string, body: string) {
+  const user = await getAdminUser();
+  if (!can(user, "appointments:update")) {
+    return { ok: false as const, error: "forbidden" };
+  }
+
+  const text = body.trim();
+  if (text.length === 0) return { ok: false as const, error: "empty" };
+  if (text.length > 2000) return { ok: false as const, error: "tooLong" };
+
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.from("appointment_activities").insert({
+    appointment_id: id,
+    user_id: user!.id,
+    action: "note",
+    new_value: text,
+  });
+
+  if (error) {
+    console.error("[admin] fallo guardando nota:", error);
+    return { ok: false as const, error: "server" };
+  }
+
+  // La auditoría guarda QUE se escribió una nota, nunca su contenido: el
+  // registro de accesos lo lee más gente que la propia ficha.
+  after(async () => {
+    await logAudit({
+      userId: user!.id,
+      action: "appointment.note_added",
+      objectType: "appointment_request",
+      objectId: id,
+    });
+  });
+
+  return {
+    ok: true as const,
+    entry: {
+      action: "note",
+      from: null,
+      to: text,
+      who: user!.displayName,
+      at: new Date().toISOString(),
+    } satisfies ActivityEntry,
+  };
+}
+
+/**
  * Registra que alguien abrió los datos de una solicitud.
  *
  * §51 exige registrar quién VIO qué, no sólo quién lo cambió. En un

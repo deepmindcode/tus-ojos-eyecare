@@ -1,10 +1,20 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { ChevronDown, Phone, MessageSquare, Mail, Loader2, Clock, Tag } from "lucide-react";
+import {
+  ChevronDown,
+  Phone,
+  MessageSquare,
+  Mail,
+  Loader2,
+  Clock,
+  Tag,
+  NotebookPen,
+} from "lucide-react";
 import {
   updateAppointmentStatus,
   getAppointmentActivity,
+  addAppointmentNote,
   type ActivityEntry,
 } from "@/app/(admin)/admin/(protected)/actions";
 
@@ -66,6 +76,15 @@ function label(s: string) {
   return s.replace(/_/g, " ").toLowerCase();
 }
 
+function when(iso: string) {
+  return new Date(iso).toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
+}
+
 export function AppointmentsTable({
   rows,
   canUpdate,
@@ -82,6 +101,39 @@ export function AppointmentsTable({
   // Estado mostrado de inmediato al pulsar, antes de que el servidor
   // confirme. Sin esto, cada clic espera a que se rehaga toda la página.
   const [override, setOverride] = useState<Record<string, string>>({});
+
+  // Lo que se está escribiendo en la nota, por ficha. Se guarda por id y
+  // no en una sola variable: quien abre dos fichas no debe encontrarse el
+  // borrador de la otra.
+  const [draft, setDraft] = useState<Record<string, string>>({});
+  const [savingNote, setSavingNote] = useState<string | null>(null);
+  const [noteError, setNoteError] = useState<Record<string, string>>({});
+
+  function saveNote(id: string) {
+    const text = (draft[id] ?? "").trim();
+    if (text.length === 0) return;
+    setSavingNote(id);
+    setNoteError((p) => ({ ...p, [id]: "" }));
+
+    startTransition(async () => {
+      const res = await addAppointmentNote(id, text);
+      if (res.ok) {
+        setActivity((prev) => ({ ...prev, [id]: [res.entry, ...(prev[id] ?? [])] }));
+        setDraft((prev) => ({ ...prev, [id]: "" }));
+      } else {
+        // El texto NO se borra si falla. Quien acaba de escribir tres
+        // líneas sobre una llamada no debería tener que recordarlas.
+        setNoteError((p) => ({
+          ...p,
+          [id]:
+            res.error === "tooLong"
+              ? "Too long — keep it under 2000 characters."
+              : "Could not save. Try again.",
+        }));
+      }
+      setSavingNote(null);
+    });
+  }
 
   async function toggle(row: AppointmentRow) {
     const opening = expanded !== row.id;
@@ -319,24 +371,83 @@ export function AppointmentsTable({
                     </p>
                   ) : (
                     <ol className="mt-2 grid gap-1.5">
-                      {activity[r.id]!.map((a, i) => (
-                        <li key={i} className="flex flex-wrap gap-x-2 text-sm">
-                          <span className="font-semibold">{a.who}</span>
-                          <span className="text-text-secondary">
-                            {a.from ? `${label(a.from)} → ` : ""}
-                            <strong className="text-text-primary">{label(a.to ?? "")}</strong>
-                          </span>
-                          <span className="ml-auto text-text-secondary">
-                            {new Date(a.at).toLocaleString("en-US", {
-                              month: "short",
-                              day: "numeric",
-                              hour: "numeric",
-                              minute: "2-digit",
-                            })}
-                          </span>
-                        </li>
-                      ))}
+                      {activity[r.id]!.map((a, i) =>
+                        a.action === "note" ? (
+                          /* Una nota ocupa su propio bloque: es texto que
+                             alguien escribió a mano y hay que poder leerlo
+                             entero, no de refilón en una línea. */
+                          <li
+                            key={i}
+                            className="rounded-xl border-l-[3px] border-brand-secondary bg-surface p-3"
+                          >
+                            <div className="flex flex-wrap items-baseline gap-x-2 text-sm">
+                              <span className="font-semibold">{a.who}</span>
+                              <span className="text-xs text-text-secondary">wrote a note</span>
+                              <span className="ml-auto text-xs text-text-secondary">
+                                {when(a.at)}
+                              </span>
+                            </div>
+                            <p className="mt-1.5 whitespace-pre-wrap text-sm">{a.to}</p>
+                          </li>
+                        ) : (
+                          <li key={i} className="flex flex-wrap gap-x-2 text-sm">
+                            <span className="font-semibold">{a.who}</span>
+                            <span className="text-text-secondary">
+                              {a.from ? `${label(a.from)} → ` : ""}
+                              <strong className="text-text-primary">{label(a.to ?? "")}</strong>
+                            </span>
+                            <span className="ml-auto text-text-secondary">{when(a.at)}</span>
+                          </li>
+                        ),
+                      )}
                     </ol>
+                  )}
+
+                  {/* El cuaderno de la llamada. Va JUNTO al historial y no
+                      en otra pestaña: se escribe mirando lo que ya pasó. */}
+                  {canUpdate && (
+                    <div className="mt-3">
+                      <label
+                        htmlFor={`note-${r.id}`}
+                        className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-text-secondary"
+                      >
+                        <NotebookPen className="size-3.5" aria-hidden="true" />
+                        Add a note
+                      </label>
+                      <textarea
+                        id={`note-${r.id}`}
+                        rows={3}
+                        value={draft[r.id] ?? ""}
+                        onChange={(e) => setDraft((p) => ({ ...p, [r.id]: e.target.value }))}
+                        placeholder="What came out of the call. Example: called at 2pm, no answer, left voicemail. Or: wants Saturday morning, asked about the discount."
+                        className="mt-1.5 w-full resize-y rounded-xl border-2 border-border-subtle bg-surface p-3 text-sm focus:border-brand-primary focus:outline-none"
+                      />
+                      <div className="mt-2 flex flex-wrap items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={() => saveNote(r.id)}
+                          disabled={
+                            savingNote === r.id || (draft[r.id] ?? "").trim().length === 0
+                          }
+                          className="inline-flex min-h-11 items-center gap-2 rounded-full bg-brand-secondary px-5 text-sm font-bold text-white hover:bg-brand-secondary-deep disabled:opacity-40"
+                        >
+                          {savingNote === r.id && (
+                            <Loader2 className="size-4 animate-spin" aria-hidden="true" />
+                          )}
+                          Save note
+                        </button>
+                        {noteError[r.id] ? (
+                          <span className="text-sm font-semibold text-error">
+                            {noteError[r.id]}
+                          </span>
+                        ) : (
+                          <span className="text-xs text-text-secondary">
+                            Saved with your name and the time. Notes cannot be edited or
+                            deleted — to correct one, add another.
+                          </span>
+                        )}
+                      </div>
+                    </div>
                   )}
                 </div>
 

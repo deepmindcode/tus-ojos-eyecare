@@ -8,6 +8,7 @@ import {
 } from "@/lib/validation/appointment";
 import { validatePromotionForAppointment } from "@/lib/promotions";
 import { notifyNewAppointment } from "@/lib/notify";
+import { pushNewAppointment } from "@/lib/push";
 import { after } from "next/server";
 
 /**
@@ -217,6 +218,11 @@ export async function POST(req: NextRequest) {
       preferredTime: data.preferredTime || null,
       withDiscount: promotionLabel !== null,
     });
+    // El aviso al telefono va aparte del correo y despues: si el push
+    // falla —un buzon caducado, el servicio del navegador caido— el
+    // correo interno ya salio igual. Dos avisos independientes para que
+    // la solicitud no se quede sin que nadie se entere.
+    await pushNewAppointment(location.city as string);
   });
 
   return NextResponse.json({ ok: true, id: appointment.id });

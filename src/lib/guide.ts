@@ -111,6 +111,77 @@ const FRONT_DESK_ES: GuideDoc = {
       ],
     },
     {
+      id: "notas",
+      title: "Apuntar lo que salió de la llamada",
+      blocks: [
+        {
+          kind: "text",
+          text: "Dentro de la ficha, debajo del historial, hay un recuadro para escribir. Ahí va lo que no cabe en un estado: lo que dijo la persona, lo que quedó pendiente, lo que hay que recordar cuando se la vuelva a llamar.",
+        },
+        {
+          kind: "steps",
+          items: [
+            "Abre la ficha del paciente.",
+            "Escribe en «Add a note» lo que pasó. Frases cortas bastan: «llamé a las 2, no contesta, dejé mensaje» o «quiere sábado por la mañana, preguntó por el descuento».",
+            "Pulsa «Save note». Queda con tu nombre y la hora, dentro del mismo historial, en orden con los cambios de estado.",
+          ],
+        },
+        {
+          kind: "defs",
+          defs: [
+            {
+              term: "No se edita ni se borra",
+              desc: "Una nota que se puede reescribir después no vale como constancia. Si escribiste algo mal, añade otra nota corrigiéndolo; las dos quedan y se ve cuál es posterior.",
+            },
+            {
+              term: "Qué escribir",
+              desc: "Lo que ayudaría a quien llame la próxima vez y no estuvo en tu conversación. El estado dice QUÉ pasó; la nota dice POR QUÉ y qué sigue.",
+            },
+          ],
+        },
+        {
+          kind: "warn",
+          text: "La nota forma parte del expediente del paciente. Apunta hechos de la conversación, no opiniones sobre la persona: lo que escribas puede acabar leído por dirección, por otro compañero, o en una reclamación.",
+        },
+      ],
+    },
+    {
+      id: "avisos",
+      title: "El panel en el teléfono, con avisos",
+      blocks: [
+        {
+          kind: "text",
+          text: "El panel se puede instalar como una app, con su icono, y avisarte en cuanto entra una solicitud que nadie ha contactado todavía. El aviso llega aunque la app esté cerrada.",
+        },
+        {
+          kind: "steps",
+          items: [
+            "En Appointments, arriba, pulsa «Turn on alerts» y acepta cuando el teléfono pregunte.",
+            "Pulsa «Send a test» para comprobar que llega.",
+            "En Android y en el ordenador, «Install as an app» pone el icono en la pantalla.",
+            "En iPhone es al revés: primero hay que instalarlo. En Safari, toca Compartir y luego «Añadir a pantalla de inicio»; abre Tus Ojos desde ese icono y ya aparecerá el botón de avisos.",
+          ],
+        },
+        {
+          kind: "defs",
+          defs: [
+            {
+              term: "Qué dice el aviso",
+              desc: "Sólo que hay una solicitud nueva y en qué oficina. Nunca el nombre del paciente ni el motivo de consulta: un aviso se lee en la pantalla bloqueada, a veces con alguien al lado.",
+            },
+            {
+              term: "Es por aparato",
+              desc: "Encenderlo en el teléfono no lo enciende en el ordenador. Hay que pulsar el botón en cada aparato donde quieras recibirlos, y «Turn off» lo apaga sólo en ése.",
+            },
+            {
+              term: "Sin conexión no funciona",
+              desc: "La app no guarda las citas en el teléfono, a propósito: sería información de pacientes en reposo y además una lista vieja que alguien podría leer como si fuera la de hoy. Sin internet, el panel no abre.",
+            },
+          ],
+        },
+      ],
+    },
+    {
       id: "seguimiento",
       title: "Cuándo una solicitud se está enfriando",
       blocks: [
@@ -300,6 +371,77 @@ const FRONT_DESK_EN: GuideDoc = {
         {
           kind: "note",
           text: "Every status change is recorded with your name and the time. Not to watch you: so that when someone asks why a patient was never called, the answer is a fact rather than a guess.",
+        },
+      ],
+    },
+    {
+      id: "notas",
+      title: "Writing down what came out of the call",
+      blocks: [
+        {
+          kind: "text",
+          text: "Inside the record, under the history, there is a box to write in. That is where what does not fit in a status goes: what the person said, what was left open, what to remember next time they are called.",
+        },
+        {
+          kind: "steps",
+          items: [
+            "Open the patient's record.",
+            "Write what happened under \"Add a note\". Short lines are enough: \"called at 2pm, no answer, left voicemail\" or \"wants Saturday morning, asked about the discount\".",
+            "Press \"Save note\". It is kept with your name and the time, in the same history, in order with the status changes.",
+          ],
+        },
+        {
+          kind: "defs",
+          defs: [
+            {
+              term: "No editing, no deleting",
+              desc: "A note that can be rewritten afterwards is worth nothing as a record. If you wrote something wrong, add another note correcting it; both stay and it is clear which came later.",
+            },
+            {
+              term: "What to write",
+              desc: "Whatever would help whoever calls next time and was not in your conversation. The status says WHAT happened; the note says WHY and what comes next.",
+            },
+          ],
+        },
+        {
+          kind: "warn",
+          text: "The note is part of the patient's record. Write facts from the conversation, not opinions about the person: what you write may end up read by leadership, by a colleague, or in a complaint.",
+        },
+      ],
+    },
+    {
+      id: "avisos",
+      title: "The panel on your phone, with alerts",
+      blocks: [
+        {
+          kind: "text",
+          text: "The panel can be installed as an app, with its own icon, and can buzz you the moment a request comes in that nobody has contacted yet. The alert arrives even with the app closed.",
+        },
+        {
+          kind: "steps",
+          items: [
+            "In Appointments, at the top, press \"Turn on alerts\" and accept when the phone asks.",
+            "Press \"Send a test\" to check it arrives.",
+            "On Android and on a computer, \"Install as an app\" puts the icon on the screen.",
+            "On iPhone it is the other way round: it has to be installed first. In Safari, tap Share and then \"Add to Home Screen\"; open Tus Ojos from that icon and the alerts button will appear.",
+          ],
+        },
+        {
+          kind: "defs",
+          defs: [
+            {
+              term: "What the alert says",
+              desc: "Only that there is a new request, and which office. Never the patient's name or reason for visiting: an alert is read off a locked screen, sometimes with someone else beside it.",
+            },
+            {
+              term: "It is per device",
+              desc: "Turning it on on the phone does not turn it on on the computer. Press the button on each device where you want them, and \"Turn off\" only switches off that one.",
+            },
+            {
+              term: "No offline mode",
+              desc: "The app deliberately keeps no appointments on the phone: that would be patient information at rest, and also a stale list someone might read as today's. With no internet, the panel does not open.",
+            },
+          ],
         },
       ],
     },
