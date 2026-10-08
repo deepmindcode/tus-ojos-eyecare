@@ -32,7 +32,7 @@ export const RELEASES: readonly Release[] = [
     title: { es: "Manzanito, la mascota", en: "Manzanito, the mascot" },
     changes: {
       es: [
-        "Nueva mascota: un ojito con bata de óptico que sale caminando por un lado de la web, saluda e invita a pedir cita.",
+        "Nueva mascota: un ojito con bata de óptico. Entra caminando por un lado de la web y, al llegar, da saltitos con los bracitos en alto invitando a pedir cita. Parpadea.",
         "Habla en el idioma de la página: español a quien lee en español, inglés a quien lee en inglés.",
         "Si hay una oferta activa, Manzanito la anuncia y lleva al formulario con el descuento ya puesto.",
         "Se enciende y se apaga desde Offers, en el panel. Llega apagado: en la web no cambia nada hasta que lo enciendas.",
@@ -40,7 +40,7 @@ export const RELEASES: readonly Release[] = [
         "Sale una vez al día por visitante, y nunca en las páginas legales ni en el formulario de cita.",
       ],
       en: [
-        "New mascot: a little eye in an optician's coat who walks in from one side of the site, waves, and invites the visitor to book.",
+        "New mascot: a little eye in an optician's coat. He walks in from one side of the site and, on arrival, hops with his little arms up inviting the visitor to book. He blinks.",
         "He speaks the page's language: Spanish to Spanish readers, English to English readers.",
         "When an offer is running, Manzanito announces it and takes the visitor to the form with the discount already applied.",
         "He is switched on and off from Offers in the panel. He arrives switched off: nothing changes on the site until you turn him on.",

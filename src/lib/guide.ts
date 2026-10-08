@@ -717,7 +717,7 @@ const LEADERSHIP_EXTRA_ES: readonly GuideSection[] = [
     blocks: [
       {
         kind: "text",
-        text: "Manzanito es un ojito con bata de óptico que sale caminando por un lado de la web, saluda e invita a pedir cita. Si hay una oferta activa, es él quien la anuncia.",
+        text: "Manzanito es un ojito con bata de óptico. Entra caminando por un lado de la web y, al llegar, da saltitos con los bracitos en alto invitando a pedir cita. Si hay una oferta activa, es él quien la anuncia.",
       },
       {
         kind: "steps",
@@ -1078,7 +1078,7 @@ const LEADERSHIP_EXTRA_EN: readonly GuideSection[] = [
     blocks: [
       {
         kind: "text",
-        text: "Manzanito is a little eye in an optician's coat who walks in from one side of the site, waves, and invites the visitor to book. When an offer is running, he is the one who announces it.",
+        text: "Manzanito is a little eye in an optician's coat. He walks in from one side of the site and, on arrival, hops with his little arms up inviting the visitor to book. When an offer is running, he is the one who announces it.",
       },
       {
         kind: "steps",

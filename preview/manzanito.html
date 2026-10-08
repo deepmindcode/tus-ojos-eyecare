@@ -44,30 +44,71 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(1.7rem,5vw,2.4rem)
 
 /* ---- CSS REAL del componente, copiado tal cual al generar ---- */
 
-.mz{position:fixed;bottom:16px;z-index:60;width:116px;pointer-events:none}
+.mz{position:fixed;bottom:16px;z-index:60;width:132px;pointer-events:none}
 .mz-bubble,.mz-toon{pointer-events:auto}
-.mz-left{left:16px;transform:translateX(-280px)}
-.mz-right{right:16px;transform:translateX(280px)}
-.mz-walking,.mz-talking{transform:translateX(0);transition:transform 2.1s cubic-bezier(.33,.02,.45,1)}
-.mz-leaving{opacity:0;transition:opacity .3s ease}
-.mz-toon{display:block;width:100%;height:auto;overflow:visible;filter:drop-shadow(0 6px 10px rgb(0 0 0/.18))}
-.mz-walking .mz-toon{animation:mzbob .36s ease-in-out infinite}
-@keyframes mzbob{0%,100%{translate:0 0}50%{translate:0 -4px}}
-.mz-leg{transform-box:view-box;transform-origin:48px 112px}
-.mz-leg.mz-r{transform-origin:62px 112px}
-.mz-walking .mz-leg{animation:mzstep .36s ease-in-out infinite}
-.mz-walking .mz-leg.mz-r{animation-delay:-.18s}
-@keyframes mzstep{0%,100%{transform:rotate(15deg)}50%{transform:rotate(-15deg)}}
-.mz-arm{transform-box:view-box;transform-origin:34px 78px}
-.mz-arm.mz-r{transform-origin:76px 78px}
-.mz-walking .mz-arm{animation:mzswing .36s ease-in-out infinite}
-.mz-walking .mz-arm.mz-r{animation-delay:-.18s}
-@keyframes mzswing{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(10deg)}}
-.mz-talking .mz-arm.mz-r{animation:mzwave .6s ease-in-out 3}
-@keyframes mzwave{0%,100%{transform:rotate(0)}35%{transform:rotate(42deg)}70%{transform:rotate(18deg)}}
-.mz-lid{transform-box:view-box;transform-origin:55px 20px;transform:scaleY(0);animation:mzblink 5.4s infinite}
-@keyframes mzblink{0%,94%,100%{transform:scaleY(0)}96%,97%{transform:scaleY(1)}}
-.mz-bubble{position:absolute;bottom:calc(100% - 4px);width:236px;max-width:calc(100vw - 48px);
+
+/* --- entrada: se acerca andando y frena con un pequeno rebote --- */
+.mz-left{left:16px;transform:translateX(-300px)}
+.mz-right{right:16px;transform:translateX(300px)}
+.mz-walking,.mz-talking{transform:translateX(0);
+ transition:transform 2.2s cubic-bezier(.26,.04,.3,1.14)}
+.mz-leaving{opacity:0;transform:translateY(14px);transition:opacity .32s ease,transform .32s ease}
+
+.mz-toon{display:block;width:100%;height:auto;overflow:visible;
+ transform-box:view-box;transform-origin:60px 132px;
+ filter:drop-shadow(0 7px 11px rgb(0 0 0/.2))}
+
+/* --- caminando --- */
+.mz-walking .mz-toon{animation:mzbob .38s ease-in-out infinite}
+@keyframes mzbob{0%,100%{transform:translateY(0) rotate(-1.4deg)}50%{transform:translateY(-5px) rotate(1.4deg)}}
+.mz-leg{transform-box:view-box;transform-origin:50px 106px}
+.mz-leg.mz-r{transform-origin:71px 106px}
+.mz-walking .mz-leg{animation:mzstep .38s ease-in-out infinite}
+.mz-walking .mz-leg.mz-r{animation-delay:-.19s}
+@keyframes mzstep{0%,100%{transform:rotate(17deg)}50%{transform:rotate(-17deg)}}
+.mz-arm{transform-box:view-box;transform-origin:30px 76px}
+.mz-arm.mz-r{transform-origin:90px 76px}
+.mz-walking .mz-arm{animation:mzswing .38s ease-in-out infinite}
+.mz-walking .mz-arm.mz-r{animation-delay:-.19s}
+@keyframes mzswing{0%,100%{transform:rotate(-13deg)}50%{transform:rotate(13deg)}}
+
+/* --- invitando: dos saltitos, descanso, y vuelta --- */
+.mz-talking .mz-toon{animation:mzhop 4.2s ease-in-out .35s infinite}
+@keyframes mzhop{
+ 0%{transform:translateY(0) scale(1,1)}
+ 5%{transform:translateY(0) scale(1.07,.93)}
+ 13%{transform:translateY(-13px) scale(.95,1.06)}
+ 20%{transform:translateY(0) scale(1.08,.92)}
+ 25%{transform:translateY(0) scale(1,1)}
+ 30%{transform:translateY(0) scale(1.05,.95)}
+ 37%{transform:translateY(-9px) scale(.97,1.04)}
+ 43%{transform:translateY(0) scale(1.05,.95)}
+ 48%,100%{transform:translateY(0) scale(1,1)}}
+
+/* Los bracitos suben y se quedan arriba, agitandose en cada salto.
+   Los cien grados no son decorativos: con el brazo apuntando abajo y
+   hacia fuera, es el giro que deja la mano por encima del hombro. */
+.mz-talking .mz-arm.mz-l{animation:mzupL 4.2s ease-in-out .35s infinite}
+.mz-talking .mz-arm.mz-r{animation:mzupR 4.2s ease-in-out .35s infinite}
+@keyframes mzupL{
+ 0%{transform:rotate(0)}8%{transform:rotate(104deg)}
+ 13%{transform:rotate(92deg)}20%{transform:rotate(104deg)}
+ 37%{transform:rotate(92deg)}43%{transform:rotate(104deg)}
+ 92%{transform:rotate(100deg)}100%{transform:rotate(0)}}
+@keyframes mzupR{
+ 0%{transform:rotate(0)}8%{transform:rotate(-104deg)}
+ 13%{transform:rotate(-92deg)}20%{transform:rotate(-104deg)}
+ 37%{transform:rotate(-92deg)}43%{transform:rotate(-104deg)}
+ 92%{transform:rotate(-100deg)}100%{transform:rotate(0)}}
+
+/* --- parpadeo: siempre, tambien mientras camina --- */
+.mz-lid{transform-box:view-box;transform-origin:60px 2px;transform:scaleY(0);
+ animation:mzblink 5.6s ease-in-out infinite}
+@keyframes mzblink{0%,88%,100%{transform:scaleY(0)}91%{transform:scaleY(1)}94%{transform:scaleY(0)}
+ 96%{transform:scaleY(1)}98%{transform:scaleY(0)}}
+
+/* --- bocadillo --- */
+.mz-bubble{position:absolute;bottom:calc(100% - 10px);width:238px;max-width:calc(100vw - 48px);
  background:var(--color-surface,#fff);color:var(--color-text-primary,#1d2422);
  border:2px solid var(--color-brand-primary,#800080);border-radius:16px;padding:13px 14px 14px;
  box-shadow:0 12px 30px rgb(0 0 0/.16);opacity:0;transform:scale(.84) translateY(8px);
@@ -78,8 +119,8 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(1.7rem,5vw,2.4rem)
 .mz-bubble::after{content:"";position:absolute;top:100%;width:14px;height:14px;
  background:var(--color-surface,#fff);border-right:2px solid var(--color-brand-primary,#800080);
  border-bottom:2px solid var(--color-brand-primary,#800080);transform:translateY(-8px) rotate(45deg)}
-.mz-left .mz-bubble::after{left:34px}
-.mz-right .mz-bubble::after{right:34px}
+.mz-left .mz-bubble::after{left:38px}
+.mz-right .mz-bubble::after{right:38px}
 .mz-say{margin:0 14px 9px 0;font-size:.92rem;line-height:1.4}
 .mz-deal{margin:0 0 10px;font-weight:800;font-size:.95rem;color:var(--color-brand-secondary-deep,#005f5f);
  background:var(--color-brand-secondary-tint,#e3f0f0);border-radius:9px;padding:7px 9px}
@@ -91,10 +132,15 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(1.7rem,5vw,2.4rem)
  background:none;border:0;border-radius:50%;color:var(--color-text-secondary,#55605d);
  font-size:15px;line-height:1;cursor:pointer}
 .mz-x:hover{background:var(--color-brand-primary-tint,#f6e8f6);color:var(--color-brand-primary,#800080)}
-@media (max-width:640px){.mz{width:92px;bottom:88px}.mz-bubble{width:210px}}
+@media (max-width:640px){.mz{width:104px;bottom:88px}.mz-bubble{width:212px}}
+
+/* Quien pide menos movimiento no ve ni paseo ni saltos. El parpadeo
+   tambien se para: es pequeno, pero es movimiento repetido. */
 @media (prefers-reduced-motion:reduce){
  .mz-walking,.mz-talking{transition:none}
  .mz-toon,.mz-leg,.mz-arm,.mz-lid{animation:none!important}
+ .mz-talking .mz-arm.mz-l{transform:rotate(100deg)}
+ .mz-talking .mz-arm.mz-r{transform:rotate(-100deg)}
 }
 
 /* ---- sólo para la vista previa: dentro del escenario, no en la ventana ---- */
@@ -137,71 +183,66 @@ button.ctl.go{background:var(--purple);border-color:var(--purple);color:#fff}
       </div>
       <svg
       class="mz-toon"
-      viewBox="0 12 110 128"
+      viewBox="0 0 120 132"
       role="img"
       aria-label="Manzanito, la mascota de Tus Ojos Eyecare"
       focusable="false"
     >
+      <defs>
+        <radialGradient id="mzIris" cx="42%" cy="36%" r="68%">
+          <stop offset="0%" stop-color="#b24fb2"/><stop offset="55%" stop-color="#800080"/><stop offset="100%" stop-color="#52004f"/>
+        </radialGradient>
+        <linearGradient id="mzCoat" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#e7ecef"/>
+        </linearGradient>
+        <linearGradient id="mzHead" x1="0.25" y1="0" x2="0.8" y2="1">
+          <stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#dfe6ea"/>
+        </linearGradient>
+      </defs>
       {}
-      <g class="mz-leg mz-l">
-        <rect x="42" y="112" width="12" height="20" rx="4" fill="#005f5f" />
-        <ellipse cx="45" cy="133" rx="9.5" ry="5" fill="#27312f" />
-      </g>
-      <g class="mz-leg mz-r">
-        <rect x="56" y="112" width="12" height="20" rx="4" fill="#005f5f" />
-        <ellipse cx="65" cy="133" rx="9.5" ry="5" fill="#27312f" />
-      </g>
+      <g class="mz-leg mz-l"><rect x="44" y="104" width="13" height="22" rx="6" fill="#2f3a4d"/><ellipse cx="47" cy="127" rx="11" ry="5.5" fill="#222b3a"/></g>
+      <g class="mz-leg mz-r"><rect x="65" y="104" width="13" height="22" rx="6" fill="#2f3a4d"/><ellipse cx="75" cy="127" rx="11" ry="5.5" fill="#222b3a"/></g>
       {}
       <g class="mz-arm mz-l">
-        <path d="M34 78 L18 110" stroke="#c6d2cf" stroke-width="15" stroke-linecap="round" fill="none" />
-        <path d="M34 78 L18 110" stroke="#ffffff" stroke-width="11.5" stroke-linecap="round" fill="none" />
-        <circle cx="16" cy="113" r="7" fill="#f0c49c" />
+        <path d="M30 76 L16 100" stroke="#d3dade" stroke-width="18" stroke-linecap="round" fill="none"/>
+        <path d="M30 76 L16 100" stroke="url(#mzCoat)" stroke-width="15" stroke-linecap="round" fill="none"/>
+        <path d="M19 95 L15 102" stroke="#800080" stroke-width="15" stroke-linecap="round"/>
+        <circle cx="13" cy="106" r="8.5" fill="#f6d8bd"/>
       </g>
       <g class="mz-arm mz-r">
-        <path d="M76 78 L92 110" stroke="#c6d2cf" stroke-width="15" stroke-linecap="round" fill="none" />
-        <path d="M76 78 L92 110" stroke="#ffffff" stroke-width="11.5" stroke-linecap="round" fill="none" />
-        <circle cx="94" cy="113" r="7" fill="#f0c49c" />
+        <path d="M90 76 L104 100" stroke="#d3dade" stroke-width="18" stroke-linecap="round" fill="none"/>
+        <path d="M90 76 L104 100" stroke="url(#mzCoat)" stroke-width="15" stroke-linecap="round" fill="none"/>
+        <path d="M101 95 L105 102" stroke="#800080" stroke-width="15" stroke-linecap="round"/>
+        <circle cx="107" cy="106" r="8.5" fill="#f6d8bd"/>
       </g>
       {}
-      <rect x="48" y="50" width="14" height="24" rx="5" fill="#dfe8e5" />
+      <path d="M22 112 C20 92 27 76 44 71 L60 86 L76 71 C93 76 100 92 98 112 Z" fill="url(#mzCoat)" stroke="#cfd7dc" stroke-width="2" stroke-linejoin="round"/>
       {}
-      <path
-        d="M24 120 C23 96 31 74 45 69 L55 81 L65 69 C79 74 87 96 86 120 Z"
-        fill="#ffffff"
-        stroke="#c6d2cf"
-        stroke-width="2"
-        stroke-linejoin="round"
-      />
-      <path d="M45 69 L55 81 L49 85 L41 73 Z" fill="#edf2f0" />
-      <path d="M65 69 L55 81 L61 85 L69 73 Z" fill="#edf2f0" />
-      <circle cx="55" cy="94" r="2.2" fill="#b9c6c3" />
-      <circle cx="55" cy="104" r="2.2" fill="#b9c6c3" />
+      <path d="M44 71 L60 86 L50 95 L36 78 Z" fill="#800080"/>
+      <path d="M76 71 L60 86 L70 95 L84 78 Z" fill="#800080"/>
+      <path d="M48 73 L60 86 L53 92 L42 77 Z" fill="#17a0a0"/>
+      <path d="M72 73 L60 86 L67 92 L78 77 Z" fill="#17a0a0"/>
       {}
-      <rect x="64" y="90" width="11" height="6.5" rx="1.8" fill="#008080" />
+      <rect x="28" y="92" width="16" height="11" rx="2.5" fill="none" stroke="#cfd7dc" stroke-width="2"/>
+      <rect x="76" y="92" width="16" height="11" rx="2.5" fill="none" stroke="#cfd7dc" stroke-width="2"/>
+      <circle cx="52" cy="101" r="2.4" fill="#17a0a0"/><circle cx="52" cy="109" r="2.4" fill="#17a0a0"/>
       {}
-      <path
-        d="M17 42 C30 18 80 18 93 42 C80 66 30 66 17 42 Z"
-        fill="#ffffff"
-        stroke="#27312f"
-        stroke-width="3.6"
-        stroke-linejoin="round"
-      />
+      <ellipse cx="60" cy="43" rx="39" ry="41" fill="url(#mzHead)" stroke="#cfd7dc" stroke-width="2"/>
+      {}
       <g class="mz-gaze">
-        <circle cx="55" cy="42" r="17" fill="#800080" />
-        <circle cx="55" cy="42" r="17" fill="none" stroke="#6b006b" stroke-width="2.5" />
-        <circle cx="55" cy="42" r="8" fill="#1d1420" />
-        <circle cx="48.5" cy="36" r="5" fill="#ffffff" opacity=".95" />
-        <circle cx="61" cy="48" r="2.4" fill="#ffffff" opacity=".6" />
+        <circle cx="62" cy="40" r="26" fill="url(#mzIris)"/>
+        <circle cx="62" cy="40" r="19" fill="none" stroke="#9c4a9c" stroke-width="1.6" opacity=".45"/>
+        <circle cx="62" cy="40" r="23" fill="none" stroke="#5e0a5c" stroke-width="2" opacity=".35"/>
+        <circle cx="62" cy="40" r="26" fill="none" stroke="#3c0039" stroke-width="2.5"/>
+        <circle cx="62" cy="40" r="12.5" fill="#140116"/>
+        <ellipse cx="53" cy="30" rx="7" ry="5.5" fill="#fff" opacity=".92" transform="rotate(-25 53 30)"/>
+        <circle cx="71" cy="51" r="3.4" fill="#fff" opacity=".5"/>
       </g>
       {}
-      <path
-        class="mz-lid"
-        d="M17 42 C30 18 80 18 93 42 C80 66 30 66 17 42 Z"
-        fill="#e8b89a"
-        stroke="#27312f"
-        stroke-width="3.6"
-        stroke-linejoin="round"
-      />
+      <ellipse class="mz-lid" cx="60" cy="43" rx="39" ry="41" fill="url(#mzHead)"/>
+      {}
+      <path class="mz-mouth" d="M41 68 C47 86 73 86 79 68 C70 74 50 74 41 68 Z" fill="#6b2230"/>
+      <path d="M51 77 C56 83 64 83 69 77 C62 75 58 75 51 77 Z" fill="#e0607a"/>
     </svg>
     </div>
   </div>
